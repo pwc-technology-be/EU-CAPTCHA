@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Captcha Audio class
+ */
 public class CaptchaAudioService {
 
     public static final String NAME = "captchaAudioService";
@@ -54,6 +59,10 @@ public class CaptchaAudioService {
             return this;
         }
 
+        /**
+         * Build the audio
+         * @return captcha audio service builder
+         */
         public CaptchaAudioService build() {
 
 
@@ -72,21 +81,21 @@ public class CaptchaAudioService {
                 sample = vProd.getVocalization(ansAry[i]);
                 samples.add(sample);
             }
-
             // 3. Add noise, if any, and return the result
             if (_noiseProds.size() > 0) {
                 NoiseProducer nProd = _noiseProds.get(RAND.nextInt(_noiseProds
                         .size()));
                 _challenge = nProd.addNoise(samples);
-
                 return new CaptchaAudioService(this);
             }
-
             _challenge = Mixer.append(samples);
-
             return new CaptchaAudioService(this);
         }
 
+        /**
+         *
+         * @return answer
+         */
         @Override public String toString() {
             StringBuffer sb = new StringBuffer();
             sb.append("[Answer: ");
@@ -97,18 +106,35 @@ public class CaptchaAudioService {
         }
     }
 
+    /**
+     *
+     * @param answer
+     * @return
+     */
     public boolean isCorrect(String answer) {
         return answer.equals(_builder._answer);
     }
 
+    /**
+     *
+     * @return answer builder
+     */
     public String getAnswer() {
         return _builder._answer;
     }
 
+    /**
+     *
+     * @return challenge
+     */
     public Sample getChallenge() {
         return _builder._challenge;
     }
 
+    /**
+     *
+     * @return builder to string
+     */
     @Override public String toString() {
         return _builder.toString();
     }

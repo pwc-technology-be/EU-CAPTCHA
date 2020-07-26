@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Captcha Text drawing class
+ */
 public class CaptchaTextRender implements WordRenderer {
 
     /**
@@ -22,10 +27,6 @@ public class CaptchaTextRender implements WordRenderer {
     private static final List<Color> DEFAULT_COLORS = new ArrayList<Color>();
     private static final List<Font> DEFAULT_FONTS = new ArrayList<Font>();
 
-
-    // The text will be rendered 25%/5% of the image height/width from the X and Y axe
-    private static final double YOFFSET = 0.75;
-    private static final double XOFFSET = 0.05;
 
     static {
         DEFAULT_COLORS.add(Color.BLACK);
@@ -66,14 +67,14 @@ public class CaptchaTextRender implements WordRenderer {
         g.setRenderingHints(hints);
 
         FontRenderContext frc = g.getFontRenderContext();
-
+        SecureRandom rand = new SecureRandom();
         double lowerX = 0.3;
         double upperX = 0.2;
-        double x = (Math.random() * (upperX - lowerX)) + lowerX;
+        double x = (rand.nextFloat() * (upperX - lowerX)) + lowerX;
 
         double lowerY = 0.45;
         double upperY = 0.7;
-        double y = (Math.random() * (upperY - lowerY)) + lowerY;
+        double y = (rand.nextFloat() * (upperY - lowerY)) + lowerY;
 
         int xBaseline = (int) Math.round(image.getWidth() * x);
         int yBaseline = image.getHeight() - (int) Math.round(image.getHeight() * y);
