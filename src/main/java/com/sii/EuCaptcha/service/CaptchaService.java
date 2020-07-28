@@ -30,19 +30,33 @@ import nl.captcha.noise.StraightLineNoiseProducer;
 import nl.captcha.text.producer.TextProducer;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Captcha Service Class
+ */
 @Service
 @Slf4j
 public class CaptchaService {
 	/**
-	 * Parametters of Captcha
+	 * Parameters of Captcha {WIDTH , HEIGHT , EXPIRY TIME }
 	 */
-	private static final int CAPTCHA_WIDTH=400,CAPTCHA_HEIGHT=200;
+	private static final int CAPTCHA_WIDTH=400;
+	private static final int CAPTCHA_HEIGHT=200;
 	private static final long CAPTCHA_EXPIRY_TIME=40;
+
+	/**
+	 * List of colors and background colors
+	 */
 	private static final List<Color> COLORS = new ArrayList<>(3);
 	private static final List<Color> COLOR_STRAIGHT_LINE_NOISE = new ArrayList<>(3);
 	private static final List<Color> BACKGROUND_COLORS = new ArrayList<>(5);
 	private static final List<Color> FISHY_EYE_GIMPY_COLORS = new ArrayList<>(5);
 
+	/**
+	 * List of fonts and font sizes
+	 */
 	private static final List<Font> FONTS = new ArrayList<Font>(3);
 	public static String answer = null;
 
@@ -87,39 +101,61 @@ public class CaptchaService {
 	 *
 	 * @param previousCaptchaId
 	 * @param locale
-	 * @return String [] which contains the CaptchaID and the image
+	 * @return String [] which contains the CaptchaID , Captcha Image , and Captcha Audio.
 	 */
 	public String[] generateCaptchaImage(String previousCaptchaId , Locale locale) {
-        // TODO: 12/05/2020  Spilt  The generate Captcha to multiFuntion
+
+		/**
+		 * Case Reload Captcha
+		 */
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
-		Random rand = new Random();
+		SecureRandom rand = new SecureRandom();
 		BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size()));
 
+		/**
+		 * Generate the Captcha Text
+		 */
 		TextProducer textProducuer = new LanguageTextProducer().LanguageTextProducer(8,locale);
 
+		/**
+		 * Generate the Captcha drawing
+		 */
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
 
+		/**
+		 * Build The Captcha
+		 */
 		Captcha captcha = new Captcha.Builder(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).addText(textProducuer ,wordRenderer )
 				.addBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
 						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).addNoise(new StraightLineNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
 				.gimp(new EuCaptchaGimpyRender()).addBorder().build();
-
+		/**
+		 * Adding the voice map for the selected language
+		 */
 		Map<String, String> voicesMap = new HashMap<String, String>();
 	    voicesMap = new VoiceMap().mapVoiceLettresAndNumbersEN(locale);
 
 		VoiceProducer vProd = new LanguageVoiceProducer(captcha.getAnswer() , voicesMap);
         CaptchaAudioService captchaAudioService = null;
-
+		/**
+		 * Build the captcha audio file.
+		 */
+		if 	(locale.getLanguage() == "bg") {
 		captchaAudioService = new CaptchaAudioService.Builder()
 				.addAnswer(captcha.getAnswer())
 				.addVoice(vProd)
-				.addNoise()
 				.build();
-
+		}else{
+			captchaAudioService = new CaptchaAudioService.Builder()
+					.addAnswer(captcha.getAnswer())
+					.addVoice(vProd)
+					.addNoise()
+					.build();
+		}
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 
@@ -152,6 +188,9 @@ public class CaptchaService {
 		
 		String captchaId=this.nextCaptchaId();
 
+		/**
+		 * Adding the Captcha image , the captcha ID , the captcha audio file to the String []
+		 */
 		String[] imageParams = {captchaPngImage,captchaId,captchaAudioFile };
 		addCaptcha(captchaId,captcha.getAnswer());
 
@@ -166,10 +205,16 @@ public class CaptchaService {
 	 */
 	public boolean validateCaptcha(String captchaId,String captchaAnswer , boolean usingAudio){
 		boolean result=false;
+		/**
+		 * case sensitive
+		 */
 		if (!usingAudio) {
 			if (captchaCodeMap.containsKey(captchaId) && captchaCodeMap.get(captchaId).equals(captchaAnswer))
 				result = true;
 		}
+		/**
+		 * if the audio is selected , ignore case sensitive
+		 */
 		else
 		{
 			if (captchaCodeMap.containsKey(captchaId) && captchaCodeMap.get(captchaId).equalsIgnoreCase(captchaAnswer))

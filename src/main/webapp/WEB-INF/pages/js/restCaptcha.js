@@ -5,7 +5,7 @@ function onPlayAudio(){
 }
 $(function(){
 	     function getcaptcha(){
-                   getCaptchaUrl = $.ajax({
+                   var getCaptchaUrl = $.ajax({
                      type: "GET",
                      url: 'http://localhost:8080/api/captchaImg',
                      success: function (data) {
@@ -18,7 +18,7 @@ $(function(){
                    });
 	               }
 	 function reloadCaptcha(){
-	               reloadCaptchaUrl = $.ajax({
+	               var reloadCaptchaUrl = $.ajax({
                           type: "GET",
                           url: 'http://localhost:8080/api/reloadCaptchaImg/'+$("#captchaImg").attr("captchaId"),
                            beforeSend: function(xhr) {
@@ -37,7 +37,7 @@ $(function(){
                        });
 	               }
 	 function validateCaptcha(){
-	   $.ajax({
+	   var validateCaptcha = $.ajax({
              type: "POST",
              contentType: 'application/json; charset=utf-8',
              url: "http://localhost:8080/api/validateCaptcha/"+$("#captchaImg").attr("captchaId"),
@@ -54,12 +54,11 @@ $(function(){
              success: function (data) {
                $("input").css({"border": ""});
                  obj = JSON.parse(data);
-                if ('success' == obj.responseCaptcha)
+                if ('success' === obj.responseCaptcha)
                 {
                  $("#success").css("visibility", "visible");
                  $("#fail").css("visibility", "hidden");
                 }else
-
                 {
                 $("#fail").css("visibility", "visible");
                 $("#success").css("visibility", "hidden");
@@ -77,13 +76,13 @@ $(function(){
 	 $("#success").css("visibility", "hidden");
 		 reloadCaptcha();
 	 });
-	 
+
 	 $("#captchaSubmit").click(function(){
 		 validateCaptcha();
 	 });
 
 	 $('#captchaAnswer').keypress(function(e) {
-	        if (e.keyCode == 13) {
+	        if (e.keyCode === 13) {
 	        	validateCaptcha();
 	            return false; // prevent the button click from happening
 	        }
@@ -92,12 +91,12 @@ $(function(){
 	$(document).ready(function () {
             $("#dropdown-language").change(function () {
                 var selectedOption = $('#dropdown-language').val();
-                languageSelected = selectedOption;
-                if (selectedOption != '') {
+                var languageSelected = selectedOption;
+                if (selectedOption !== '') {
                     window.location.replace('?lang=' + selectedOption);
                 }
             });
         });
 	 getcaptcha();
-	 
+
  });

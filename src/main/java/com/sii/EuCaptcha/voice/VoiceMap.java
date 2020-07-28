@@ -5,14 +5,21 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Mapping of the audio files
+ */
 public class VoiceMap {
 
-
+    /**
+     *
+     * @param locale
+     * @return map voice for each language
+     */
     public final Map<String, String> mapVoiceLettresAndNumbersEN(Locale locale) {
         Map<String, String> voicesMap = new HashMap<String, String>();
-
         switch (locale.getLanguage()) {
-
             case "fr":
                 String fileLocsFrensh0 = "/sounds/fr/numbers/0.wav";
                 String fileLocsFrensh1 = "/sounds/fr/numbers/1.wav";
@@ -88,6 +95,7 @@ public class VoiceMap {
                 voicesMap.put("Y", fileLocsFrenshY);
                 voicesMap.put("Z", fileLocsFrenshZ);
                 break;
+
             case "de":
                 String fileLocsGerman0 = "/sounds/de/numbers/0.wav";
                 String fileLocsGerman1 = "/sounds/de/numbers/1.wav";
@@ -172,6 +180,7 @@ public class VoiceMap {
                 voicesMap.put("Y", fileLocsGermanY);
                 voicesMap.put("Z", fileLocsGermanZ);
                 break;
+
             case "it":
                 String fileLocsItalien0 = "/sounds/it/numbers/0.wav";
                 String fileLocsItalien1 = "/sounds/it/numbers/1.wav";
@@ -246,7 +255,6 @@ public class VoiceMap {
                 voicesMap.put("X", fileLocsItalienX);
                 voicesMap.put("Y", fileLocsItalienY);
                 voicesMap.put("Z", fileLocsItalienZ);
-
                 break;
 
             case "nl":
@@ -401,8 +409,8 @@ public class VoiceMap {
                 voicesMap.put("X", fileLocsSpanishX);
                 voicesMap.put("Y", fileLocsSpanishY);
                 voicesMap.put("Z", fileLocsSpanishZ);
-
                 break;
+
             case "pt":
                 String fileLocsPortuguese0 = "/sounds/pt/numbers/0.wav";
                 String fileLocsPortuguese1 = "/sounds/pt/numbers/1.wav";
@@ -480,7 +488,83 @@ public class VoiceMap {
                 break;
 
             case "bg":
+                String fileLocsBulgarian0 = "/sounds/bg/numbers/0.wav";
+                String fileLocsBulgarian1 = "/sounds/bg/numbers/1.wav";
+                String fileLocsBulgarian2 = "/sounds/bg/numbers/2.wav";
+                String fileLocsBulgarian3 = "/sounds/bg/numbers/3.wav";
+                String fileLocsBulgarian4 = "/sounds/bg/numbers/4.wav";
+                String fileLocsBulgarian5 = "/sounds/bg/numbers/5.wav";
+                String fileLocsBulgarian6 = "/sounds/bg/numbers/6.wav";
+                String fileLocsBulgarian7 = "/sounds/bg/numbers/7.wav";
+                String fileLocsBulgarian8 = "/sounds/bg/numbers/8.wav";
+                String fileLocsBulgarian9 = "/sounds/bg/numbers/9.wav";
+                String fileLocsBulgarianА = "/sounds/bg/letters/А.wav";
+                String fileLocsBulgarianБ = "/sounds/bg/letters/Б.wav";
+                String fileLocsBulgarianВ = "/sounds/bg/letters/В.wav";
+                String fileLocsBulgarianГ = "/sounds/bg/letters/Г.wav";
+                String fileLocsBulgarianД = "/sounds/bg/letters/Д.wav";
+                String fileLocsBulgarianЕ = "/sounds/bg/letters/Е.wav";
+                String fileLocsBulgarianЖ = "/sounds/bg/letters/Ж.wav";
+                String fileLocsBulgarianЗ = "/sounds/bg/letters/З.wav";
+                String fileLocsBulgarianИ = "/sounds/bg/letters/И.wav";
+                String fileLocsBulgarianЙ = "/sounds/bg/letters/Й.wav";
+                String fileLocsBulgarianК = "/sounds/bg/letters/К.wav";
+                String fileLocsBulgarianЛ = "/sounds/bg/letters/Л.wav";
+                String fileLocsBulgarianМ = "/sounds/bg/letters/М.wav";
+                String fileLocsBulgarianН = "/sounds/bg/letters/Н.wav";
+                String fileLocsBulgarianО = "/sounds/bg/letters/О.wav";
+                String fileLocsBulgarianП = "/sounds/bg/letters/П.wav";
+                String fileLocsBulgarianР = "/sounds/bg/letters/Р.wav";
+                String fileLocsBulgarianС = "/sounds/bg/letters/С.wav";
+                String fileLocsBulgarianТ = "/sounds/bg/letters/Т.wav";
+                String fileLocsBulgarianУ = "/sounds/bg/letters/У.wav";
+                String fileLocsBulgarianФ = "/sounds/bg/letters/Ф.wav";
+                String fileLocsBulgarianХ = "/sounds/bg/letters/Х.wav";
+                String fileLocsBulgarianЦ = "/sounds/bg/letters/Ц.wav";
+                String fileLocsBulgarianЧ = "/sounds/bg/letters/Ч.wav";
+                String fileLocsBulgarianШ = "/sounds/bg/letters/Ш.wav";
+                String fileLocsBulgarianЩ = "/sounds/bg/letters/Щ.wav";
+                String fileLocsBulgarianЮ = "/sounds/bg/letters/Ю.wav";
+                String fileLocsBulgarianЯ = "/sounds/bg/letters/Я.wav";
 
+                voicesMap.put("0", fileLocsBulgarian0);
+                voicesMap.put("1", fileLocsBulgarian1);
+                voicesMap.put("2", fileLocsBulgarian2);
+                voicesMap.put("3", fileLocsBulgarian3);
+                voicesMap.put("4", fileLocsBulgarian4);
+                voicesMap.put("5", fileLocsBulgarian5);
+                voicesMap.put("6", fileLocsBulgarian6);
+                voicesMap.put("7", fileLocsBulgarian7);
+                voicesMap.put("8", fileLocsBulgarian8);
+                voicesMap.put("9", fileLocsBulgarian9);
+                voicesMap.put("А", fileLocsBulgarianА);
+                voicesMap.put("Б", fileLocsBulgarianБ);
+                voicesMap.put("В", fileLocsBulgarianВ);
+                voicesMap.put("Г", fileLocsBulgarianГ);
+                voicesMap.put("Д", fileLocsBulgarianД);
+                voicesMap.put("Е", fileLocsBulgarianЕ);
+                voicesMap.put("Ж", fileLocsBulgarianЖ);
+                voicesMap.put("З", fileLocsBulgarianЗ);
+                voicesMap.put("И", fileLocsBulgarianИ);
+                voicesMap.put("Й", fileLocsBulgarianЙ);
+                voicesMap.put("К", fileLocsBulgarianК);
+                voicesMap.put("Л", fileLocsBulgarianЛ);
+                voicesMap.put("М", fileLocsBulgarianМ);
+                voicesMap.put("Н", fileLocsBulgarianН);
+                voicesMap.put("О", fileLocsBulgarianО);
+                voicesMap.put("П", fileLocsBulgarianП);
+                voicesMap.put("Р", fileLocsBulgarianР);
+                voicesMap.put("С", fileLocsBulgarianС);
+                voicesMap.put("Т", fileLocsBulgarianТ);
+                voicesMap.put("У", fileLocsBulgarianУ);
+                voicesMap.put("Ф", fileLocsBulgarianФ);
+                voicesMap.put("Х", fileLocsBulgarianХ);
+                voicesMap.put("Ц", fileLocsBulgarianЦ);
+                voicesMap.put("Ч", fileLocsBulgarianЧ);
+                voicesMap.put("Ш", fileLocsBulgarianШ);
+                voicesMap.put("Щ", fileLocsBulgarianЩ);
+                voicesMap.put("Ю", fileLocsBulgarianЮ);
+                voicesMap.put("Я", fileLocsBulgarianЯ);
                 break;
 
             case "hr":
@@ -557,7 +641,6 @@ public class VoiceMap {
                 voicesMap.put("Đ", fileLocsCroatianĐ);
                 voicesMap.put("Š", fileLocsCroatianŠ);
                 voicesMap.put("Ž", fileLocsCroatianŽ);
-
                 break;
             case "da":
                 String fileLocsDanish0 = "/sounds/da/numbers/0.wav";
@@ -640,7 +723,6 @@ public class VoiceMap {
                 voicesMap.put("Æ", fileLocsDanishÆ);
                 voicesMap.put("Ø", fileLocsDanishØ);
                 voicesMap.put("Å", fileLocsDanishÅ);
-
                 break;
 
             case "et":
@@ -729,8 +811,8 @@ public class VoiceMap {
                 voicesMap.put("Ä", fileLocsEstonianÄ);
                 voicesMap.put("Ö", fileLocsEstonianÖ);
                 voicesMap.put("Ü", fileLocsEstonianÜ);
-
                 break;
+
             case "fi":
                 String fileLocsFinnish0 = "/sounds/fi/numbers/0.wav";
                 String fileLocsFinnish1 = "/sounds/fi/numbers/1.wav";
@@ -811,8 +893,8 @@ public class VoiceMap {
                 voicesMap.put("Å", fileLocsFinnishÅ);
                 voicesMap.put("Ä", fileLocsFinnishÄ);
                 voicesMap.put("Ö", fileLocsFinnishÖ);
-
                 break;
+
             case "el":
                 String fileLocsGreek0 = "/sounds/el/numbers/0.wav";
                 String fileLocsGreek1 = "/sounds/el/numbers/1.wav";
@@ -848,7 +930,7 @@ public class VoiceMap {
                 String fileLocsGreekΧ = "/sounds/el/letters/Χ.wav";
                 String fileLocsGreekΨ = "/sounds/el/letters/Ψ.wav";
                 String fileLocsGreekΩ = "/sounds/el/letters/Ω.wav";
-                String fileLocsGreekZ = "/sounds/el/letters/Z.wav";
+
 
                 voicesMap.put("0", fileLocsGreek0);
                 voicesMap.put("1", fileLocsGreek1);
@@ -884,7 +966,6 @@ public class VoiceMap {
                 voicesMap.put("Χ", fileLocsGreekΧ);
                 voicesMap.put("Ψ", fileLocsGreekΨ);
                 voicesMap.put("Ω", fileLocsGreekΩ);
-                voicesMap.put("Z", fileLocsGreekZ);
                 break;
 
             case "hu":
@@ -981,8 +1062,93 @@ public class VoiceMap {
                 voicesMap.put("Ü", fileLocsHungarianÜ);
                 voicesMap.put("Ű", fileLocsHungarianŰ);
                 break;
-            case "ga":
 
+            case "ga":
+                String fileLocsIrish0 = "/sounds/ga/numbers/0.wav";
+                String fileLocsIrish1 = "/sounds/ga/numbers/1.wav";
+                String fileLocsIrish2 = "/sounds/ga/numbers/2.wav";
+                String fileLocsIrish3 = "/sounds/ga/numbers/3.wav";
+                String fileLocsIrish4 = "/sounds/ga/numbers/4.wav";
+                String fileLocsIrish5 = "/sounds/ga/numbers/5.wav";
+                String fileLocsIrish6 = "/sounds/ga/numbers/6.wav";
+                String fileLocsIrish7 = "/sounds/ga/numbers/7.wav";
+                String fileLocsIrish8 = "/sounds/ga/numbers/8.wav";
+                String fileLocsIrish9 = "/sounds/ga/numbers/9.wav";
+                String fileLocsIrishA = "/sounds/ga/letters/A.wav";
+                String fileLocsIrishB = "/sounds/ga/letters/B.wav";
+                String fileLocsIrishC = "/sounds/ga/letters/C.wav";
+                String fileLocsIrishD = "/sounds/ga/letters/D.wav";
+                String fileLocsIrishE = "/sounds/ga/letters/E.wav";
+                String fileLocsIrishF = "/sounds/ga/letters/F.wav";
+                String fileLocsIrishG = "/sounds/ga/letters/G.wav";
+                String fileLocsIrishH = "/sounds/ga/letters/H.wav";
+                String fileLocsIrishI = "/sounds/ga/letters/I.wav";
+                String fileLocsIrishJ = "/sounds/ga/letters/J.wav";
+                String fileLocsIrishK = "/sounds/ga/letters/K.wav";
+                String fileLocsIrishL = "/sounds/ga/letters/L.wav";
+                String fileLocsIrishM = "/sounds/ga/letters/M.wav";
+                String fileLocsIrishN = "/sounds/ga/letters/N.wav";
+                String fileLocsIrishO = "/sounds/ga/letters/O.wav";
+                String fileLocsIrishP = "/sounds/ga/letters/P.wav";
+                String fileLocsIrishQ = "/sounds/ga/letters/Q.wav";
+                String fileLocsIrishR = "/sounds/ga/letters/R.wav";
+                String fileLocsIrishS = "/sounds/ga/letters/S.wav";
+                String fileLocsIrishT = "/sounds/ga/letters/T.wav";
+                String fileLocsIrishU = "/sounds/ga/letters/U.wav";
+                String fileLocsIrishV = "/sounds/ga/letters/V.wav";
+                String fileLocsIrishW = "/sounds/ga/letters/W.wav";
+                String fileLocsIrishX = "/sounds/ga/letters/X.wav";
+                String fileLocsIrishY = "/sounds/ga/letters/Y.wav";
+                String fileLocsIrishZ = "/sounds/ga/letters/Z.wav";
+                String fileLocsIrishÁ = "/sounds/ga/letters/Á.wav";
+                String fileLocsIrishÉ = "/sounds/ga/letters/É.wav";
+                String fileLocsIrishÍ = "/sounds/ga/letters/Í.wav";
+                String fileLocsIrishÓ = "/sounds/ga/letters/Ó.wav";
+                String fileLocsIrishÚ = "/sounds/ga/letters/Ú.wav";
+
+
+
+                voicesMap.put("0", fileLocsIrish0);
+                voicesMap.put("1", fileLocsIrish1);
+                voicesMap.put("2", fileLocsIrish2);
+                voicesMap.put("3", fileLocsIrish3);
+                voicesMap.put("4", fileLocsIrish4);
+                voicesMap.put("5", fileLocsIrish5);
+                voicesMap.put("6", fileLocsIrish6);
+                voicesMap.put("7", fileLocsIrish7);
+                voicesMap.put("8", fileLocsIrish8);
+                voicesMap.put("9", fileLocsIrish9);
+                voicesMap.put("A", fileLocsIrishA);
+                voicesMap.put("B", fileLocsIrishB);
+                voicesMap.put("C", fileLocsIrishC);
+                voicesMap.put("D", fileLocsIrishD);
+                voicesMap.put("E", fileLocsIrishE);
+                voicesMap.put("F", fileLocsIrishF);
+                voicesMap.put("G", fileLocsIrishG);
+                voicesMap.put("H", fileLocsIrishH);
+                voicesMap.put("I", fileLocsIrishI);
+                voicesMap.put("J", fileLocsIrishJ);
+                voicesMap.put("K", fileLocsIrishK);
+                voicesMap.put("L", fileLocsIrishL);
+                voicesMap.put("M", fileLocsIrishM);
+                voicesMap.put("N", fileLocsIrishN);
+                voicesMap.put("O", fileLocsIrishO);
+                voicesMap.put("P", fileLocsIrishP);
+                voicesMap.put("Q", fileLocsIrishQ);
+                voicesMap.put("R", fileLocsIrishR);
+                voicesMap.put("S", fileLocsIrishS);
+                voicesMap.put("T", fileLocsIrishT);
+                voicesMap.put("U", fileLocsIrishU);
+                voicesMap.put("V", fileLocsIrishV);
+                voicesMap.put("W", fileLocsIrishW);
+                voicesMap.put("X", fileLocsIrishX);
+                voicesMap.put("Y", fileLocsIrishY);
+                voicesMap.put("Z", fileLocsIrishZ);
+                voicesMap.put("Á", fileLocsIrishÁ);
+                voicesMap.put("É", fileLocsIrishÉ);
+                voicesMap.put("Í", fileLocsIrishÍ);
+                voicesMap.put("Ó", fileLocsIrishÓ);
+                voicesMap.put("Ú", fileLocsIrishÚ);
                 break;
 
             case "lv":
@@ -1073,8 +1239,8 @@ public class VoiceMap {
                 voicesMap.put("Ū", fileLocsLatvianŪ);
                 voicesMap.put("Ž", fileLocsLatvianŽ);
                 voicesMap.put("C", fileLocsLatvianC);
-
                 break;
+
             case "lt":
                 String fileLocsLithuanian0 = "/sounds/lt/numbers/0.wav";
                 String fileLocsLithuanian1 = "/sounds/lt/numbers/1.wav";
@@ -1159,11 +1325,79 @@ public class VoiceMap {
                 voicesMap.put("Ū", fileLocsLithuanianŪ);
                 voicesMap.put("Ž", fileLocsLithuanianŽ);
                 voicesMap.put("C", fileLocsLithuanianC);
-
-
                 break;
-            case "mt":
 
+            case "mt":
+                String fileLocsMaltese0 = "/sounds/mt/numbers/0.wav";
+                String fileLocsMaltese1 = "/sounds/mt/numbers/1.wav";
+                String fileLocsMaltese2 = "/sounds/mt/numbers/2.wav";
+                String fileLocsMaltese3 = "/sounds/mt/numbers/3.wav";
+                String fileLocsMaltese4 = "/sounds/mt/numbers/4.wav";
+                String fileLocsMaltese5 = "/sounds/mt/numbers/5.wav";
+                String fileLocsMaltese6 = "/sounds/mt/numbers/6.wav";
+                String fileLocsMaltese7 = "/sounds/mt/numbers/7.wav";
+                String fileLocsMaltese8 = "/sounds/mt/numbers/8.wav";
+                String fileLocsMaltese9 = "/sounds/mt/numbers/9.wav";
+                String fileLocsMalteseA = "/sounds/mt/letters/A.wav";
+                String fileLocsMalteseB = "/sounds/mt/letters/B.wav";
+                String fileLocsMalteseĊ = "/sounds/mt/letters/Ċ.wav";
+                String fileLocsMalteseD = "/sounds/mt/letters/D.wav";
+                String fileLocsMalteseE = "/sounds/mt/letters/E.wav";
+                String fileLocsMalteseF = "/sounds/mt/letters/F.wav";
+                String fileLocsMalteseG = "/sounds/mt/letters/G.wav";
+                String fileLocsMalteseĠ = "/sounds/mt/letters/Ġ.wav";
+                String fileLocsMalteseĦ = "/sounds/mt/letters/Ħ.wav";
+                String fileLocsMalteseI = "/sounds/mt/letters/I.wav";
+                String fileLocsMalteseJ = "/sounds/mt/letters/J.wav";
+                String fileLocsMalteseK = "/sounds/mt/letters/K.wav";
+                String fileLocsMalteseL = "/sounds/mt/letters/L.wav";
+                String fileLocsMalteseM = "/sounds/mt/letters/M.wav";
+                String fileLocsMalteseN = "/sounds/mt/letters/N.wav";
+                String fileLocsMalteseO = "/sounds/mt/letters/O.wav";
+                String fileLocsMalteseP = "/sounds/mt/letters/P.wav";
+                String fileLocsMalteseR = "/sounds/mt/letters/R.wav";
+                String fileLocsMalteseS = "/sounds/mt/letters/S.wav";
+                String fileLocsMalteseT = "/sounds/mt/letters/T.wav";
+                String fileLocsMalteseU = "/sounds/mt/letters/U.wav";
+                String fileLocsMalteseV = "/sounds/mt/letters/V.wav";
+                String fileLocsMalteseZ = "/sounds/mt/letters/Z.wav";
+                String fileLocsMalteseŻ = "/sounds/mt/letters/Ż.wav";
+
+
+                voicesMap.put("0", fileLocsMaltese0);
+                voicesMap.put("1", fileLocsMaltese1);
+                voicesMap.put("2", fileLocsMaltese2);
+                voicesMap.put("3", fileLocsMaltese3);
+                voicesMap.put("4", fileLocsMaltese4);
+                voicesMap.put("5", fileLocsMaltese5);
+                voicesMap.put("6", fileLocsMaltese6);
+                voicesMap.put("7", fileLocsMaltese7);
+                voicesMap.put("8", fileLocsMaltese8);
+                voicesMap.put("9", fileLocsMaltese9);
+                voicesMap.put("A", fileLocsMalteseA);
+                voicesMap.put("B", fileLocsMalteseB);
+                voicesMap.put("Ċ", fileLocsMalteseĊ);
+                voicesMap.put("D", fileLocsMalteseD);
+                voicesMap.put("E", fileLocsMalteseE);
+                voicesMap.put("F", fileLocsMalteseF);
+                voicesMap.put("G", fileLocsMalteseG);
+                voicesMap.put("Ġ", fileLocsMalteseĠ);
+                voicesMap.put("Ħ", fileLocsMalteseĦ);
+                voicesMap.put("I", fileLocsMalteseI);
+                voicesMap.put("J", fileLocsMalteseJ);
+                voicesMap.put("K", fileLocsMalteseK);
+                voicesMap.put("L", fileLocsMalteseL);
+                voicesMap.put("M", fileLocsMalteseM);
+                voicesMap.put("N", fileLocsMalteseN);
+                voicesMap.put("O", fileLocsMalteseO);
+                voicesMap.put("P", fileLocsMalteseP);
+                voicesMap.put("R", fileLocsMalteseR);
+                voicesMap.put("S", fileLocsMalteseS);
+                voicesMap.put("T", fileLocsMalteseT);
+                voicesMap.put("U", fileLocsMalteseU);
+                voicesMap.put("V", fileLocsMalteseV);
+                voicesMap.put("Z", fileLocsMalteseZ);
+                voicesMap.put("Ż", fileLocsMalteseŻ);
                 break;
 
             case "pl":
@@ -1250,7 +1484,6 @@ public class VoiceMap {
                 voicesMap.put("Ś", fileLocsPolishŚ);
                 voicesMap.put("Ź", fileLocsPolishŹ);
                 voicesMap.put("Ż", fileLocsPolishŻ);
-
                 break;
 
             case "ro":
@@ -1338,6 +1571,7 @@ public class VoiceMap {
                 voicesMap.put("Ș", fileLocsRomanianȘ);
                 voicesMap.put("Ț", fileLocsRomanianȚ);
                 break;
+
             case "sk":
                 String fileLocsSlovakian0 = "/sounds/sk/numbers/0.wav";
                 String fileLocsSlovakian1 = "/sounds/sk/numbers/1.wav";
@@ -1431,9 +1665,81 @@ public class VoiceMap {
                 voicesMap.put("Š", fileLocsSlovakianŠ);
                 voicesMap.put("Ť", fileLocsSlovakianŤ);
                 voicesMap.put("Ž", fileLocsSlovakianŽ);
-
                 break;
+
             case "sl":
+                String fileLocsSlovenian0 = "/sounds/sl/numbers/0.wav";
+                String fileLocsSlovenian1 = "/sounds/sl/numbers/1.wav";
+                String fileLocsSlovenian2 = "/sounds/sl/numbers/2.wav";
+                String fileLocsSlovenian3 = "/sounds/sl/numbers/3.wav";
+                String fileLocsSlovenian4 = "/sounds/sl/numbers/4.wav";
+                String fileLocsSlovenian5 = "/sounds/sl/numbers/5.wav";
+                String fileLocsSlovenian6 = "/sounds/sl/numbers/6.wav";
+                String fileLocsSlovenian7 = "/sounds/sl/numbers/7.wav";
+                String fileLocsSlovenian8 = "/sounds/sl/numbers/8.wav";
+                String fileLocsSlovenian9 = "/sounds/sl/numbers/9.wav";
+                String fileLocsSlovenianA = "/sounds/sl/letters/A.wav";
+                String fileLocsSlovenianB = "/sounds/sl/letters/B.wav";
+                String fileLocsSlovenianČ = "/sounds/sl/letters/Č.wav";
+                String fileLocsSlovenianD = "/sounds/sl/letters/D.wav";
+                String fileLocsSlovenianE = "/sounds/sl/letters/E.wav";
+                String fileLocsSlovenianF = "/sounds/sl/letters/F.wav";
+                String fileLocsSlovenianG = "/sounds/sl/letters/G.wav";
+                String fileLocsSlovenianĠ = "/sounds/sl/letters/Ġ.wav";
+                String fileLocsSlovenianH = "/sounds/sl/letters/H.wav";
+                String fileLocsSlovenianI = "/sounds/sl/letters/I.wav";
+                String fileLocsSlovenianJ = "/sounds/sl/letters/J.wav";
+                String fileLocsSlovenianK = "/sounds/sl/letters/K.wav";
+                String fileLocsSlovenianL = "/sounds/sl/letters/L.wav";
+                String fileLocsSlovenianM = "/sounds/sl/letters/M.wav";
+                String fileLocsSlovenianN = "/sounds/sl/letters/N.wav";
+                String fileLocsSlovenianO = "/sounds/sl/letters/O.wav";
+                String fileLocsSlovenianP = "/sounds/sl/letters/P.wav";
+                String fileLocsSlovenianR = "/sounds/sl/letters/R.wav";
+                String fileLocsSlovenianS = "/sounds/sl/letters/S.wav";
+                String fileLocsSlovenianŠ = "/sounds/sl/letters/Š.wav";
+                String fileLocsSlovenianT = "/sounds/sl/letters/T.wav";
+                String fileLocsSlovenianU = "/sounds/sl/letters/U.wav";
+                String fileLocsSlovenianV = "/sounds/sl/letters/V.wav";
+                String fileLocsSlovenianZ = "/sounds/sl/letters/Z.wav";
+                String fileLocsSlovenianŽ = "/sounds/sl/letters/Ž.wav";
+
+                voicesMap.put("0", fileLocsSlovenian0);
+                voicesMap.put("1", fileLocsSlovenian1);
+                voicesMap.put("2", fileLocsSlovenian2);
+                voicesMap.put("3", fileLocsSlovenian3);
+                voicesMap.put("4", fileLocsSlovenian4);
+                voicesMap.put("5", fileLocsSlovenian5);
+                voicesMap.put("6", fileLocsSlovenian6);
+                voicesMap.put("7", fileLocsSlovenian7);
+                voicesMap.put("8", fileLocsSlovenian8);
+                voicesMap.put("9", fileLocsSlovenian9);
+                voicesMap.put("A", fileLocsSlovenianA);
+                voicesMap.put("B", fileLocsSlovenianB);
+                voicesMap.put("Č", fileLocsSlovenianČ);
+                voicesMap.put("D", fileLocsSlovenianD);
+                voicesMap.put("E", fileLocsSlovenianE);
+                voicesMap.put("F", fileLocsSlovenianF);
+                voicesMap.put("G", fileLocsSlovenianG);
+                voicesMap.put("Ġ", fileLocsSlovenianĠ);
+                voicesMap.put("H", fileLocsSlovenianH);
+                voicesMap.put("I", fileLocsSlovenianI);
+                voicesMap.put("J", fileLocsSlovenianJ);
+                voicesMap.put("K", fileLocsSlovenianK);
+                voicesMap.put("L", fileLocsSlovenianL);
+                voicesMap.put("M", fileLocsSlovenianM);
+                voicesMap.put("N", fileLocsSlovenianN);
+                voicesMap.put("O", fileLocsSlovenianO);
+                voicesMap.put("P", fileLocsSlovenianP);
+                voicesMap.put("R", fileLocsSlovenianR);
+                voicesMap.put("S", fileLocsSlovenianS);
+                voicesMap.put("Š", fileLocsSlovenianŠ);
+                voicesMap.put("T", fileLocsSlovenianT);
+                voicesMap.put("U", fileLocsSlovenianU);
+                voicesMap.put("V", fileLocsSlovenianV);
+                voicesMap.put("Z", fileLocsSlovenianZ);
+                voicesMap.put("Ž", fileLocsSlovenianŽ);
+                break;
 
             case "sv":
                 String fileLocsSwedish0 = "/sounds/sv/numbers/0.wav";
@@ -1517,6 +1823,7 @@ public class VoiceMap {
                 voicesMap.put("Ö", fileLocsSwedishÖ);
 
                 break;
+
             case "cs":
                 String fileLocsCzech0 = "/sounds/cs/numbers/0.wav";
                 String fileLocsCzech1 = "/sounds/cs/numbers/1.wav";
@@ -1554,6 +1861,14 @@ public class VoiceMap {
                 String fileLocsCzechX = "/sounds/cs/letters/X.wav";
                 String fileLocsCzechY = "/sounds/cs/letters/Y.wav";
                 String fileLocsCzechZ = "/sounds/cs/letters/Z.wav";
+                String fileLocsCzechÁ = "/sounds/cs/letters/Á.wav";
+                String fileLocsCzechĎ = "/sounds/cs/letters/Ď.wav";
+                String fileLocsCzechÉ = "/sounds/cs/letters/É.wav";
+                String fileLocsCzechŇ = "/sounds/cs/letters/Ň.wav";
+                String fileLocsCzechÓ = "/sounds/cs/letters/Ó.wav";
+                String fileLocsCzechŤ = "/sounds/cs/letters/Ť.wav";
+                String fileLocsCzechÚ = "/sounds/cs/letters/Ú.wav";
+                String fileLocsCzechÝ = "/sounds/cs/letters/Ý.wav";
                 String fileLocsCzechČ = "/sounds/cs/letters/Č.wav";
                 String fileLocsCzechŘ = "/sounds/cs/letters/Ř.wav";
                 String fileLocsCzechŠ = "/sounds/cs/letters/Š.wav";
@@ -1596,6 +1911,14 @@ public class VoiceMap {
                 voicesMap.put("X", fileLocsCzechX);
                 voicesMap.put("Y", fileLocsCzechY);
                 voicesMap.put("Z", fileLocsCzechZ);
+                voicesMap.put("Á", fileLocsCzechÁ);
+                voicesMap.put("Ď", fileLocsCzechĎ);
+                voicesMap.put("É", fileLocsCzechÉ);
+                voicesMap.put("Ň", fileLocsCzechŇ);
+                voicesMap.put("Ó", fileLocsCzechÓ);
+                voicesMap.put("Ť", fileLocsCzechŤ);
+                voicesMap.put("Ú", fileLocsCzechÚ);
+                voicesMap.put("Ý", fileLocsCzechÝ);
                 voicesMap.put("Č", fileLocsCzechČ);
                 voicesMap.put("Ř", fileLocsCzechŘ);
                 voicesMap.put("Š", fileLocsCzechŠ);
@@ -1679,8 +2002,6 @@ public class VoiceMap {
                 voicesMap.put("Y", fileLocsDefaultY);
                 voicesMap.put("Z", fileLocsDefaultZ);
         }
-
-
         return voicesMap;
     }
 

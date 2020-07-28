@@ -6,11 +6,17 @@ import io.jsonwebtoken.SignatureException;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Jwt token
+ */
 @Component
 public class JwtToken {
 
     /**
-     *
+     * Generating Token
+     * @param key
      * @return jwtToken
      */
     public String generateJwtToken(Key key) {
@@ -19,7 +25,7 @@ public class JwtToken {
     }
 
     /**
-     *
+     * Verify token
      * @param jwtToken
      * @return true|false
      */

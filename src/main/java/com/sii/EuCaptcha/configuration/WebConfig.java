@@ -19,12 +19,19 @@ import org.springframework.web.servlet.view.JstlView;
 
 import java.util.Locale;
 
-
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * Web MVC configuration.
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.sii.EuCaptcha"})
 public class WebConfig implements WebMvcConfigurer {
-
+    /**
+     *
+     * @return resolver
+     */
     @Bean
     public InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -33,26 +40,38 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
+    /**
+     *
+     * @return localResolver.
+     */
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(Locale.US);
         return localeResolver;
     }
-
+    /**
+     *
+     * @return localChangeInterceptor
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
-
+    /**
+     *
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
-
+    /**
+     *
+     * @return source
+     */
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
@@ -60,7 +79,10 @@ public class WebConfig implements WebMvcConfigurer {
         source.setBasename("messages");
         return source;
     }
-
+    /**
+     *
+     * @return validator
+     */
     @Override
     public Validator getValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -68,6 +90,10 @@ public class WebConfig implements WebMvcConfigurer {
         return validator;
     }
 
+    /**
+     *
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
@@ -82,15 +108,18 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/swagger-ui.html")
                 .addResourceLocations(getStaticLocations());
     }
-    private String[] getStaticLocations() {
 
+    /**
+     *
+     * @return result
+     */
+    private String[] getStaticLocations() {
         String[] result = new String[5];
         result[0] = "/";
         result[1] = "classpath:/META-INF/resources/";
         result[2] = "classpath:/resources/";
         result[3] = "classpath:/static/";
         result[4] = "classpath:/public/";
-
         return result;
     }
 }

@@ -4,20 +4,36 @@ import nl.captcha.gimpy.GimpyRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.security.SecureRandom;
 
+/**
+ * @author mousab.aidoud
+ * @version 1.0
+ * GimpyRender Class
+ */
 public class EuCaptchaGimpyRender implements GimpyRenderer {
     private final Color _hColor;
-    private final Color _vColor;
 
+    /**
+     * Constructor
+     */
     public EuCaptchaGimpyRender() {
         this(Color.gray, Color.lightGray);
     }
 
+    /**
+     *
+     * @param hColor
+     * @param vColor
+     */
     public EuCaptchaGimpyRender(Color hColor, Color vColor) {
         this._hColor = hColor;
-        this._vColor = vColor;
     }
 
+    /**
+     *
+     * @param image
+     */
     public void gimp(BufferedImage image) {
         int height = image.getHeight();
         int width = image.getWidth();
@@ -26,16 +42,13 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
         int hspace = height / (hstripes + 1);
         int vspace = width / (vstripes + 1);
         Graphics2D graph = (Graphics2D)image.getGraphics();
-
         int i;
         for(i = hspace; i < height; i += hspace) {
             graph.setColor(this._hColor);
             graph.drawLine(0, i, width, i);
         }
-
         int[] pix = new int[height * width];
         int j = 0;
-
         for(int j1 = 0; j1 < width; ++j1) {
             for(int k1 = 0; k1 < height; ++k1) {
                 pix[j] = image.getRGB(j1, k1);
@@ -46,7 +59,6 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
         double distance = (double)this.ranInt(width / 4, width / 3);
         int wMid = image.getWidth() / 2;
         int hMid = image.getHeight() / 2;
-
         for(int x = 0; x < image.getWidth(); ++x) {
             for(int y = 0; y < image.getHeight(); ++y) {
                 int relX = x - wMid;
@@ -59,15 +71,26 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
                 }
             }
         }
-
         graph.dispose();
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     private final int ranInt(int i, int j) {
-        double d = Math.random();
+        SecureRandom rand  = new SecureRandom();
+        double d = rand.nextDouble();
         return (int)((double)i + (double)(j - i + 1) * d);
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     private final double fishEyeFormula(double s) {
         if (s < 0.0D) {
             return 0.0D;
