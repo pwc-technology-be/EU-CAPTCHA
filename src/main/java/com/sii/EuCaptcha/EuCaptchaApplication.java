@@ -16,7 +16,6 @@ public class EuCaptchaApplication extends SpringBootServletInitializer {
 		return application.sources(EuCaptchaApplication.class);
 	}
 	public static void main(String[] args) {
-		log.info("Welcome To Eu Captcha");
 		SpringApplication.run(EuCaptchaApplication.class, args);
 	}
 }
