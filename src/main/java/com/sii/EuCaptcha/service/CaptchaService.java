@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
@@ -52,12 +53,11 @@ public class CaptchaService {
 	private static final List<Color> COLORS = new ArrayList<>(3);
 	private static final List<Color> COLOR_STRAIGHT_LINE_NOISE = new ArrayList<>(3);
 	private static final List<Color> BACKGROUND_COLORS = new ArrayList<>(5);
-	private static final List<Color> FISHY_EYE_GIMPY_COLORS = new ArrayList<>(5);
 
 	/**
 	 * List of fonts and font sizes
 	 */
-	private static final List<Font> FONTS = new ArrayList<Font>(3);
+	private static final List<Font> FONTS = new ArrayList<>(3);
 	public static String answer = null;
 
 	static {
@@ -79,17 +79,15 @@ public class CaptchaService {
 		COLOR_STRAIGHT_LINE_NOISE.add(Color.orange);
 		COLOR_STRAIGHT_LINE_NOISE.add(Color.magenta);
 
-		FISHY_EYE_GIMPY_COLORS.add(Color.LIGHT_GRAY);
-		FISHY_EYE_GIMPY_COLORS.add(Color.lightGray);
 	}
 
 	/**
 	 * Building a map with Expiration Time CAPTCHA_EXPIRY_TIME
 	 */
-	private static Map<String, String> captchaCodeMap =
-			ExpiringMap.builder().expiration(Long.valueOf(CAPTCHA_EXPIRY_TIME), TimeUnit.SECONDS).build();
+	private static final Map<String, String> captchaCodeMap =
+			ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.SECONDS).build();
 
-	private SecureRandom random = new SecureRandom();
+	private final SecureRandom random = new SecureRandom();
 	/**
 	 *
 	 * @return Captcha ID
@@ -99,63 +97,50 @@ public class CaptchaService {
 	}
 	/**
 	 *
-	 * @param previousCaptchaId
-	 * @param locale
+	 * @param previousCaptchaId the ID of the Captcha
+	 * @param locale the chosen locale
 	 * @return String [] which contains the CaptchaID , Captcha Image , and Captcha Audio.
 	 */
 	public String[] generateCaptchaImage(String previousCaptchaId , Locale locale) {
 
-		/**
-		 * Case Reload Captcha
-		 */
+		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
 		SecureRandom rand = new SecureRandom();
 		BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size()));
 
-		/**
-		 * Generate the Captcha Text
-		 */
-		TextProducer textProducuer = new LanguageTextProducer().LanguageTextProducer(8,locale);
+		//Generate the Captcha Text
+		TextProducer textProducer = new LanguageTextProducer().LanguageTextProducer(8,locale);
 
-		/**
-		 * Generate the Captcha drawing
-		 */
+		//Generate the Captcha drawing
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
 
-		/**
-		 * Build The Captcha
-		 */
-		Captcha captcha = new Captcha.Builder(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).addText(textProducuer ,wordRenderer )
+		//Build The Captcha
+		Captcha captcha = new Captcha.Builder(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).addText(textProducer ,wordRenderer )
 				.addBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
 						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).addNoise(new StraightLineNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
 				.gimp(new EuCaptchaGimpyRender()).addBorder().build();
-		/**
-		 * Adding the voice map for the selected language
-		 */
-		Map<String, String> voicesMap = new HashMap<String, String>();
+		//Adding the voice map for the selected language
+		Map<String, String> voicesMap;
 	    voicesMap = new VoiceMap().mapVoiceLettresAndNumbersEN(locale);
 
 		VoiceProducer vProd = new LanguageVoiceProducer(captcha.getAnswer() , voicesMap);
-        CaptchaAudioService captchaAudioService = null;
-		/**
-		 * Build the captcha audio file.
-		 */
-		if 	(locale.getLanguage() == "bg") {
+        CaptchaAudioService captchaAudioService;
+
+		 //Build the captcha audio file.
+		if 	(locale.getLanguage().equals("bg")) {
 		captchaAudioService = new CaptchaAudioService.Builder()
 				.addAnswer(captcha.getAnswer())
 				.addVoice(vProd)
 				.build();
-		}else{
-			captchaAudioService = new CaptchaAudioService.Builder()
-					.addAnswer(captcha.getAnswer())
-					.addVoice(vProd)
-					.addNoise()
-					.build();
-		}
+		}else captchaAudioService = new CaptchaAudioService.Builder()
+				.addAnswer(captcha.getAnswer())
+				.addVoice(vProd)
+				.addNoise()
+				.build();
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 
@@ -166,7 +151,7 @@ public class CaptchaService {
 			bao.flush();
 			byte[] imageBytes = bao.toByteArray();
 			bao.close();
-			captchaPngImage = new String(Base64.getEncoder().encode(imageBytes), "UTF-8");
+			captchaPngImage = new String(Base64.getEncoder().encode(imageBytes), StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -181,16 +166,13 @@ public class CaptchaService {
 			byte[] audioBytes =  baos.toByteArray();
 			baos.close();
 
-			captchaAudioFile = new String(Base64.getEncoder().encode(audioBytes), "UTF-8");
+			captchaAudioFile = new String(Base64.getEncoder().encode(audioBytes), StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		String captchaId=this.nextCaptchaId();
-
-		/**
-		 * Adding the Captcha image , the captcha ID , the captcha audio file to the String []
-		 */
+		//Adding the Captcha image , the captcha ID , the captcha audio file to the String []
 		String[] imageParams = {captchaPngImage,captchaId,captchaAudioFile };
 		addCaptcha(captchaId,captcha.getAnswer());
 
@@ -199,22 +181,19 @@ public class CaptchaService {
 
 	/**
 	 * Verify the Captcha based on the CaptchaID stored on the CaptchaCode Map
-	 * @param captchaId
-	 * @param captchaAnswer
+	 * @param captchaId the ID of the Captcha
+	 * @param captchaAnswer the users answer on the Captcha
 	 * @return Boolean of the verification
 	 */
 	public boolean validateCaptcha(String captchaId,String captchaAnswer , boolean usingAudio){
 		boolean result=false;
-		/**
-		 * case sensitive
-		 */
+
+		//case sensitive
 		if (!usingAudio) {
 			if (captchaCodeMap.containsKey(captchaId) && captchaCodeMap.get(captchaId).equals(captchaAnswer))
 				result = true;
 		}
-		/**
-		 * if the audio is selected , ignore case sensitive
-		 */
+		//if the audio is selected , ignore case sensitive
 		else
 		{
 			if (captchaCodeMap.containsKey(captchaId) && captchaCodeMap.get(captchaId).equalsIgnoreCase(captchaAnswer))
@@ -226,7 +205,7 @@ public class CaptchaService {
 
 	/**
 	 * Adding the Captcha ID and the answer the the MAP
-	 * @param captchaId
+	 * @param captchaId the ID of the Captcha
 	 * @param captchaAnswer contains combination of key value
 	 *                    Captcha ID    =>   Captcha answer
 	 */
@@ -237,12 +216,10 @@ public class CaptchaService {
 
 	/**
 	 * removing the Captcha ID and it and answer
-	 * @param captchaId
+	 * @param captchaId the ID of the Captcha
 	 */
 	private static void removeCaptcha(String captchaId){
-		if(captchaCodeMap.containsKey(captchaId)){
-			captchaCodeMap.remove(captchaId);
-		}
+		captchaCodeMap.remove(captchaId);
 	}
 
 }
