@@ -69,15 +69,15 @@ public class CaptchaService {
 		FONTS.add(new Font("Courier", Font.BOLD, 70));
 		FONTS.add(new Font("Arial", Font.BOLD, 60));
 
-		BACKGROUND_COLORS.add(Color.pink);
+		BACKGROUND_COLORS.add(Color.PINK);
 		BACKGROUND_COLORS.add(Color.ORANGE);
-		BACKGROUND_COLORS.add(Color.lightGray);
-		BACKGROUND_COLORS.add(Color.white);
+		BACKGROUND_COLORS.add(Color.LIGHT_GRAY);
+		BACKGROUND_COLORS.add(Color.WHITE);
 		BACKGROUND_COLORS.add(Color.CYAN);
 
-		COLOR_STRAIGHT_LINE_NOISE.add(Color.red);
-		COLOR_STRAIGHT_LINE_NOISE.add(Color.orange);
-		COLOR_STRAIGHT_LINE_NOISE.add(Color.magenta);
+		COLOR_STRAIGHT_LINE_NOISE.add(Color.RED);
+		COLOR_STRAIGHT_LINE_NOISE.add(Color.ORANGE);
+		COLOR_STRAIGHT_LINE_NOISE.add(Color.MAGENTA);
 
 	}
 
