@@ -15,10 +15,9 @@ import java.util.Random;
  */
 public class CaptchaAudioService {
 
-    public static final String NAME = "captchaAudioService";
     private static final Random RAND = new SecureRandom();
 
-    private CaptchaAudioService.Builder _builder;
+    private final CaptchaAudioService.Builder _builder;
 
     CaptchaAudioService(CaptchaAudioService.Builder builder) {
         _builder = builder;
@@ -28,12 +27,12 @@ public class CaptchaAudioService {
 
         private String _answer = "";
         private Sample _challenge;
-        private List<VoiceProducer> _voiceProds;
-        private List<NoiseProducer> _noiseProds;
+        private final List<VoiceProducer> _voiceProds;
+        private final List<NoiseProducer> _noiseProds;
 
         public Builder() {
-            _voiceProds = new ArrayList<VoiceProducer>();
-            _noiseProds = new ArrayList<NoiseProducer>();
+            _voiceProds = new ArrayList<>();
+            _noiseProds = new ArrayList<>();
         }
 
 
@@ -72,13 +71,13 @@ public class CaptchaAudioService {
 
             // Make a List of Samples for each character
             VoiceProducer vProd;
-            List<Sample> samples = new ArrayList<Sample>();
+            List<Sample> samples = new ArrayList<>();
             Sample sample;
-            for (int i = 0; i < ansAry.length; i++) {
+            for (char c : ansAry) {
                 // Create Sample for this character from one of the
                 // VoiceProducers
                 vProd = _voiceProds.get(RAND.nextInt(_voiceProds.size()));
-                sample = vProd.getVocalization(ansAry[i]);
+                sample = vProd.getVocalization(c);
                 samples.add(sample);
             }
             // 3. Add noise, if any, and return the result
@@ -97,23 +96,13 @@ public class CaptchaAudioService {
          * @return answer
          */
         @Override public String toString() {
-            StringBuffer sb = new StringBuffer();
-            sb.append("[Answer: ");
-            sb.append(_answer);
-            sb.append("]");
 
-            return sb.toString();
+            return "[Answer: " +
+                    _answer +
+                    "]";
         }
     }
 
-    /**
-     *
-     * @param answer
-     * @return
-     */
-    public boolean isCorrect(String answer) {
-        return answer.equals(_builder._answer);
-    }
 
     /**
      *
