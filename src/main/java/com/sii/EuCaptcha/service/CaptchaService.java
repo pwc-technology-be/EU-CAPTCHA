@@ -108,7 +108,6 @@ public class CaptchaService {
 			removeCaptcha(previousCaptchaId);
 
 		SecureRandom rand = new SecureRandom();
-		BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size()));
 
 		//Generate the Captcha Text
 		TextProducer textProducer = new LanguageTextProducer().LanguageTextProducer(8,locale);
