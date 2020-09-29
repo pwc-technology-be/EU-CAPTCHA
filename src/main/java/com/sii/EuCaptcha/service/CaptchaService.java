@@ -110,7 +110,7 @@ public class CaptchaService {
 		SecureRandom rand = new SecureRandom();
 
 		//Generate the Captcha Text
-		TextProducer textProducer = new LanguageTextProducer().LanguageTextProducer(8,locale);
+		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);
 
 		//Generate the Captcha drawing
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
