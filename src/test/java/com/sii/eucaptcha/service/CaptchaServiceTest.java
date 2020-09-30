@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.service;
+package com.sii.eucaptcha.service;
 
 import net.jodah.expiringmap.ExpiringMap;
 import org.junit.Before;

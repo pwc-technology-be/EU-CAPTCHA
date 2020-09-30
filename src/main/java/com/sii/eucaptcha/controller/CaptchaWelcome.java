@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.controller;
+package com.sii.eucaptcha.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class CaptchaWelcome {
      * @return JSP FILE FOR THE DEMO
      * (     server:port/euCaptcha    )
      */
-    @GetMapping("/euCaptcha")
+    @GetMapping("/")
     public String welcomePage(){
         return "EUCAPTCHA";
     }

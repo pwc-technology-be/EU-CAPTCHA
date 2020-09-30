@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.text.textProducer;
+package com.sii.eucaptcha.text.textProducer;
 
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.producer.TextProducer;

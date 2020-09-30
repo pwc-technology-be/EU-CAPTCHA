@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.security;
+package com.sii.eucaptcha.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

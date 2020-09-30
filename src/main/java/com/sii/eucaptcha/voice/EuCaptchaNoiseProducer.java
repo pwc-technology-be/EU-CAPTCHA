@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.voice;
+package com.sii.eucaptcha.voice;
 
 import nl.captcha.audio.Mixer;
 import nl.captcha.audio.Sample;

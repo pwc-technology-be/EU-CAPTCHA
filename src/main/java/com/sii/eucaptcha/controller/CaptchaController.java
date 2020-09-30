@@ -1,7 +1,7 @@
-package com.sii.EuCaptcha.controller;
+package com.sii.eucaptcha.controller;
 
-import com.sii.EuCaptcha.security.JwtToken;
-import com.sii.EuCaptcha.service.CaptchaService;
+import com.sii.eucaptcha.security.JwtToken;
+import com.sii.eucaptcha.service.CaptchaService;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

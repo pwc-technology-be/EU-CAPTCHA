@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.configuration;
+package com.sii.eucaptcha.configuration;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.sii.EuCaptcha"})
+@ComponentScan(basePackages = {"com.sii.eucaptcha"})
 public class WebConfig implements WebMvcConfigurer {
     /**
      *

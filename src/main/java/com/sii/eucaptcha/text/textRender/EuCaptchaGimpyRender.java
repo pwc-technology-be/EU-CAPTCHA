@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.text.textRender;
+package com.sii.eucaptcha.text.textRender;
 
 import nl.captcha.gimpy.GimpyRenderer;
 

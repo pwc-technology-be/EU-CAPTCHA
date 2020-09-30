@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.service;
+package com.sii.eucaptcha.service;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,12 +15,12 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 
-import com.sii.EuCaptcha.text.textRender.EuCaptchaGimpyRender;
-import com.sii.EuCaptcha.text.textProducer.*;
-import com.sii.EuCaptcha.text.textRender.CaptchaTextRender;
-import com.sii.EuCaptcha.voice.CaptchaAudioService;
-import com.sii.EuCaptcha.voice.LanguageVoiceProducer;
-import com.sii.EuCaptcha.voice.VoiceMap;
+import com.sii.eucaptcha.text.textRender.EuCaptchaGimpyRender;
+import com.sii.eucaptcha.text.textProducer.*;
+import com.sii.eucaptcha.text.textRender.CaptchaTextRender;
+import com.sii.eucaptcha.voice.CaptchaAudioService;
+import com.sii.eucaptcha.voice.LanguageVoiceProducer;
+import com.sii.eucaptcha.voice.VoiceMap;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpiringMap;
 import nl.captcha.Captcha;
@@ -126,7 +126,7 @@ public class CaptchaService {
 		Map<String, String> voicesMap;
 	    voicesMap = new VoiceMap().mapVoiceLettresAndNumbersEN(locale);
 
-		VoiceProducer vProd = new LanguageVoiceProducer(captcha.getAnswer() , voicesMap);
+		VoiceProducer vProd = new LanguageVoiceProducer(voicesMap);
         CaptchaAudioService captchaAudioService;
 
 		 //Build the captcha audio file.
