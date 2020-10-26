@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.voice;
+package com.sii.eucaptcha.voice;
 import nl.captcha.audio.Mixer;
 import nl.captcha.audio.Sample;
 import nl.captcha.audio.noise.NoiseProducer;
@@ -15,36 +15,35 @@ import java.util.Random;
  */
 public class CaptchaAudioService {
 
-    public static final String NAME = "captchaAudioService";
-    private static final Random RAND = new SecureRandom();
+    private static final Random SECURE_RANDOM = new SecureRandom();
 
-    private CaptchaAudioService.Builder _builder;
+    private final CaptchaAudioService.Builder builder;
 
     CaptchaAudioService(CaptchaAudioService.Builder builder) {
-        _builder = builder;
+        this.builder = builder;
     }
 
     public static class Builder {
 
-        private String _answer = "";
-        private Sample _challenge;
-        private List<VoiceProducer> _voiceProds;
-        private List<NoiseProducer> _noiseProds;
+        private String answer = "";
+        private Sample challenge;
+        private final List<VoiceProducer> voiceProducers;
+        private final List<NoiseProducer> noiseProducers;
 
         public Builder() {
-            _voiceProds = new ArrayList<VoiceProducer>();
-            _noiseProds = new ArrayList<NoiseProducer>();
+            voiceProducers = new ArrayList<>();
+            noiseProducers = new ArrayList<>();
         }
 
 
         public CaptchaAudioService.Builder addAnswer(String ansProd) {
-            _answer += ansProd;
+            answer += ansProd;
 
             return this;
         }
 
         public CaptchaAudioService.Builder addVoice(VoiceProducer vProd) {
-            _voiceProds.add(vProd);
+            voiceProducers.add(vProd);
 
             return this;
         }
@@ -54,7 +53,7 @@ public class CaptchaAudioService {
         }
 
         public CaptchaAudioService.Builder addNoise(NoiseProducer noiseProd) {
-            _noiseProds.add(noiseProd);
+            noiseProducers.add(noiseProd);
 
             return this;
         }
@@ -68,27 +67,27 @@ public class CaptchaAudioService {
 
 
             // Convert answer to an array
-            char[] ansAry = _answer.toCharArray();
+            char[] ansAry = answer.toCharArray();
 
             // Make a List of Samples for each character
             VoiceProducer vProd;
-            List<Sample> samples = new ArrayList<Sample>();
+            List<Sample> samples = new ArrayList<>();
             Sample sample;
-            for (int i = 0; i < ansAry.length; i++) {
+            for (char c : ansAry) {
                 // Create Sample for this character from one of the
                 // VoiceProducers
-                vProd = _voiceProds.get(RAND.nextInt(_voiceProds.size()));
-                sample = vProd.getVocalization(ansAry[i]);
+                vProd = voiceProducers.get(SECURE_RANDOM.nextInt(voiceProducers.size()));
+                sample = vProd.getVocalization(c);
                 samples.add(sample);
             }
             // 3. Add noise, if any, and return the result
-            if (_noiseProds.size() > 0) {
-                NoiseProducer nProd = _noiseProds.get(RAND.nextInt(_noiseProds
+            if (noiseProducers.size() > 0) {
+                NoiseProducer nProd = noiseProducers.get(SECURE_RANDOM.nextInt(noiseProducers
                         .size()));
-                _challenge = nProd.addNoise(samples);
+                challenge = nProd.addNoise(samples);
                 return new CaptchaAudioService(this);
             }
-            _challenge = Mixer.append(samples);
+            challenge = Mixer.append(samples);
             return new CaptchaAudioService(this);
         }
 
@@ -97,30 +96,20 @@ public class CaptchaAudioService {
          * @return answer
          */
         @Override public String toString() {
-            StringBuffer sb = new StringBuffer();
-            sb.append("[Answer: ");
-            sb.append(_answer);
-            sb.append("]");
 
-            return sb.toString();
+            return "[Answer: " +
+                    answer +
+                    "]";
         }
     }
 
-    /**
-     *
-     * @param answer
-     * @return
-     */
-    public boolean isCorrect(String answer) {
-        return answer.equals(_builder._answer);
-    }
 
     /**
      *
      * @return answer builder
      */
     public String getAnswer() {
-        return _builder._answer;
+        return builder.answer;
     }
 
     /**
@@ -128,7 +117,7 @@ public class CaptchaAudioService {
      * @return challenge
      */
     public Sample getChallenge() {
-        return _builder._challenge;
+        return builder.challenge;
     }
 
     /**
@@ -136,6 +125,6 @@ public class CaptchaAudioService {
      * @return builder to string
      */
     @Override public String toString() {
-        return _builder.toString();
+        return builder.toString();
     }
 }

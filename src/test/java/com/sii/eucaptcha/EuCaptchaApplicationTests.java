@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha;
+package com.sii.eucaptcha;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

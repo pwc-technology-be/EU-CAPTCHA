@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.configuration;
+package com.sii.eucaptcha.configuration;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,59 +26,65 @@ import java.util.Locale;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.sii.EuCaptcha"})
+@ComponentScan(basePackages = {"com.sii.eucaptcha"})
 public class WebConfig implements WebMvcConfigurer {
+
     /**
      *
-     * @return resolver
+     * @return the created resolver
      */
     @Bean
-    public InternalResourceViewResolver resolver() {
+    protected InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setViewClass(JstlView.class);
         resolver.setPrefix("/WEB-INF/pages/");
         resolver.setSuffix(".jsp");
         return resolver;
     }
+
     /**
      *
      * @return localResolver.
      */
     @Bean
-    public LocaleResolver localeResolver() {
+    protected LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.US);
+        localeResolver.setDefaultLocale(Locale.ENGLISH);
         return localeResolver;
     }
+
     /**
      *
      * @return localChangeInterceptor
      */
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
+    protected LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
+
     /**
      *
-     * @param registry
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-    }
-    /**
-     *
-     * @return source
+     * @return the message source created
      */
     @Bean
-    public MessageSource messageSource() {
+    protected MessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
         source.setDefaultEncoding("UTF-8");
         source.setBasename("messages");
         return source;
     }
+
+    /**
+     *
+     * @param registry the registry to add the interceptor to change the language
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+
     /**
      *
      * @return validator
@@ -92,7 +98,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      *
-     * @param registry
+     * @param registry the registry to add the resource handlers
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

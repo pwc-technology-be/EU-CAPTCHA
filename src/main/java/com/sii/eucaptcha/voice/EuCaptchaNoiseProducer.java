@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.voice;
+package com.sii.eucaptcha.voice;
 
 import nl.captcha.audio.Mixer;
 import nl.captcha.audio.Sample;
@@ -6,6 +6,7 @@ import nl.captcha.audio.noise.NoiseProducer;
 import nl.captcha.util.FileUtil;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -14,13 +15,13 @@ import java.util.Random;
  * @version 1.0
  */
 public class EuCaptchaNoiseProducer implements NoiseProducer {
-    private static final Random RAND = new SecureRandom();
+    private static final Random RANDOM = new SecureRandom();
     /**
      * List of the audio files for noises
      */
     private static final String[] DEFAULT_NOISES = new String[]{"/sounds/noises/radio_tuning.wav",
             "/sounds/noises/restaurant.wav", "/sounds/noises/swimming.wav"};
-    private final String[] _noiseFiles;
+    private final String[] noiseFiles;
 
     /**
      * Constructor
@@ -30,34 +31,32 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
     }
 
     /**
-     * @param noiseFiles
+     * @param noiseFiles the noises to be mixed in the background of the spoken Captcha
      */
     public EuCaptchaNoiseProducer(String[] noiseFiles) {
-        this._noiseFiles = noiseFiles;
+        this.noiseFiles = noiseFiles;
     }
 
     /**
      * Handling the volume of the captcha audio and the volume of the noises
-     * @param samples
+     *
+     * @param samples the audio files to generate the spoken Captcha
      * @return audio mixed with noise
      */
     public Sample addNoise(List<Sample> samples) {
         Sample appended = Mixer.append(samples);
-        String noiseFile = this._noiseFiles[RAND.nextInt(this._noiseFiles.length)];
+        String noiseFile = this.noiseFiles[RANDOM.nextInt(this.noiseFiles.length)];
         Sample noise = FileUtil.readSample(noiseFile);
         return Mixer.mix(appended, 1.0D, noise, 0.15D);
     }
 
     /**
-     *
      * @return to String
      */
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("[Noise files: ");
-        sb.append(this._noiseFiles);
-        sb.append("]");
-        return sb.toString();
+        return "[Noise files: " +
+                Arrays.toString(this.noiseFiles) +
+                "]";
     }
 }
 

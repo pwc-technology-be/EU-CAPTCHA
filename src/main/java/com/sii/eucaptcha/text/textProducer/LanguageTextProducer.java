@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.text.textProducer;
+package com.sii.eucaptcha.text.textProducer;
 
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.producer.TextProducer;
@@ -100,78 +100,78 @@ public class LanguageTextProducer implements TextProducer {
 
     private final static char[] SWEDISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Å', 'å', 'Ä', 'ä', 'Ö', 'ö');
 
-    private TextProducer _txtProd;
+    private TextProducer txtProd;
 
     /**
      *
-     * @param length
-     * @param locale
+     * @param length the number of characters in the Captcha
+     * @param locale the chosen locale
      * @return Text Producer based on the language selected .
      */
-    public final TextProducer LanguageTextProducer(int length, Locale locale) {
+    public final TextProducer getLanguageTextProducer(int length, Locale locale) {
         switch (locale.getLanguage()) {
             case "en": case "fr": case "it":case "nl":case "pt": default:
-               _txtProd = new DefaultTextProducer(length, ENGLISH_CHARS);
+               txtProd = new DefaultTextProducer(length, ENGLISH_CHARS);
                 break;
             case "de":
-                _txtProd = new DefaultTextProducer(length, GERMAN_CHARS);
+                txtProd = new DefaultTextProducer(length, GERMAN_CHARS);
                 break;
             case "bg":
-                _txtProd = new DefaultTextProducer(length, BULGARE_CHARS);
+                txtProd = new DefaultTextProducer(length, BULGARE_CHARS);
                 break;
             case "hr":
-                _txtProd = new DefaultTextProducer(length, CROATE_CHARS);
+                txtProd = new DefaultTextProducer(length, CROATE_CHARS);
                 break;
             case "da":
-                _txtProd = new DefaultTextProducer(length, DANISH_CHARS);
+                txtProd = new DefaultTextProducer(length, DANISH_CHARS);
                 break;
             case "es":
-                _txtProd = new DefaultTextProducer(length, SPANISH_CHARS);
+                txtProd = new DefaultTextProducer(length, SPANISH_CHARS);
                 break;
             case "et":
-                _txtProd = new DefaultTextProducer(length, ESTONIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, ESTONIAN_CHARS);
                 break;
             case "fi":
-                _txtProd = new DefaultTextProducer(length, FINNISH_CHARS);
+                txtProd = new DefaultTextProducer(length, FINNISH_CHARS);
                 break;
             case "el":
-                _txtProd = new DefaultTextProducer(length, GREEK_CHARS);
+                txtProd = new DefaultTextProducer(length, GREEK_CHARS);
                 break;
             case "hu":
-                _txtProd = new DefaultTextProducer(length, HUNGARIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, HUNGARIAN_CHARS);
                 break;
             case "ga":
-                _txtProd = new DefaultTextProducer(length, IRISH_CHARS);
+                txtProd = new DefaultTextProducer(length, IRISH_CHARS);
                 break;
             case "lv":
-                _txtProd = new DefaultTextProducer(length, LATVIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, LATVIAN_CHARS);
                 break;
             case "lt":
-                _txtProd = new DefaultTextProducer(length, LITHUANIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, LITHUANIAN_CHARS);
                 break;
             case "mt":
-                _txtProd = new DefaultTextProducer(length, MALTESE_CHARS);
+                txtProd = new DefaultTextProducer(length, MALTESE_CHARS);
                 break;
             case "pl":
-                _txtProd = new DefaultTextProducer(length, POLISH_CHARS);
+                txtProd = new DefaultTextProducer(length, POLISH_CHARS);
                 break;
             case "ro":
-                _txtProd = new DefaultTextProducer(length, ROMANIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, ROMANIAN_CHARS);
                 break;
             case "sk":
-                _txtProd = new DefaultTextProducer(length, SLOVAKIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, SLOVAKIAN_CHARS);
                 break;
             case "sl":
-                _txtProd = new DefaultTextProducer(length, SLOVENIAN_CHARS);
+                txtProd = new DefaultTextProducer(length, SLOVENIAN_CHARS);
                 break;
             case "sv":
-                _txtProd = new DefaultTextProducer(length, SWEDISH_CHARS);
+                txtProd = new DefaultTextProducer(length, SWEDISH_CHARS);
                 break;
             case "cs":
-                _txtProd = new DefaultTextProducer(length, CZECH_CHARS);
+                txtProd = new DefaultTextProducer(length, CZECH_CHARS);
                 break;
         }
-        return this._txtProd;
+        return this.txtProd;
     }
 
     /**
@@ -180,6 +180,6 @@ public class LanguageTextProducer implements TextProducer {
      */
     @Override
     public final String getText() {
-        return new StringBuffer(_txtProd.getText()).reverse().toString();
+        return new StringBuffer(txtProd.getText()).reverse().toString();
     }
 }

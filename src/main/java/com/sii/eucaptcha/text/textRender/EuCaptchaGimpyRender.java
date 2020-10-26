@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.text.textRender;
+package com.sii.eucaptcha.text.textRender;
 
 import nl.captcha.gimpy.GimpyRenderer;
 
@@ -12,39 +12,28 @@ import java.security.SecureRandom;
  * GimpyRender Class
  */
 public class EuCaptchaGimpyRender implements GimpyRenderer {
-    private final Color _hColor;
+    private final Color borderColor;
 
     /**
      * Constructor
      */
     public EuCaptchaGimpyRender() {
-        this(Color.gray, Color.lightGray);
+        this.borderColor = Color.gray;
     }
 
     /**
      *
-     * @param hColor
-     * @param vColor
-     */
-    public EuCaptchaGimpyRender(Color hColor, Color vColor) {
-        this._hColor = hColor;
-    }
-
-    /**
-     *
-     * @param image
+     * @param image the Captcha image
      */
     public void gimp(BufferedImage image) {
         int height = image.getHeight();
         int width = image.getWidth();
         int hstripes = height / 10;
-        int vstripes = width / 10;
         int hspace = height / (hstripes + 1);
-        int vspace = width / (vstripes + 1);
         Graphics2D graph = (Graphics2D)image.getGraphics();
         int i;
         for(i = hspace; i < height; i += hspace) {
-            graph.setColor(this._hColor);
+            graph.setColor(this.borderColor);
             graph.drawLine(0, i, width, i);
         }
         int[] pix = new int[height * width];
@@ -56,14 +45,14 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
             }
         }
 
-        double distance = (double)this.ranInt(width / 4, width / 3);
+        double distance = this.ranInt(width / 4, width / 3);
         int wMid = image.getWidth() / 2;
         int hMid = image.getHeight() / 2;
         for(int x = 0; x < image.getWidth(); ++x) {
             for(int y = 0; y < image.getHeight(); ++y) {
                 int relX = x - wMid;
                 int relY = y - hMid;
-                double d1 = Math.sqrt((double)(relX * relX + relY * relY));
+                double d1 = Math.sqrt(relX * relX + relY * relY);
                 if (d1 < distance) {
                     int j2 = wMid + (int)(this.fishEyeFormula(d1 / distance) * distance / d1 * (double)(x - wMid));
                     int k2 = hMid + (int)(this.fishEyeFormula(d1 / distance) * distance / d1 * (double)(y - hMid));
@@ -76,11 +65,11 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
 
     /**
      *
-     * @param i
-     * @param j
-     * @return
+     * @param i width to calculate randomized
+     * @param j width to be randomized
+     * @return the randomized int value
      */
-    private final int ranInt(int i, int j) {
+    private int ranInt(int i, int j) {
         SecureRandom rand  = new SecureRandom();
         double d = rand.nextDouble();
         return (int)((double)i + (double)(j - i + 1) * d);
@@ -88,10 +77,10 @@ public class EuCaptchaGimpyRender implements GimpyRenderer {
 
     /**
      *
-     * @param s
-     * @return
+     * @param s the starting value to randomize
+     * @return the calculated random value
      */
-    private final double fishEyeFormula(double s) {
+    private double fishEyeFormula(double s) {
         if (s < 0.0D) {
             return 0.0D;
         } else {

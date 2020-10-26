@@ -1,4 +1,4 @@
-package com.sii.EuCaptcha.text.textRender;
+package com.sii.eucaptcha.text.textRender;
 
 import nl.captcha.text.renderer.WordRenderer;
 
@@ -23,35 +23,22 @@ public class CaptchaTextRender implements WordRenderer {
     /**
      * List of Color and font
      */
-    private static final Random RAND = new SecureRandom();
-    private static final List<Color> DEFAULT_COLORS = new ArrayList<Color>();
-    private static final List<Font> DEFAULT_FONTS = new ArrayList<Font>();
+    private static final Random RANDOM = new SecureRandom();
 
+    private final List<Color> colors = new ArrayList<>();
+    private final List<Font> fonts = new ArrayList<>();
 
-    static {
-        DEFAULT_COLORS.add(Color.BLACK);
-        DEFAULT_FONTS.add(new Font("Arial", Font.BOLD, 80));
-        DEFAULT_FONTS.add(new Font("Courier", Font.BOLD, 80));
-    }
-
-    private final List<Color> _colors = new ArrayList<Color>();
-    private final List<Font> _fonts = new ArrayList<Font>();
-
-
-    public CaptchaTextRender() {
-        this(DEFAULT_COLORS, DEFAULT_FONTS);
-    }
 
     /**
      * Build a <code>WordRenderer</code> using the given <code>Color</code>s and
      * <code>Font</code>s.
      *
-     * @param colors
-     * @param fonts
+     * @param colors the colors to be used
+     * @param fonts the fonts to be used
      */
     public CaptchaTextRender(List<Color> colors, List<Font> fonts) {
-        _colors.addAll(colors);
-        _fonts.addAll(fonts);
+        this.colors.addAll(colors);
+        this.fonts.addAll(fonts);
     }
 
 
@@ -83,9 +70,9 @@ public class CaptchaTextRender implements WordRenderer {
 
         for (char c : word.toCharArray()) {
             chars[0] = c;
-            g.setColor(_colors.get(RAND.nextInt(_colors.size())));
-            int choiceFont = RAND.nextInt(_fonts.size());
-            Font font = _fonts.get(choiceFont);
+            g.setColor(colors.get(RANDOM.nextInt(colors.size())));
+            int choiceFont = RANDOM.nextInt(fonts.size());
+            Font font = fonts.get(choiceFont);
             g.setFont(font);
 
             GlyphVector gv = font.createGlyphVector(frc, chars);
