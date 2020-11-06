@@ -101,41 +101,6 @@ public class Sample {
         return samples;
     }
 
-    /**
-     * Extract samples of a particular channel from interleavedSamples and copy
-     * them into channelSamples
-     *
-     * @param channel
-     * @param interleavedSamples
-     * @param channelSamples
-     */
-    public void getChannelSamples(int channel, double[] interleavedSamples,
-                                  double[] channelSamples) {
-        int nbChannels = getFormat().getChannels();
-        for (int i = 0; i < channelSamples.length; i++) {
-            channelSamples[i] = interleavedSamples[nbChannels * i + channel];
-        }
-    }
-
-    /**
-     * Convenience method. Extract left and right channels for common stereo
-     * files. leftSamples and rightSamples must be of size getSampleCount()
-     *
-     * @param leftSamples
-     * @param rightSamples
-     * @throws IOException
-     */
-    public void getStereoSamples(double[] leftSamples, double[] rightSamples)
-            throws IOException {
-        long sampleCount = getSampleCount();
-        double[] interleavedSamples = new double[(int) sampleCount * 2];
-        getInterleavedSamples(0, sampleCount, interleavedSamples);
-        for (int i = 0; i < leftSamples.length; i++) {
-            leftSamples[i] = interleavedSamples[2 * i];
-            rightSamples[i] = interleavedSamples[2 * i + 1];
-        }
-    }
-
     // Decode bytes of audioBytes into audioSamples
     public void decodeBytes(byte[] audioBytes, double[] audioSamples) {
         int sampleSizeInBytes = getFormat().getSampleSizeInBits() / 8;
@@ -152,8 +117,6 @@ public class Sample {
                 // bytes start with LSB
                 for (int j = sampleSizeInBytes - 1; j >= 0; j--) {
                     sampleBytes[j] = audioBytes[k++];
-                    if (sampleBytes[j] != 0)
-                        j = j + 0;
                 }
             }
             // get integer value from bytes
@@ -171,15 +134,6 @@ public class Sample {
     }
 
     /**
-     * Return the interleaved samples as a <code>byte[]</code>.
-     *
-     * @return The interleaved samples
-     */
-    public final byte[] asByteArray() {
-        return asByteArray(getSampleCount(), getInterleavedSamples());
-    }
-
-    /**
      * Helper method to convert a double[] to a byte[] in a format that can be
      * used by {@link AudioInputStream}. Typically this will be used with
      * a {@link Sample} that has been modified from its original.
@@ -188,7 +142,7 @@ public class Sample {
      *
      * @return A byte[] representing a sample
      */
-    public static final byte[] asByteArray(long sampleCount, double[] sample) {
+    public static byte[] asByteArray(long sampleCount, double[] sample) {
         int b_len = (int) sampleCount
                 * (SC_AUDIO_FORMAT.getSampleSizeInBits() / 8);
         byte[] buffer = new byte[b_len];
@@ -208,7 +162,7 @@ public class Sample {
                 + getFormat();
     }
 
-    private static final void checkFormat(AudioFormat af) {
+    private static void checkFormat(AudioFormat af) {
         if (!af.matches(SC_AUDIO_FORMAT)) {
             throw new IllegalArgumentException(
                     "Unsupported audio format.\nReceived: " + af.toString()

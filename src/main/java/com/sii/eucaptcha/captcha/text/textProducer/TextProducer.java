@@ -7,5 +7,5 @@ public interface TextProducer {
      *
      * @return The answer for the CAPTCHA.
      */
-    public String getText();
+    String getText();
 }

@@ -8,16 +8,12 @@ import java.awt.image.BufferedImage;
 
 public class GradiatedBackgroundProducer implements BackgroundProducer {
 
-    private Color fromColor = Color.DARK_GRAY;
-    private Color toColor = Color.WHITE;
-
-    public GradiatedBackgroundProducer() {
-        this(Color.DARK_GRAY, Color.WHITE);
-    }
+    private final Color FROM_COLOR;
+    private final Color TO_COLOR;
 
     public GradiatedBackgroundProducer(Color from, Color to) {
-        fromColor = from;
-        toColor = to;
+        FROM_COLOR = from;
+        TO_COLOR = to;
     }
 
     @Override
@@ -34,8 +30,8 @@ public class GradiatedBackgroundProducer implements BackgroundProducer {
         g.setRenderingHints(hints);
 
         // create the gradient color
-        GradientPaint ytow = new GradientPaint(0, 0, fromColor, width, height,
-                toColor);
+        GradientPaint ytow = new GradientPaint(0, 0, FROM_COLOR, width, height,
+                TO_COLOR);
 
         g.setPaint(ytow);
         // draw gradient color
@@ -56,11 +52,4 @@ public class GradiatedBackgroundProducer implements BackgroundProducer {
         return getBackground(width, height);
     }
 
-    public void setFromColor(Color fromColor) {
-        fromColor = fromColor;
-    }
-
-    public void setToColor(Color toColor) {
-        toColor = toColor;
-    }
 }

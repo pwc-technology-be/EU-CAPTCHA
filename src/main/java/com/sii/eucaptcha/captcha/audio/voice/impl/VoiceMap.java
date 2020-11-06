@@ -14,7 +14,7 @@ public class VoiceMap {
 
     /**
      *
-     * @param locale
+     * @param locale the locale chosen
      * @return map voice for each language
      */
     public final Map<String, String> mapVoiceLettresAndNumbersEN(Locale locale) {

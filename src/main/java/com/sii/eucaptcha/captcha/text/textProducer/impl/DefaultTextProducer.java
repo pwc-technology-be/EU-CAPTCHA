@@ -27,11 +27,11 @@ public class DefaultTextProducer implements TextProducer {
 
     @Override
     public String getText() {
-        String capText = "";
+        StringBuilder capText = new StringBuilder();
         for (int i = 0; i < LENGTH; i++) {
-            capText += SRC_CHARS[RANDOM.nextInt(SRC_CHARS.length)];
+            capText.append(SRC_CHARS[RANDOM.nextInt(SRC_CHARS.length)]);
         }
-        return capText;
+        return capText.toString();
     }
 
     private static char[] copyOf(char[] original, int newLength) {

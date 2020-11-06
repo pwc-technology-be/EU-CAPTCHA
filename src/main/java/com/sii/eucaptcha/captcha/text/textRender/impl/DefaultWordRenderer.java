@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class DefaultWordRenderer implements WordRenderer {
     private static final Random RAND = new SecureRandom();
-    private static final List<Color> DEFAULT_COLORS = new ArrayList<Color>();
-    private static final List<Font> DEFAULT_FONTS = new ArrayList<Font>();
+    private static final List<Color> DEFAULT_COLORS = new ArrayList<>();
+    private static final List<Font> DEFAULT_FONTS = new ArrayList<>();
     // The text will be rendered 25%/5% of the image height/width from the X and Y axes
     private static final double YOFFSET = 0.25;
     private static final double XOFFSET = 0.05;
@@ -25,8 +25,8 @@ public class DefaultWordRenderer implements WordRenderer {
         DEFAULT_FONTS.add(new Font("Courier", Font.BOLD, 40));
     }
 
-    private final List<Color> COLORS = new ArrayList<Color>();
-    private final List<Font> FONTS = new ArrayList<Font>();
+    private final List<Color> COLORS = new ArrayList<>();
+    private final List<Font> FONTS = new ArrayList<>();
 
     /**
      * Use the default color (black) and fonts (Arial and Courier).
@@ -39,8 +39,8 @@ public class DefaultWordRenderer implements WordRenderer {
      * Build a <code>WordRenderer</code> using the given <code>Color</code>s and
      * <code>Font</code>s.
      *
-     * @param colors
-     * @param fonts
+     * @param colors colors that can be used
+     * @param fonts fonts that can be used
      */
     public DefaultWordRenderer(List<Color> colors, List<Font> fonts) {
         COLORS.addAll(colors);

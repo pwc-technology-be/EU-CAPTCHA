@@ -22,8 +22,7 @@ import java.util.Date;
 
 public class Captcha implements Serializable {
     private static final long serialVersionUID = 617511236L;
-    public static final String NAME = "EUCaptcha";
-    private Builder builder;
+    private final Builder builder;
 
     private Captcha(Builder builder) {
         this.builder = builder;
@@ -52,13 +51,6 @@ public class Captcha implements Serializable {
 
         public Builder(int width, int height) {
             img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        }
-
-        /**
-         * Add a background using the default {@link BackgroundProducer} (a {@link TransparentBackgroundProducer}).
-         */
-        public Builder addBackground() {
-            return addBackground(new TransparentBackgroundProducer());
         }
 
         /**
@@ -133,7 +125,7 @@ public class Captcha implements Serializable {
         }
 
         /**
-         * Gimp the image using the default {@link GimpyRenderer} (a {@link nl.captcha.gimpy.ShearGimpyRenderer}).
+         * Gimp the image using the default {@link GimpyRenderer} (a {@link ShearGimpyRenderer}).
          */
         public Builder gimp() {
             return gimp(new ShearGimpyRenderer());
@@ -194,16 +186,14 @@ public class Captcha implements Serializable {
 
         @Override
         public String toString() {
-            StringBuffer sb = new StringBuffer();
-            sb.append("[Answer: ");
-            sb.append(answer);
-            sb.append("][Timestamp: ");
-            sb.append(timeStamp);
-            sb.append("][Image: ");
-            sb.append(img);
-            sb.append("]");
 
-            return sb.toString();
+            return "[Answer: " +
+                    answer +
+                    "][Timestamp: " +
+                    timeStamp +
+                    "][Image: " +
+                    img +
+                    "]";
         }
 
         private void writeObject(ObjectOutputStream out) throws IOException {

@@ -12,13 +12,6 @@ public class StraightLineImageNoiseProducer implements ImageNoiseProducer {
     private final Color COLOR;
     private final int THICKNESS;
 
-    /**
-     * Default constructor creates a 4-pixel wide red line.
-     */
-    public StraightLineImageNoiseProducer() {
-        this(Color.RED, 4);
-    }
-
     public StraightLineImageNoiseProducer(Color color, int thickness) {
         COLOR = color;
         THICKNESS = thickness;
@@ -56,8 +49,8 @@ public class StraightLineImageNoiseProducer implements ImageNoiseProducer {
         int dy = (int) ddy;
 
         // Now we can compute the corner points...
-        int xPoints[] = new int[4];
-        int yPoints[] = new int[4];
+        int[] xPoints = new int[4];
+        int[] yPoints = new int[4];
 
         xPoints[0] = X1 + dx;
         yPoints[0] = y1 + dy;

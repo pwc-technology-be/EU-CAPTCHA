@@ -2,8 +2,8 @@ package com.sii.eucaptcha.captcha.text.textProducer.impl;
 
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
 import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author mousab.aidoud
@@ -171,11 +171,6 @@ public class LanguageTextProducer implements TextProducer {
                 break;
         }
         return this.txtProd;
-    }
-
-    private String[] getAlphabet(String locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("/resources/Resource Bundle" + locale);
-        return bundle.getStringArray("Alphabet");
     }
 
     /**
