@@ -1,6 +1,6 @@
-package com.sii.eucaptcha.text.textRender;
+package com.sii.eucaptcha.captcha.text.image.gimpy.impl;
 
-import nl.captcha.gimpy.GimpyRenderer;
+import com.sii.eucaptcha.captcha.text.image.gimpy.GimpyRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,13 +11,13 @@ import java.security.SecureRandom;
  * @version 1.0
  * GimpyRender Class
  */
-public class EuCaptchaGimpyRender implements GimpyRenderer {
+public class EuCaptchaGimpyRenderer implements GimpyRenderer {
     private final Color borderColor;
 
     /**
      * Constructor
      */
-    public EuCaptchaGimpyRender() {
+    public EuCaptchaGimpyRenderer() {
         this.borderColor = Color.gray;
     }
 

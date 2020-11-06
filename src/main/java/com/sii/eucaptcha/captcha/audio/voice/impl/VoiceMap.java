@@ -1,4 +1,4 @@
-package com.sii.eucaptcha.voice;
+package com.sii.eucaptcha.captcha.audio.voice.impl;
 
 
 import java.util.HashMap;

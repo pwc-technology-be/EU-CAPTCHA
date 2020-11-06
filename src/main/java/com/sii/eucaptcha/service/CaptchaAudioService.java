@@ -1,8 +1,9 @@
-package com.sii.eucaptcha.voice;
-import nl.captcha.audio.Mixer;
-import nl.captcha.audio.Sample;
-import nl.captcha.audio.noise.NoiseProducer;
-import nl.captcha.audio.producer.VoiceProducer;
+package com.sii.eucaptcha.service;
+import com.sii.eucaptcha.captcha.audio.Mixer;
+import com.sii.eucaptcha.captcha.audio.Sample;
+import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
+import com.sii.eucaptcha.captcha.audio.noise.impl.EuCaptchaNoiseProducer;
+import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
