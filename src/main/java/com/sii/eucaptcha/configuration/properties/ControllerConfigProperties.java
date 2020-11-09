@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath: controller.properties")
+@PropertySource("classpath:controller.properties")
 @ConfigurationProperties(prefix = "controller.captcha")
 public class ControllerConfigProperties {
 }
