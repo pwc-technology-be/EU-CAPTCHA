@@ -1,8 +1,8 @@
-package com.sii.eucaptcha.voice;
+package com.sii.eucaptcha.captcha.audio.voice.impl;
 
-import nl.captcha.audio.Sample;
-import nl.captcha.audio.producer.VoiceProducer;
-import nl.captcha.util.FileUtil;
+import com.sii.eucaptcha.captcha.audio.Sample;
+import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
+import com.sii.eucaptcha.captcha.util.FileUtil;
 
 import java.util.Map;
 

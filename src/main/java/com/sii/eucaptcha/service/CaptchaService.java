@@ -15,20 +15,19 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 
-import com.sii.eucaptcha.text.textRender.EuCaptchaGimpyRender;
-import com.sii.eucaptcha.text.textProducer.*;
-import com.sii.eucaptcha.text.textRender.CaptchaTextRender;
-import com.sii.eucaptcha.voice.CaptchaAudioService;
-import com.sii.eucaptcha.voice.LanguageVoiceProducer;
-import com.sii.eucaptcha.voice.VoiceMap;
+import com.sii.eucaptcha.captcha.Captcha;
+import com.sii.eucaptcha.captcha.audio.Sample;
+import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
+import com.sii.eucaptcha.captcha.text.image.background.impl.GradiatedBackgroundProducer;
+import com.sii.eucaptcha.captcha.text.image.noise.impl.StraightLineImageNoiseProducer;
+import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
+import com.sii.eucaptcha.captcha.text.textProducer.impl.LanguageTextProducer;
+import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
+import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
+import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
+import com.sii.eucaptcha.captcha.audio.voice.impl.VoiceMap;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpiringMap;
-import nl.captcha.Captcha;
-import nl.captcha.audio.Sample;
-import nl.captcha.audio.producer.VoiceProducer;
-import nl.captcha.backgrounds.GradiatedBackgroundProducer;
-import nl.captcha.noise.StraightLineNoiseProducer;
-import nl.captcha.text.producer.TextProducer;
 import org.springframework.stereotype.Service;
 
 
@@ -118,10 +117,10 @@ public class CaptchaService {
 		//Build The Captcha
 		Captcha captcha = new Captcha.Builder(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).addText(textProducer ,wordRenderer )
 				.addBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
-						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).addNoise(new StraightLineNoiseProducer(
+						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).addNoise(new StraightLineImageNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
-				.gimp(new EuCaptchaGimpyRender()).addBorder().build();
+				.gimp(new EuCaptchaGimpyRenderer()).addBorder().build();
 		//Adding the voice map for the selected language
 		Map<String, String> voicesMap;
 	    voicesMap = new VoiceMap().mapVoiceLettresAndNumbersEN(locale);

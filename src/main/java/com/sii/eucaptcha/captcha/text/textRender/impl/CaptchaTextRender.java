@@ -1,6 +1,6 @@
-package com.sii.eucaptcha.text.textRender;
+package com.sii.eucaptcha.captcha.text.textRender.impl;
 
-import nl.captcha.text.renderer.WordRenderer;
+import com.sii.eucaptcha.captcha.text.textRender.WordRenderer;
 
 import java.awt.*;
 

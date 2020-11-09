@@ -1,4 +1,4 @@
-package com.sii.eucaptcha.voice;
+package com.sii.eucaptcha.captcha.audio.voice.impl;
 
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class VoiceMap {
 
     /**
      *
-     * @param locale
+     * @param locale the locale chosen
      * @return map voice for each language
      */
     public final Map<String, String> mapVoiceLettresAndNumbersEN(Locale locale) {

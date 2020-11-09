@@ -25,7 +25,7 @@ public class AppInitializer extends
      */
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebMvcConfigurer.class};
+        return new Class[]{WebConfig.class};
     }
 
     /**

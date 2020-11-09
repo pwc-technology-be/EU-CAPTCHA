@@ -7,7 +7,7 @@ $(function(){
 	     function getcaptcha(){
                    var getCaptchaUrl = $.ajax({
                      type: "GET",
-                     url: 'http://localhost:8080/api/captchaImg',
+                     url: 'api/captchaImg',
                      success: function (data) {
                        EuCaptchaToken = getCaptchaUrl.getResponseHeader("token");
                        var jsonData=JSON.parse(data);
@@ -20,7 +20,7 @@ $(function(){
 	 function reloadCaptcha(){
 	               var reloadCaptchaUrl = $.ajax({
                           type: "GET",
-                          url: 'http://localhost:8080/api/reloadCaptchaImg/'+$("#captchaImg").attr("captchaId"),
+                          url: 'api/reloadCaptchaImg/'+$("#captchaImg").attr("captchaId"),
                            beforeSend: function(xhr) {
                                       xhr.setRequestHeader("Accept", "application/json");
                                       xhr.setRequestHeader("Content-Type", "application/json");
@@ -40,7 +40,7 @@ $(function(){
 	   var validateCaptcha = $.ajax({
              type: "POST",
              contentType: 'application/json; charset=utf-8',
-             url: "http://localhost:8080/api/validateCaptcha/"+$("#captchaImg").attr("captchaId"),
+             url: "api/validateCaptcha/"+$("#captchaImg").attr("captchaId"),
             beforeSend: function(xhr) {
                           xhr.setRequestHeader("Accept", "application/json");
                           xhr.setRequestHeader("Content-Type", "application/json");

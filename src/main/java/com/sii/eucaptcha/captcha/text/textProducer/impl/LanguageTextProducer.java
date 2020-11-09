@@ -1,7 +1,6 @@
-package com.sii.eucaptcha.text.textProducer;
+package com.sii.eucaptcha.captcha.text.textProducer.impl;
 
-import nl.captcha.text.producer.DefaultTextProducer;
-import nl.captcha.text.producer.TextProducer;
+import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Locale;

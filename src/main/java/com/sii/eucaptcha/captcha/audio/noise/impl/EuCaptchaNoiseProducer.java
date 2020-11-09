@@ -1,9 +1,9 @@
-package com.sii.eucaptcha.voice;
+package com.sii.eucaptcha.captcha.audio.noise.impl;
 
-import nl.captcha.audio.Mixer;
-import nl.captcha.audio.Sample;
-import nl.captcha.audio.noise.NoiseProducer;
-import nl.captcha.util.FileUtil;
+import com.sii.eucaptcha.captcha.audio.Mixer;
+import com.sii.eucaptcha.captcha.audio.Sample;
+import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
+import com.sii.eucaptcha.captcha.util.FileUtil;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -43,6 +43,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
      * @param samples the audio files to generate the spoken Captcha
      * @return audio mixed with noise
      */
+    @Override
     public Sample addNoise(List<Sample> samples) {
         Sample appended = Mixer.append(samples);
         String noiseFile = this.noiseFiles[RANDOM.nextInt(this.noiseFiles.length)];
