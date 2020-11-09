@@ -5,6 +5,7 @@ import com.sii.eucaptcha.service.CaptchaService;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +31,20 @@ public class CaptchaController {
     private final JwtToken jwtToken;
 
     /**
-     * Captcha answer length -> application.properties
+     * Captcha answer length -> controller.properties
      */
-    @Value("${captcha.answer.length}")
+    @Value("${controller.captcha.answerLength}")
     private int captchaAnswerLength;
     /**
-     * Captcha ID Length  -> application.properties
+     * Captcha ID Length  -> controller.properties
      */
-    @Value("${captcha.id.length}")
+    @Value("${controller.captcha.idLength}")
     private int captchaIdLength;
+    /**
+     * Captcha keyAlgorithm -> controller.properties
+     */
+    @Value("${controller.captcha.keyAlgorithm}")
+    private String keyAlgorithm;
 
     public CaptchaController(CaptchaService captchaService, JwtToken jwtToken) {
         this.captchaService = captchaService;
@@ -66,7 +72,7 @@ public class CaptchaController {
         headers.add("Content-Type", "application/json; charset=UTF-8");
 
         byte[] decodedKey = Base64.getDecoder().decode(captchaData[1]);
-        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, keyAlgorithm);
         headers.add("token", jwtToken.generateJwtToken(originalKey));
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
     }
@@ -86,7 +92,7 @@ public class CaptchaController {
 
         try {
             byte[] decodedKey = Base64.getDecoder().decode(previousCaptchaId);
-            SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, keyAlgorithm);
 
             // Reload the captcha if the token is valid
             if (jwtToken.verifyToken(jwtString, originalKey)) {
@@ -126,7 +132,7 @@ public class CaptchaController {
         } else {
 
             byte[] decodedKey = Base64.getDecoder().decode(captchaId);
-            SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, keyAlgorithm);
 
             try {
                 if (jwtToken.verifyToken(jwtString, originalKey)) {
