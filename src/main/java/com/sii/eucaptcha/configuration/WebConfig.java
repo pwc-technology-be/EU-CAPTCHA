@@ -1,5 +1,7 @@
 package com.sii.eucaptcha.configuration;
 
+import com.sii.eucaptcha.configuration.properties.ApplicationConfigProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.annotation.Resource;
 import java.util.Locale;
 
 /**
@@ -29,6 +32,9 @@ import java.util.Locale;
 @ComponentScan(basePackages = {"com.sii.eucaptcha"})
 public class WebConfig implements WebMvcConfigurer {
 
+    @Resource
+    private ApplicationConfigProperties props;
+
     /**
      *
      * @return the created resolver
@@ -37,8 +43,8 @@ public class WebConfig implements WebMvcConfigurer {
     protected InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setViewClass(JstlView.class);
-        resolver.setPrefix("/WEB-INF/pages/");
-        resolver.setSuffix(".jsp");
+        resolver.setPrefix(props.getPrefix());
+        resolver.setSuffix(props.getSuffix());
         return resolver;
     }
 
@@ -49,7 +55,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     protected LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.ENGLISH);
+        localeResolver.setDefaultLocale(props.getDefaultLocale());
         return localeResolver;
     }
 
@@ -60,7 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     protected LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
+        localeChangeInterceptor.setParamName(props.getParamName());
         return localeChangeInterceptor;
     }
 
@@ -71,8 +77,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     protected MessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setDefaultEncoding("UTF-8");
-        source.setBasename("messages");
+        source.setDefaultEncoding(props.getDefaultEncoding());
+        source.setBasename(props.getBaseName());
         return source;
     }
 
@@ -103,27 +109,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("/WEB-INF/pages/css/");
-        registry.addResourceHandler("/js/**")
-                .addResourceLocations("/WEB-INF/pages/js/");
+        registry.addResourceHandler(props.getCssHandler())
+                .addResourceLocations(props.getCssLocations());
+        registry.addResourceHandler(props.getJsHandler())
+                .addResourceLocations(props.getJsLocations());
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations(
                         "classpath:/META-INF/resources/webjars/");
 
-    }
-
-    /**
-     *
-     * @return result
-     */
-    private String[] getStaticLocations() {
-        String[] result = new String[5];
-        result[0] = "/";
-        result[1] = "classpath:/META-INF/resources/";
-        result[2] = "classpath:/resources/";
-        result[3] = "classpath:/static/";
-        result[4] = "classpath:/public/";
-        return result;
     }
 }
