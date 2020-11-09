@@ -123,7 +123,7 @@ public class CaptchaService {
 				.gimp(new EuCaptchaGimpyRenderer()).addBorder().build();
 		//Adding the voice map for the selected language
 		Map<String, String> voicesMap;
-	    voicesMap = new VoiceMap().mapVoiceLettresAndNumbersEN(locale);
+	    voicesMap = new VoiceMap().voiceMapLettersAndNumbers(locale);
 
 		VoiceProducer vProd = new LanguageVoiceProducer(voicesMap);
         CaptchaAudioService captchaAudioService;

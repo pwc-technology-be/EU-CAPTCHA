@@ -17,7 +17,7 @@ public class VoiceMap {
      * @param locale the locale chosen
      * @return map voice for each language
      */
-    public final Map<String, String> mapVoiceLettresAndNumbersEN(Locale locale) {
+    public final Map<String, String> voiceMapLettersAndNumbers(Locale locale) {
         Map<String, String> voicesMap = new HashMap<String, String>();
         switch (locale.getLanguage()) {
             case "fr":

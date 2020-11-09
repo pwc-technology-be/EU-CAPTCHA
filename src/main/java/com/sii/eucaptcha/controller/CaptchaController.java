@@ -122,7 +122,7 @@ public class CaptchaController {
         if (captchaAnswer.trim().length() != captchaAnswerLength ||
                 captchaId.trim().length() != captchaIdLength
                 || jwtString == null) {
-            return new ResponseEntity<>("Sorry, you should give a correct answer", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         } else {
 
             byte[] decodedKey = Base64.getDecoder().decode(captchaId);
@@ -139,10 +139,10 @@ public class CaptchaController {
                     return new ResponseEntity<>(response.toString(), HttpStatus.OK);
                 } else {
                     //The token is not valid.
-                    return new ResponseEntity<>("Sorry, you can't get access ", HttpStatus.FORBIDDEN);
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
             } catch (Exception e) {
-                return new ResponseEntity<>("Sorry, you can't get access", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
     }
