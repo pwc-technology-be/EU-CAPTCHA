@@ -43,6 +43,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
      * @param samples the audio files to generate the spoken Captcha
      * @return audio mixed with noise
      */
+    @Override
     public Sample addNoise(List<Sample> samples) {
         Sample appended = Mixer.append(samples);
         String noiseFile = this.noiseFiles[RANDOM.nextInt(this.noiseFiles.length)];
