@@ -25,6 +25,7 @@ public class EuCaptchaGimpyRenderer implements GimpyRenderer {
      *
      * @param image the Captcha image
      */
+    @Override
     public void gimp(BufferedImage image) {
         int height = image.getHeight();
         int width = image.getWidth();
