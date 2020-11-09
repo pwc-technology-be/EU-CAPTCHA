@@ -67,6 +67,10 @@ $(function(){
              },
              error: function (e) {
                $("input").css({"border": "2px solid red"});
+               $("#error").css("visibility", "visible");
+               $("#fail").css("visibility", "hidden");
+               $("#success").css("visibility", "hidden");
+               reloadCaptcha();
              }
          });
 	 }

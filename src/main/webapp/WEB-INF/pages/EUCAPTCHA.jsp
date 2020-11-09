@@ -36,6 +36,9 @@
        <div class=" col-md-12 alert alert-danger" id="fail" role="alert" style="visibility : hidden">
         <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> <fmt:message key="euCaptcha.invalid" />
       </div>
+        <div class=" col-md-12 alert alert-danger" id="error" role="alert" style="visibility : hidden">
+          <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> <fmt:message key="euCaptcha.error" />
+        </div>
     </div>
         <div class="panel panel-default bg border">
           <div class="panel-body">
@@ -44,12 +47,12 @@
                 <div class="form-group">
                   <select id="dropdown-language" class="custom-select  form-control">
                     <option> <fmt:message key="language.change" /> :  </option>
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="bg">български</option>
-                    <option value="hr">Hrvatski</option>
-                    <option value="da">Dansk</option>
+                    <option value="en">English!</option>
+                    <option value="fr">French!</option>
+                    <option value="de">German!</option>
+                    <option value="bg">български!</option>
+                    <option value="hr">Hrvatski!</option>
+                    <option value="da">Dansk!</option>
                     <option value="es">Espanol</option>
                     <option value="et">Eestlane</option>
                     <option value="fi">Suomalainen</option>
