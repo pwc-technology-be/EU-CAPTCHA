@@ -47,12 +47,12 @@
                 <div class="form-group">
                   <select id="dropdown-language" class="custom-select  form-control">
                     <option> <fmt:message key="language.change" /> :  </option>
-                    <option value="en">English!</option>
-                    <option value="fr">French!</option>
-                    <option value="de">German!</option>
-                    <option value="bg">български!</option>
-                    <option value="hr">Hrvatski!</option>
-                    <option value="da">Dansk!</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="bg">български</option>
+                    <option value="hr">Hrvatski</option>
+                    <option value="da">Dansk</option>
                     <option value="es">Espanol</option>
                     <option value="et">Eestlane</option>
                     <option value="fi">Suomalainen</option>

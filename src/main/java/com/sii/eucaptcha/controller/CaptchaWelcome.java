@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CaptchaWelcome {
 
-    @Value("${captcha.welcome.page}")
+    @Value("${controller.captcha.welcomePage}")
     private String welcomePageName;
     /**
      *
