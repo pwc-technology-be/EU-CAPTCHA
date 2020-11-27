@@ -27,8 +27,7 @@ public class JwtToken {
      * @return jwtToken
      */
     public String generateJwtToken(Key key) {
-        String jwtString = Jwts.builder().setSubject(subject).signWith(SignatureAlgorithm.HS512, key).compact();
-        return jwtString;
+        return Jwts.builder().setSubject(subject).signWith(SignatureAlgorithm.HS512, key).compact();
     }
 
     /**
@@ -37,10 +36,6 @@ public class JwtToken {
      * @return true|false
      */
     public Boolean verifyToken(String jwtToken , Key key) throws SignatureException {
-        if (Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken).getBody().getSubject().equals(subject)) {
-            return true;
-        } else {
-            return false;
-        }
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken).getBody().getSubject().equals(subject);
     }
 }
