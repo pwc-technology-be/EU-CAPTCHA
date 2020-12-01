@@ -17,6 +17,7 @@ import javax.sound.sampled.AudioSystem;
 
 import com.sii.eucaptcha.captcha.Captcha;
 import com.sii.eucaptcha.captcha.audio.Sample;
+import com.sii.eucaptcha.captcha.audio.noise.impl.EuCaptchaNoiseProducer;
 import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
 import com.sii.eucaptcha.captcha.text.image.background.impl.GradiatedBackgroundProducer;
 import com.sii.eucaptcha.captcha.text.image.noise.impl.StraightLineImageNoiseProducer;
@@ -57,7 +58,6 @@ public class CaptchaService {
 	 * List of fonts and font sizes
 	 */
 	private static final List<Font> FONTS = new ArrayList<>(3);
-	public static String answer = null;
 
 	static {
 		COLORS.add(Color.BLACK);
@@ -115,34 +115,28 @@ public class CaptchaService {
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
 
 		//Build The Captcha
-		Captcha captcha = new Captcha.Builder(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).addText(textProducer ,wordRenderer )
-				.addBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
-						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).addNoise(new StraightLineImageNoiseProducer(
+		Captcha captcha = Captcha.CaptchaBuilder.newBuilder().withDimensions(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).withText(textProducer ,wordRenderer )
+				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
+						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
-				.gimp(new EuCaptchaGimpyRenderer()).addBorder().build();
+				.gimp(new EuCaptchaGimpyRenderer()).withBorder().build();
 		//Adding the voice map for the selected language
 		Map<String, String> voicesMap;
 	    voicesMap = new VoiceMap().voiceMapLettersAndNumbers(locale);
 
-		VoiceProducer vProd = new LanguageVoiceProducer(voicesMap);
-        CaptchaAudioService captchaAudioService;
+		VoiceProducer voiceProducer = new LanguageVoiceProducer(voicesMap);
 
 		 //Build the captcha audio file.
-		if 	(locale.getLanguage().equals("bg")) {
-		captchaAudioService = new CaptchaAudioService.Builder()
-				.addAnswer(captcha.getAnswer())
-				.addVoice(vProd)
-				.build();
-		}else captchaAudioService = new CaptchaAudioService.Builder()
-				.addAnswer(captcha.getAnswer())
-				.addVoice(vProd)
-				.addNoise()
+		CaptchaAudioService captchaAudioService = CaptchaAudioService.CaptchaAudioServiceBuilder.newBuilder()
+				.withAnswer(captcha.getAnswer())
+				.withVoice(voiceProducer)
+				.withNoise(new EuCaptchaNoiseProducer())
 				.build();
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 
-		String captchaPngImage = null;
+		String captchaPngImage = "";
 
 		try {
 			ImageIO.write(buf, "png", bao);
@@ -156,7 +150,7 @@ public class CaptchaService {
 
 		InputStream in = captchaAudioService.getChallenge().getAudioInputStream();
 		Sample sample = new Sample(in);
-		String captchaAudioFile = null;
+		String captchaAudioFile = "";
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
 			AudioSystem.write(sample.getAudioInputStream(),

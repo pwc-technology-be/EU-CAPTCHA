@@ -3,93 +3,70 @@ package com.sii.eucaptcha.captcha;
 import com.sii.eucaptcha.captcha.text.image.background.BackgroundProducer;
 import com.sii.eucaptcha.captcha.text.image.background.impl.TransparentBackgroundProducer;
 import com.sii.eucaptcha.captcha.text.image.gimpy.GimpyRenderer;
-import com.sii.eucaptcha.captcha.text.image.gimpy.impl.ShearGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.image.noise.ImageNoiseProducer;
-import com.sii.eucaptcha.captcha.text.image.noise.impl.CurvedLineImageNoiseProducer;
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
-import com.sii.eucaptcha.captcha.text.textProducer.impl.DefaultTextProducer;
 import com.sii.eucaptcha.captcha.text.textRender.WordRenderer;
-import com.sii.eucaptcha.captcha.text.textRender.impl.DefaultWordRenderer;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Date;
 
-public class Captcha implements Serializable {
-    private static final long serialVersionUID = 617511236L;
-    private final Builder builder;
+public class Captcha {
 
-    private Captcha(Builder builder) {
-        this.builder = builder;
+    private final String answer;
+    private final BufferedImage image;
+    private final Date timeStamp;
+
+    private Captcha(CaptchaBuilder captchaBuilder) {
+        this.answer = captchaBuilder.answer;
+        this.image = captchaBuilder.image;
+        this.timeStamp = captchaBuilder.timeStamp;
     }
 
-    public static class Builder implements Serializable {
-        private static final long serialVersionUID = 12L;
-        /**
-         * @serial
-         */
+    public String getAnswer() {
+        return answer;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    @Override
+    public String toString() {
+        return "[Answer: " +
+                answer +
+                "][Timestamp: " +
+                timeStamp +
+                "][Image: " +
+                image +
+                "]";
+    }
+
+    public static class CaptchaBuilder {
+
         private String answer = "";
-        /**
-         * @serial
-         */
-        private BufferedImage img;
-        /**
-         * @serial
-         */
-        private BufferedImage bg;
-        /**
-         * @serial
-         */
+        private BufferedImage image;
+        private BufferedImage background;
         private Date timeStamp;
+        private boolean border = false;
 
-        private boolean addBorder = false;
-
-        public Builder(int width, int height) {
-            img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        public static CaptchaBuilder newBuilder()
+        {
+            return new CaptchaBuilder();
         }
 
-        /**
-         * Add a background using the given {@link BackgroundProducer}.
-         *
-         * @param bgProd
-         */
-        public Builder addBackground(BackgroundProducer bgProd) {
-            bg = bgProd.getBackground(img.getWidth(), img.getHeight());
-
+        public CaptchaBuilder withDimensions(int width, int height) {
+            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             return this;
         }
 
         /**
-         * Generate the answer to the CAPTCHA using the {@link DefaultTextProducer}.
-         */
-        public Builder addText() {
-            return addText(new DefaultTextProducer());
-        }
-
-        /**
-         * Generate the answer to the CAPTCHA using the given
-         * {@link TextProducer}.
          *
-         * @param txtProd
+         * @param bgProd the chosen {@link BackgroundProducer}
          */
-        public Builder addText(TextProducer txtProd) {
-            return addText(txtProd, new DefaultWordRenderer());
-        }
-
-        /**
-         * Generate the answer to the CAPTCHA using the default
-         * {@link TextProducer}, and render it to the image using the given
-         * {@link WordRenderer}.
-         *
-         * @param wRenderer
-         */
-        public Builder addText(WordRenderer wRenderer) {
-            return addText(new DefaultTextProducer(), wRenderer);
+        public CaptchaBuilder withBackground(BackgroundProducer bgProd) {
+            background = bgProd.getBackground(image.getWidth(), image.getHeight());
+            return this;
         }
 
         /**
@@ -97,56 +74,41 @@ public class Captcha implements Serializable {
          * {@link TextProducer}, and render it to the image using the given
          * {@link WordRenderer}.
          *
-         * @param txtProd
-         * @param wRenderer
+         * @param txtProd the chosen TextProducer
+         * @param wRenderer the chosen WordRenderer
          */
-        public Builder addText(TextProducer txtProd, WordRenderer wRenderer) {
+        public CaptchaBuilder withText(TextProducer txtProd, WordRenderer wRenderer) {
             answer += txtProd.getText();
-            wRenderer.render(answer, img);
+            wRenderer.render(answer, image);
 
             return this;
-        }
-
-        /**
-         * Add noise using the default {@link CurvedLineImageNoiseProducer}.
-         */
-        public Builder addNoise() {
-            return this.addNoise(new CurvedLineImageNoiseProducer());
         }
 
         /**
          * Add noise using the given NoiseProducer.
          *
-         * @param nProd
+         * @param nProd the chosen ImageNoiseProducer
          */
-        public Builder addNoise(ImageNoiseProducer nProd) {
-            nProd.makeNoise(img);
+        public CaptchaBuilder withNoise(ImageNoiseProducer nProd) {
+            nProd.makeNoise(image);
             return this;
-        }
-
-        /**
-         * Gimp the image using the default {@link GimpyRenderer} (a {@link ShearGimpyRenderer}).
-         */
-        public Builder gimp() {
-            return gimp(new ShearGimpyRenderer());
         }
 
         /**
          * Gimp the image using the given {@link GimpyRenderer}.
          *
-         * @param gimpy
+         * @param gimpy the chosen GimpyRenderer
          */
-        public Builder gimp(GimpyRenderer gimpy) {
-            gimpy.gimp(img);
+        public CaptchaBuilder gimp(GimpyRenderer gimpy) {
+            gimpy.gimp(image);
             return this;
         }
 
         /**
          * Draw a single-pixel wide black border around the image.
          */
-        public Builder addBorder() {
-            addBorder = true;
-
+        public CaptchaBuilder withBorder() {
+            border = true;
             return this;
         }
 
@@ -157,18 +119,18 @@ public class Captcha implements Serializable {
          * @return The constructed CAPTCHA.
          */
         public Captcha build() {
-            if (bg == null) {
-                bg = new TransparentBackgroundProducer().getBackground(img.getWidth(), img.getHeight());
+            if (background == null) {
+                background = new TransparentBackgroundProducer().getBackground(image.getWidth(), image.getHeight());
             }
 
             // Paint the main image over the background
-            Graphics2D g = bg.createGraphics();
+            Graphics2D g = background.createGraphics();
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-            g.drawImage(img, null, null);
+            g.drawImage(image, null, null);
 
-            if (addBorder) {
-                int width = img.getWidth();
-                int height = img.getHeight();
+            if (border) {
+                int width = image.getWidth();
+                int height = image.getHeight();
 
                 g.setColor(Color.BLACK);
                 g.drawLine(0, 0, 0, width);
@@ -176,63 +138,9 @@ public class Captcha implements Serializable {
                 g.drawLine(0, height - 1, width, height - 1);
                 g.drawLine(width - 1, height - 1, width - 1, 0);
             }
-
-            img = bg;
-
+            image = background;
             timeStamp = new Date();
-
             return new Captcha(this);
         }
-
-        @Override
-        public String toString() {
-
-            return "[Answer: " +
-                    answer +
-                    "][Timestamp: " +
-                    timeStamp +
-                    "][Image: " +
-                    img +
-                    "]";
-        }
-
-        private void writeObject(ObjectOutputStream out) throws IOException {
-            out.writeObject(answer);
-            out.writeObject(timeStamp);
-            ImageIO.write(img, "png", ImageIO.createImageOutputStream(out));
-        }
-
-        private void readObject(ObjectInputStream in) throws IOException,
-                ClassNotFoundException {
-            answer = (String) in.readObject();
-            timeStamp = (Date) in.readObject();
-            img = ImageIO.read(ImageIO.createImageInputStream(in));
-        }
-    }
-
-    public boolean isCorrect(String answer) {
-        return answer.equals(builder.answer);
-    }
-
-    public String getAnswer() {
-        return builder.answer;
-    }
-
-    /**
-     * Get the CAPTCHA image, a PNG.
-     *
-     * @return A PNG CAPTCHA image.
-     */
-    public BufferedImage getImage() {
-        return builder.img;
-    }
-
-    public Date getTimeStamp() {
-        return new Date(builder.timeStamp.getTime());
-    }
-
-    @Override
-    public String toString() {
-        return builder.toString();
     }
 }
