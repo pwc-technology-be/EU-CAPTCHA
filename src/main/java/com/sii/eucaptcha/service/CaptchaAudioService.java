@@ -51,9 +51,7 @@ public class CaptchaAudioService {
         private final List<VoiceProducer> voiceProducers;
         private final List<NoiseProducer> noiseProducers;
 
-        public static CaptchaAudioServiceBuilder newBuilder() {
-            return new CaptchaAudioServiceBuilder();
-        }
+
 
         public CaptchaAudioServiceBuilder() {
             voiceProducers = new ArrayList<>();
@@ -106,5 +104,8 @@ public class CaptchaAudioService {
             return captchaAudioService;
         }
 
+    }
+    public static CaptchaAudioServiceBuilder newBuilder() {
+        return new CaptchaAudioServiceBuilder();
     }
 }

@@ -50,10 +50,6 @@ public class Captcha {
         private Date timeStamp;
         private boolean border = false;
 
-        public static CaptchaBuilder newBuilder()
-        {
-            return new CaptchaBuilder();
-        }
 
         public CaptchaBuilder withDimensions(int width, int height) {
             image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -143,4 +139,9 @@ public class Captcha {
             return new Captcha(this);
         }
     }
+    public static CaptchaBuilder newBuilder()
+    {
+        return new CaptchaBuilder();
+    }
+
 }

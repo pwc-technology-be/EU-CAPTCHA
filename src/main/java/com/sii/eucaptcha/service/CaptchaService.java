@@ -115,7 +115,7 @@ public class CaptchaService {
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
 
 		//Build The Captcha
-		Captcha captcha = Captcha.CaptchaBuilder.newBuilder().withDimensions(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).withText(textProducer ,wordRenderer )
+		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).withText(textProducer ,wordRenderer )
 				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
 						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
@@ -128,7 +128,7 @@ public class CaptchaService {
 		VoiceProducer voiceProducer = new LanguageVoiceProducer(voicesMap);
 
 		 //Build the captcha audio file.
-		CaptchaAudioService captchaAudioService = CaptchaAudioService.CaptchaAudioServiceBuilder.newBuilder()
+		CaptchaAudioService captchaAudioService = CaptchaAudioService.newBuilder()
 				.withAnswer(captcha.getAnswer())
 				.withVoice(voiceProducer)
 				.withNoise(new EuCaptchaNoiseProducer())
