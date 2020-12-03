@@ -4,7 +4,6 @@ import com.sii.eucaptcha.captcha.audio.Mixer;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.util.FileUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.SecureRandom;
@@ -19,14 +18,13 @@ import java.util.Random;
 public class EuCaptchaNoiseProducer implements NoiseProducer {
     private static final Random RANDOM = new SecureRandom();
 
-    //private ApplicationConfigProperties props;
     /**
      * List of the audio files for noises
      */
     private static final String[] DEFAULT_NOISES = new String[]{"/sounds/noises/radio_tuning.wav",
             "/sounds/noises/restaurant.wav", "/sounds/noises/swimming.wav"};
 
-    @Value("${config.view.noises}")
+    @Value("${captcha.audio.noises}")
     private final String[] noiseFiles;
 
     /**
