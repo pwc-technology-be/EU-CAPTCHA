@@ -99,4 +99,5 @@ public class ApplicationConfigProperties {
     public void setJsLocations(String jsLocations) {
         this.jsLocations = jsLocations;
     }
+
 }
