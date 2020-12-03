@@ -1,11 +1,12 @@
 package com.sii.eucaptcha.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import java.security.Key;
+
+import javax.crypto.SecretKey;
+import java.util.UUID;
 
 /**
  * @author mousab.aidoud
@@ -15,27 +16,38 @@ import java.security.Key;
 @Component
 public class JwtToken {
 
-    /**
-     * Captcha JwtToken subject -> application.properties
-     */
-    @Value("${captcha.jwt.token.subject}")
-    private String subject;
+    private SecretKey key;
+    private final UUID id = UUID.randomUUID();
 
     /**
      * Generating Token
-     * @param key
+     *
      * @return jwtToken
      */
-    public String generateJwtToken(Key key) {
-        return Jwts.builder().setSubject(subject).signWith(SignatureAlgorithm.HS512, key).compact();
+    public String generateJwtToken() {
+        key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        return Jwts.builder().setSubject(id.toString()).signWith(key).compact();
     }
 
     /**
      * Verify token
-     * @param jwtToken
+     *
+     * @param jwtString token string to validate
      * @return true|false
      */
-    public Boolean verifyToken(String jwtToken , Key key) throws SignatureException {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken).getBody().getSubject().equals(subject);
+    public Boolean verifyToken(String jwtString) {
+        try {
+            Jws<Claims> claims = decodeToken(jwtString);
+            return StringUtils.equals(id.toString(), claims.getBody().getSubject());
+        } catch (JwtException ex) {
+            return false;
+        }
+    }
+
+    private Jws<Claims> decodeToken(String jwtString) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jwtString);
     }
 }

@@ -77,7 +77,7 @@ public class CaptchaController {
 
         try {
             // Reload the captcha if the token is valid
-            if (jwtToken.verifyToken(jwtString, getSecretKey(previousCaptchaId))) {
+            if (jwtToken.verifyToken(jwtString)) {
                 return createResponse(captchaService.generateCaptchaImage(previousCaptchaId, locale));
             } else {
                 return new ResponseEntity<>("You can't get access ", HttpStatus.FORBIDDEN);
@@ -108,7 +108,7 @@ public class CaptchaController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         } else {
             try {
-                if (jwtToken.verifyToken(jwtString, getSecretKey(captchaId))) {
+                if (jwtToken.verifyToken(jwtString)) {
                     boolean responseCaptcha;
                     //the Token is valid , we proceed the validation of the captcha
                     responseCaptcha = captchaService.validateCaptcha(captchaId, captchaAnswer, useAudio);
@@ -126,11 +126,6 @@ public class CaptchaController {
         }
     }
 
-    private SecretKey getSecretKey(String id) {
-        byte[] decodedKey = Base64.getDecoder().decode(id);
-        return new SecretKeySpec(decodedKey, 0, decodedKey.length, keyAlgorithm);
-    }
-
     private ResponseEntity<String> createResponse(String[] captchaData) {
         JsonObject response = new JsonObject();
         //Adding data to the Jason Object().
@@ -140,7 +135,7 @@ public class CaptchaController {
         //Adding the token to the Http Header
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=UTF-8");
-        headers.add("token", jwtToken.generateJwtToken(getSecretKey(captchaData[1])));
+        headers.add("token", jwtToken.generateJwtToken());
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
 
     }
