@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
@@ -29,8 +29,9 @@
                     <div class="row ">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label title="Change the language" for="dropdown-language">Change the Captcha language</label>
                                 <select id="dropdown-language" class="custom-select  form-control" >
-                                    <option value=" " >Change Language ...</option>
+                                    <option value=" " >...</option>
                                     <option value="en">English</option>
                                     <option value="fr">Français</option>
                                     <option value="de">Deutsch</option>
@@ -63,13 +64,14 @@
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
-                            <img alt="Captcha Loading" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
+                            <img alt="Captcha image to solve" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
                             <hr>
-                            <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
+                            <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()" ></audio>
                         </div>
                         <div class="col-md-2">
                             <br><br><br>
-                            <button class="btn btn-primary btn-lg " id="captchaReload"> <i class="fa fa-refresh"></i> </button>
+                            <label title="Reload the Captcha" for="captchaReload">Reload the Captcha</label>
+                            <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <i class="fa fa-refresh"></i> </button>
                         </div>
                     </div>
                     <hr>
@@ -78,10 +80,12 @@
 
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="captchaAnswer" placeholder="Captcha Text">
+                            <label title="Captcha input for solution" for="captchaAnswer">Captcha input for solution</label>
+                            <input title="Captcha input for solution" type="text" class="form-control" id="captchaAnswer" placeholder="Captcha Text">
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary btn-lg " id="captchaSubmit"> <i class="fa fa-check" aria-hidden="true"></i> </button>
+                            <label title="Submit tha Captcha" for="captchaSubmit">Submit tha Captcha</label>
+                            <button title="Submit tha Captcha" class="btn btn-primary btn-lg " id="captchaSubmit"> <i class="fa fa-check" aria-hidden="true"></i> </button>
                         </div>
                     </div>
                     <br>

@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
@@ -22,7 +22,7 @@
 
   <title>EU Captcha</title>
 </head>
-<body>
+<body onload="getLastSelectedValue()">
   <div class="container ">
    <div class="row text-center">
       <div class="col-md-3">
@@ -45,8 +45,9 @@
             <div class="row ">
               <div class="col-md-12">
                 <div class="form-group">
+                  <label title="Change the language" for="dropdown-language"><fmt:message key="language.change" /> :  </label>
                   <select id="dropdown-language" class="custom-select  form-control">
-                    <option> <fmt:message key="language.change" /> :  </option>
+                    <option value=" "> ... </option>
                     <option value="en">English</option>
                     <option value="fr">Français</option>
                     <option value="de">Deutsch</option>
@@ -79,13 +80,14 @@
             <div class="row">
               <div class="col-md-2"></div>
               <div class="col-md-8">
-                <img alt="Captcha Loading" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
+                <img alt="Captcha image to solve" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
                 <hr>
                 <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
               </div>
               <div class="col-md-2">
                 <br><br><br>
-                <button class="btn btn-primary btn-lg " id="captchaReload"> <i class="fa fa-refresh"></i> </button>
+                <label title="Change the language" for="captchaReload">Reload the Captcha</label>
+                <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <i class="fa fa-refresh"></i> </button>
               </div>
             </div>
             <hr>
@@ -94,10 +96,12 @@
 
               </div>
               <div class="col-md-8">
-                <input type="text" class="form-control" id="captchaAnswer" placeholder="Captcha Text">
+                <label title="Captcha input for solution" for="captchaAnswer">Input field for solution</label>
+                <input title="Captcha input for solution" type="text" class="form-control" id="captchaAnswer" placeholder="Captcha Text">
               </div>
               <div class="col-md-2">
-                <button class="btn btn-primary btn-lg " id="captchaSubmit"> <i class="fa fa-check" aria-hidden="true"></i> </button>
+                <label title="Submit tha Captcha" for="captchaSubmit">Submit the Captcha</label>
+                <button title="Submit tha Captcha" class="btn btn-primary btn-lg " id="captchaSubmit"> <i class="fa fa-check" aria-hidden="true"></i> </button>
               </div>
             </div>  
             <br>
