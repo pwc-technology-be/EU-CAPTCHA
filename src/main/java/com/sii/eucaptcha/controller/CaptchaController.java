@@ -36,11 +36,6 @@ public class CaptchaController {
      */
     @Value("${controller.captcha.idLength}")
     private int captchaIdLength;
-    /**
-     * Captcha keyAlgorithm -> controller.properties
-     */
-    @Value("${controller.captcha.keyAlgorithm}")
-    private String keyAlgorithm;
 
     public CaptchaController(CaptchaService captchaService, JwtToken jwtToken) {
         this.captchaService = captchaService;
