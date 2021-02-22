@@ -6,7 +6,6 @@ import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
 import com.sii.eucaptcha.security.CaptchaRandom;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -97,7 +96,7 @@ public class CaptchaAudioService {
             if (noiseProducers.size() > 0) {
                 NoiseProducer nProd = noiseProducers.get(SECURE_RANDOM.nextInt(noiseProducers
                         .size()));
-                challenge = nProd.addNoise(samples);
+                challenge = nProd.produceNoise(samples);
                 return new CaptchaAudioService(this);
             }
             challenge = Mixer.append(samples);
