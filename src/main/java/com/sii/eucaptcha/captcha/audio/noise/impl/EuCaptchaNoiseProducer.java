@@ -4,19 +4,20 @@ import com.sii.eucaptcha.captcha.audio.Mixer;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.util.FileUtil;
+import com.sii.eucaptcha.security.CaptchaRandom;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author mousab.aidoud
  * @version 1.0
  */
 public class EuCaptchaNoiseProducer implements NoiseProducer {
-    private static final Random RANDOM = new SecureRandom();
+
+    private static final SecureRandom RANDOM = CaptchaRandom.getSecureInstance();
 
     /**
      * List of the audio files for noises

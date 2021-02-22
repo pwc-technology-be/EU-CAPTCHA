@@ -1,6 +1,7 @@
 package com.sii.eucaptcha.captcha.text.image.gimpy.impl;
 
 import com.sii.eucaptcha.captcha.text.image.gimpy.GimpyRenderer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -71,7 +72,7 @@ public class EuCaptchaGimpyRenderer implements GimpyRenderer {
      * @return the randomized int value
      */
     private int ranInt(int i, int j) {
-        SecureRandom rand  = new SecureRandom();
+        SecureRandom rand  = CaptchaRandom.getSecureInstance();
         double d = rand.nextDouble();
         return (int)((double)i + (double)(j - i + 1) * d);
     }

@@ -1,6 +1,7 @@
 package com.sii.eucaptcha.captcha.text.image.noise.impl;
 
 import com.sii.eucaptcha.captcha.text.image.noise.ImageNoiseProducer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,7 +9,7 @@ import java.security.SecureRandom;
 
 public class StraightLineImageNoiseProducer implements ImageNoiseProducer {
 
-    private static final SecureRandom RAND = new SecureRandom();
+    private static final SecureRandom RAND = CaptchaRandom.getSecureInstance();
     private final Color COLOR;
     private final int THICKNESS;
 

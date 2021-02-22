@@ -4,6 +4,7 @@ import com.sii.eucaptcha.captcha.audio.Mixer;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Random;
  */
 public class CaptchaAudioService {
 
-    private static final Random SECURE_RANDOM = new SecureRandom();
+    private static final Random SECURE_RANDOM = CaptchaRandom.getSecureInstance();
 
     private final String answer;
     private final Sample challenge;

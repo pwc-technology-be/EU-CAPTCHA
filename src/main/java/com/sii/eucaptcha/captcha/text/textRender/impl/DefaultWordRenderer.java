@@ -1,6 +1,7 @@
 package com.sii.eucaptcha.captcha.text.textRender.impl;
 
 import com.sii.eucaptcha.captcha.text.textRender.WordRenderer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DefaultWordRenderer implements WordRenderer {
-    private static final Random RAND = new SecureRandom();
+    private static final Random RAND = CaptchaRandom.getSecureInstance();
     private static final List<Color> DEFAULT_COLORS = new ArrayList<>();
     private static final List<Font> DEFAULT_FONTS = new ArrayList<>();
     // The text will be rendered 25%/5% of the image height/width from the X and Y axes
