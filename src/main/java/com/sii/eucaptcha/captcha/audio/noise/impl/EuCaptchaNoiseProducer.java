@@ -23,7 +23,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
      * List of the audio files for noises
      */
     private static final String[] DEFAULT_NOISES = new String[]{"/sounds/noises/radio_tuning.wav",
-            "/sounds/noises/restaurant.wav", "/sounds/noises/swimming.wav"};
+            "/sounds/noises/restaurant.wav", "/sounds/noises/swimming.wav", "/sounds/noises/zombie.wav"};
 
     @Value("${captcha.audio.noises}")
     private final String[] noiseFiles;
