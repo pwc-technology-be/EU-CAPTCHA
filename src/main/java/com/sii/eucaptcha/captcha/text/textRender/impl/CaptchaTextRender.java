@@ -1,6 +1,7 @@
 package com.sii.eucaptcha.captcha.text.textRender.impl;
 
 import com.sii.eucaptcha.captcha.text.textRender.WordRenderer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.awt.*;
 
@@ -23,7 +24,7 @@ public class CaptchaTextRender implements WordRenderer {
     /**
      * List of Color and font
      */
-    private static final Random RANDOM = new SecureRandom();
+    private static final Random RANDOM = CaptchaRandom.getSecureInstance();
 
     private final List<Color> colors = new ArrayList<>();
     private final List<Font> fonts = new ArrayList<>();
@@ -54,7 +55,7 @@ public class CaptchaTextRender implements WordRenderer {
         g.setRenderingHints(hints);
 
         FontRenderContext frc = g.getFontRenderContext();
-        SecureRandom rand = new SecureRandom();
+        SecureRandom rand = CaptchaRandom.getSecureInstance();
         double lowerX = 0.3;
         double upperX = 0.2;
         double x = (rand.nextFloat() * (upperX - lowerX)) + lowerX;

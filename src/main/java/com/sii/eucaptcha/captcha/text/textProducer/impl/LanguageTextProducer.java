@@ -82,8 +82,11 @@ public class LanguageTextProducer implements TextProducer {
             'Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž',
             'ą', 'č', 'ę', 'ė', 'į', 'š', 'ų', 'ū', 'ž', 'c', 'C');
 
-    private final static char[] MALTESE_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
-            'Ċ', 'Ġ', 'Ħ', 'Ż', 'ċ', 'ġ', 'ħ', 'z', 'ż');
+    private final static char[] MALTESE_CHARS = new char[] {'a', 'b', 'd', 'e', 'f', 'g', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'r', 's', 't', 'u', 'v', 'z',
+            'A', 'B', 'D', 'E', 'F', 'G',  'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T',
+            'U', 'V', 'Z', 'Ċ', 'Ġ', 'Ħ', 'Ż', 'ċ', 'ġ', 'ħ', 'z', 'ż'};
     private final static char[] POLISH_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
             'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż',
             'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'Y', 'y', 'ź', 'ż');

@@ -27,6 +27,7 @@ import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
 import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
 import com.sii.eucaptcha.captcha.audio.voice.impl.VoiceMap;
+import com.sii.eucaptcha.security.CaptchaRandom;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpiringMap;
 import org.springframework.stereotype.Service;
@@ -86,7 +87,7 @@ public class CaptchaService {
 	private static final Map<String, String> captchaCodeMap =
 			ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.SECONDS).build();
 
-	private final SecureRandom random = new SecureRandom();
+	private final SecureRandom random = CaptchaRandom.getSecureInstance();
 	/**
 	 *
 	 * @return Captcha ID
@@ -106,7 +107,7 @@ public class CaptchaService {
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
-		SecureRandom rand = new SecureRandom();
+		SecureRandom rand = CaptchaRandom.getSecureInstance();
 
 		//Generate the Captcha Text
 		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);

@@ -1,13 +1,14 @@
 package com.sii.eucaptcha.captcha.text.textProducer.impl;
 
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
+import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.security.SecureRandom;
 import java.util.Random;
 
 public class DefaultTextProducer implements TextProducer {
 
-    private static final Random RANDOM = new SecureRandom();
+    private static final Random RANDOM = CaptchaRandom.getSecureInstance();
     private static final int DEFAULT_LENGTH = 5;
     private static final char[] DEFAULT_CHARS = new char[] { 'a', 'b', 'c', 'd',
             'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'r', 'w', 'x', 'y',
