@@ -4,8 +4,12 @@ import com.sii.eucaptcha.captcha.audio.Mixer;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.util.FileUtil;
+import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
 import com.sii.eucaptcha.security.CaptchaRandom;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -19,27 +23,13 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
 
     private static final SecureRandom RANDOM = CaptchaRandom.getSecureInstance();
 
-    /**
-     * List of the audio files for noises
-     */
-    private static final String[] DEFAULT_NOISES = new String[]{"/sounds/noises/radio_tuning.wav",
-            "/sounds/noises/restaurant.wav", "/sounds/noises/swimming.wav", "/sounds/noises/zombie.wav"};
-
-    @Value("${captcha.audio.noises}")
-    private final String[] noiseFiles;
-
-    /**
-     * Constructor
-     */
-    public EuCaptchaNoiseProducer() {
-        this(DEFAULT_NOISES);
-    }
+    private final String[] noises;
 
     /**
      * @param noiseFiles the noises to be mixed in the background of the spoken Captcha
      */
     public EuCaptchaNoiseProducer(String[] noiseFiles) {
-        this.noiseFiles = noiseFiles;
+        this.noises = noiseFiles;
     }
 
     /**
@@ -50,7 +40,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
     @Override
     public Sample produceNoise(List<Sample> noiseSamples) {
         Sample appended = Mixer.append(noiseSamples);
-        String noiseFile = this.noiseFiles[RANDOM.nextInt(this.noiseFiles.length)];
+        String noiseFile = this.noises[RANDOM.nextInt(this.noises.length)];
         Sample noise = FileUtil.readSample(noiseFile);
         return Mixer.mix(appended, 1.0D, noise, 0.15D);
     }
@@ -60,7 +50,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
      */
     public String toString() {
         return "[Noise files: " +
-                Arrays.toString(this.noiseFiles) +
+                Arrays.toString(this.noises) +
                 "]";
     }
 }

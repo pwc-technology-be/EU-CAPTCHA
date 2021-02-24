@@ -27,9 +27,11 @@ import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
 import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
 import com.sii.eucaptcha.captcha.audio.voice.impl.VoiceMap;
+import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
 import com.sii.eucaptcha.security.CaptchaRandom;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpiringMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -87,6 +89,9 @@ public class CaptchaService {
 	private static final Map<String, String> captchaCodeMap =
 			ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.SECONDS).build();
 
+	@Autowired
+	SoundConfigProperties props;
+
 	private final SecureRandom random = CaptchaRandom.getSecureInstance();
 	/**
 	 *
@@ -107,8 +112,6 @@ public class CaptchaService {
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
-		SecureRandom rand = CaptchaRandom.getSecureInstance();
-
 		//Generate the Captcha Text
 		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);
 
@@ -117,9 +120,9 @@ public class CaptchaService {
 
 		//Build The Captcha
 		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).withText(textProducer ,wordRenderer )
-				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())),
-						BACKGROUND_COLORS.get(rand.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
-						COLOR_STRAIGHT_LINE_NOISE.get(rand.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
+				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())),
+						BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
+						COLOR_STRAIGHT_LINE_NOISE.get(random.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
 				.gimp(new EuCaptchaGimpyRenderer()).withBorder().build();
 		//Adding the voice map for the selected language
@@ -132,7 +135,7 @@ public class CaptchaService {
 		CaptchaAudioService captchaAudioService = CaptchaAudioService.newBuilder()
 				.withAnswer(captcha.getAnswer())
 				.withVoice(voiceProducer)
-				.withNoise(new EuCaptchaNoiseProducer())
+				.withNoise(new EuCaptchaNoiseProducer(props.getDefaultNoises()))
 				.build();
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
