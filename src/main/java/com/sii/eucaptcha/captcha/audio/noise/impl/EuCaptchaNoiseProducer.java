@@ -24,12 +24,16 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
     private static final SecureRandom RANDOM = CaptchaRandom.getSecureInstance();
 
     private final String[] noises;
+    private final Double sampleVolume;
+    private final Double noiseVolume;
 
     /**
      * @param noiseFiles the noises to be mixed in the background of the spoken Captcha
      */
-    public EuCaptchaNoiseProducer(String[] noiseFiles) {
+    public EuCaptchaNoiseProducer(String[] noiseFiles, Double sampleVolume, Double noiseVolume) {
         this.noises = noiseFiles;
+        this.sampleVolume = sampleVolume;
+        this.noiseVolume = noiseVolume;
     }
 
     /**
@@ -42,7 +46,7 @@ public class EuCaptchaNoiseProducer implements NoiseProducer {
         Sample appended = Mixer.append(noiseSamples);
         String noiseFile = this.noises[RANDOM.nextInt(this.noises.length)];
         Sample noise = FileUtil.readSample(noiseFile);
-        return Mixer.mix(appended, 1.0D, noise, 0.15D);
+        return Mixer.mix(appended, sampleVolume, noise, noiseVolume);
     }
 
     /**

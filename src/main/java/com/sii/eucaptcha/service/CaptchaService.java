@@ -135,7 +135,7 @@ public class CaptchaService {
 		CaptchaAudioService captchaAudioService = CaptchaAudioService.newBuilder()
 				.withAnswer(captcha.getAnswer())
 				.withVoice(voiceProducer)
-				.withNoise(new EuCaptchaNoiseProducer(props.getDefaultNoises()))
+				.withNoise(new EuCaptchaNoiseProducer(props.getDefaultNoises(), props.getSampleVolume(), props.getNoiseVolume()))
 				.build();
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
