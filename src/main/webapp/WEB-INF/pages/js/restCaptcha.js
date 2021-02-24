@@ -18,7 +18,7 @@ $(function(){
                  type: "GET",
                  url: 'api/captchaImg',
                  success: function (data) {
-                     EuCaptchaToken = getCaptchaUrl.getResponseHeader("token");
+                     EuCaptchaToken = getCaptchaUrl.getResponseHeader("jwtString");
                      const jsonData = JSON.parse(data);
                      $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
                      $("#captchaImg").attr("captchaId", jsonData.captchaId);
@@ -36,7 +36,7 @@ $(function(){
                  xhr.setRequestHeader("jwtString", EuCaptchaToken);
              },
              success: function (data) {
-                 EuCaptchaToken = reloadCaptchaUrl.getResponseHeader("token");
+                 EuCaptchaToken = reloadCaptchaUrl.getResponseHeader("jwtString");
                  const jsonData = JSON.parse(data);
                  $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
                  $("#captchaImg").attr("captchaId", jsonData.captchaId);
