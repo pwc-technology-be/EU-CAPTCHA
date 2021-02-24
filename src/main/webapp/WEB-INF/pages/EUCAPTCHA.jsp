@@ -87,7 +87,7 @@
               <div class="col-md-2">
                 <br><br><br>
                 <label title="Change the language" for="captchaReload">Reload the Captcha</label>
-                <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <i class="fa fa-refresh"></i> </button>
+                <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <em class="fa fa-refresh"></em> </button>
               </div>
             </div>
             <hr>
@@ -101,7 +101,7 @@
               </div>
               <div class="col-md-2">
                 <label title="Submit tha Captcha" for="captchaSubmit">Submit the Captcha</label>
-                <button title="Submit tha Captcha" class="btn btn-primary btn-lg " id="captchaSubmit"> <i class="fa fa-check" aria-hidden="true"></i> </button>
+                <button title="Submit tha Captcha" class="btn btn-primary btn-lg " id="captchaSubmit"> <em class="fa fa-check" aria-hidden="true"></em> </button>
               </div>
             </div>  
             <br>
