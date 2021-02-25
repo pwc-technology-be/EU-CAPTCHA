@@ -128,6 +128,7 @@ public class CaptchaController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"jwtString");
         headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "jwtString");
+        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         headers.add("Content-Type", "application/json; charset=UTF-8");
         headers.add("jwtString", jwtToken.generateJwtToken());
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
