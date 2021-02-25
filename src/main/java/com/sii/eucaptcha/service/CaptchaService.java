@@ -26,7 +26,7 @@ import com.sii.eucaptcha.captcha.text.textProducer.impl.LanguageTextProducer;
 import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
 import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
-import com.sii.eucaptcha.captcha.audio.voice.impl.VoiceMap;
+import com.sii.eucaptcha.captcha.util.ResourceI18nMapUtil;
 import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
 import com.sii.eucaptcha.security.CaptchaRandom;
 import lombok.extern.slf4j.Slf4j;
@@ -108,6 +108,8 @@ public class CaptchaService {
 	 */
 	public String[] generateCaptchaImage(String previousCaptchaId , Locale locale) {
 
+
+
 		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
@@ -126,8 +128,7 @@ public class CaptchaService {
 				))
 				.gimp(new EuCaptchaGimpyRenderer()).withBorder().build();
 		//Adding the voice map for the selected language
-		Map<String, String> voicesMap;
-	    voicesMap = new VoiceMap().voiceMapLettersAndNumbers(locale);
+		Map<String, String> voicesMap = new ResourceI18nMapUtil().voiceMap(locale);
 
 		VoiceProducer voiceProducer = new LanguageVoiceProducer(voicesMap);
 
