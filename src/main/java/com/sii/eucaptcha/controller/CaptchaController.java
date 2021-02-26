@@ -20,7 +20,7 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/api")
 @Slf4j
-@CrossOrigin("*")
+@CrossOrigin()
 public class CaptchaController {
 
     private final CaptchaService captchaService;
@@ -49,7 +49,6 @@ public class CaptchaController {
      * @param locale the chosen locale
      * @return response as String contains CaptchaID and Captcha Image
      */
-
     @GetMapping(value = "/captchaImg")
     public ResponseEntity<String> getCaptchaImage(@ApiParam(hidden = true) Locale locale) {
         return createResponse(captchaService.generateCaptchaImage(null, locale));
@@ -86,7 +85,6 @@ public class CaptchaController {
      * @param captchaAnswer the answer of the Captcha -> success or fail
      * @return fail or success as String response
      */
-
     @PostMapping(value = "/validateCaptcha/{captchaId}")
     public ResponseEntity<String> validateCaptcha(@PathVariable("captchaId") String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
@@ -128,7 +126,6 @@ public class CaptchaController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"jwtString");
         headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "jwtString");
-        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         headers.add("Content-Type", "application/json; charset=UTF-8");
         headers.add("jwtString", jwtToken.generateJwtToken());
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);

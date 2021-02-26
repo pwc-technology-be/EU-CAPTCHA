@@ -16,7 +16,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'https://fd8c470fz6.execute-api.eu-west-1.amazonaws.com/ProdStage/api/captchaImg',
+            url: '!url of your server!/api/captchaImg',
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("jwtString");
                 const jsonData = JSON.parse(data);
@@ -29,9 +29,10 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'https://fd8c470fz6.execute-api.eu-west-1.amazonaws.com/ProdStage/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
+            url: '!url of your server/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Origin:", "!url of your client!");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
             },
@@ -51,9 +52,10 @@ $(function(){
         const validateCaptcha = $.ajax({
             type: "POST",
             contentType: 'application/json; charset=utf-8',
-            url: "https://fd8c470fz6.execute-api.eu-west-1.amazonaws.com/ProdStage/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
+            url: "!url of your server!/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Origin:", "!url of your client!");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
             },
