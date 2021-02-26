@@ -111,9 +111,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler(props.getJsHandler())
                 .addResourceLocations(props.getJsLocations());
     }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
 }
