@@ -49,6 +49,7 @@ public class CaptchaController {
      * @param locale the chosen locale
      * @return response as String contains CaptchaID and Captcha Image
      */
+    @CrossOrigin()
     @GetMapping(value = "/captchaImg")
     public ResponseEntity<String> getCaptchaImage(@ApiParam(hidden = true) Locale locale) {
         return createResponse(captchaService.generateCaptchaImage(null, locale));
@@ -61,6 +62,7 @@ public class CaptchaController {
      * @param locale            the chosen Locale
      * @return response as String contains CaptchaID and Captcha Image
      */
+    @CrossOrigin()
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public ResponseEntity<String> reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
                                                      Locale locale,
@@ -85,6 +87,7 @@ public class CaptchaController {
      * @param captchaAnswer the answer of the Captcha -> success or fail
      * @return fail or success as String response
      */
+    @CrossOrigin()
     @PostMapping(value = "/validateCaptcha/{captchaId}")
     public ResponseEntity<String> validateCaptcha(@PathVariable("captchaId") String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
