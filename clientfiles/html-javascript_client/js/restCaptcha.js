@@ -32,7 +32,6 @@ $(function(){
             url: '!url of your server/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Origin:", "!url of your client!");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
             },
@@ -55,7 +54,6 @@ $(function(){
             url: "!url of your server!/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Origin:", "!url of your client!");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
             },
