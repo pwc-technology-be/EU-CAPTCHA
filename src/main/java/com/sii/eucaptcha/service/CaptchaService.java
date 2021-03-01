@@ -108,8 +108,6 @@ public class CaptchaService {
 	 */
 	public String[] generateCaptchaImage(String previousCaptchaId , Locale locale) {
 
-
-
 		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);

@@ -124,7 +124,6 @@ public class CaptchaController {
         response.addProperty("audioCaptcha", captchaData[2]);
         //Adding the token to the Http Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"jwtString");
         headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "jwtString");
         headers.add("Content-Type", "application/json; charset=UTF-8");
         headers.add("jwtString", jwtToken.generateJwtToken());

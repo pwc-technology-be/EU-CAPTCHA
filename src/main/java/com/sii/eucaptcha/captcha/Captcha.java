@@ -76,7 +76,6 @@ public class Captcha {
         public CaptchaBuilder withText(TextProducer txtProd, WordRenderer wRenderer) {
             answer += txtProd.getText();
             wRenderer.render(answer, image);
-
             return this;
         }
 
