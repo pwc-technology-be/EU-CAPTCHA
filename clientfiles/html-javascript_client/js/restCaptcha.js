@@ -1,4 +1,3 @@
-let language = "Change Language ...";
 let useAudio = false;
 let EuCaptchaToken;
 
@@ -16,7 +15,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: '!url of your server!/api/captchaImg',
+            url: 'api/captchaImg?lang=' + localStorage.getItem("language"),
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("jwtString");
                 const jsonData = JSON.parse(data);
@@ -29,7 +28,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: '!url of your server/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
+            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -43,7 +42,6 @@ $(function(){
                 $("#audioCaptcha").attr("src", "data:audio/wav;base64," + jsonData.audioCaptcha);
                 $("#captchaAnswer").val("");
                 useAudio = false;
-                document.getElementById('dropdown-language').value = language;
             }
         });
     }
@@ -51,7 +49,7 @@ $(function(){
         const validateCaptcha = $.ajax({
             type: "POST",
             contentType: 'application/json; charset=utf-8',
-            url: "!url of your server!/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
+            url: "api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -106,6 +104,7 @@ $(function(){
     $(document).ready(function () {
         $("#dropdown-language").change(function () {
             const selectedOption = $('#dropdown-language').val();
+            $('#dropdown-language').val(selectedOption);
             if (selectedOption !== '') {
                 localStorage.setItem("language", selectedOption);
                 window.location.replace('?lang=' + selectedOption);
