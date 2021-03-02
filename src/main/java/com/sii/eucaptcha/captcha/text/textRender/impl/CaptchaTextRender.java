@@ -61,8 +61,8 @@ public class CaptchaTextRender implements WordRenderer {
         double x = (rand.nextFloat() * (upperX - lowerX)) + lowerX;
 
         double lowerY = 0.45;
-        double upperY = 0.7;
-        double y = (rand.nextFloat() * (upperY - lowerY)) + lowerY;
+        double upperY = 0.6;
+        double y = (rand.nextFloat() * (upperY - lowerY)) + upperY;
 
         int xBaseline = (int) Math.round(image.getWidth() * x);
         int yBaseline = image.getHeight() - (int) Math.round(image.getHeight() * y);

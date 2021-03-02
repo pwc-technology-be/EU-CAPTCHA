@@ -1,4 +1,3 @@
-let language = "Change Language ...";
 let useAudio = false;
 let EuCaptchaToken;
 
@@ -16,7 +15,7 @@ $(function(){
 	     function getcaptcha(){
              const getCaptchaUrl = $.ajax({
                  type: "GET",
-                 url: 'api/captchaImg',
+                 url: 'api/captchaImg?lang=' + localStorage.getItem("language"),
                  success: function (data) {
                      EuCaptchaToken = getCaptchaUrl.getResponseHeader("jwtString");
                      const jsonData = JSON.parse(data);
@@ -105,6 +104,7 @@ $(function(){
 	$(document).ready(function () {
             $("#dropdown-language").change(function () {
                 const selectedOption = $('#dropdown-language').val();
+                $('#dropdown-language').val(selectedOption);
                 if (selectedOption !== '') {
                     localStorage.setItem("language", selectedOption);
                     window.location.replace('?lang=' + selectedOption);
