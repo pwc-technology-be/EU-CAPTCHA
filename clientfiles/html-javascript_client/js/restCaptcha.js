@@ -15,7 +15,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/captchaImg',
+            url: '!! URL TO THE SERVER!!/api/captchaImg',
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);
@@ -28,7 +28,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
+            url: '!! URL TO THE SERVER!!/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -49,7 +49,7 @@ $(function(){
         const validateCaptcha = $.ajax({
             type: "POST",
             contentType: 'application/json; charset=utf-8',
-            url: "api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
+            url: "!! URL TO THE SERVER!!/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
