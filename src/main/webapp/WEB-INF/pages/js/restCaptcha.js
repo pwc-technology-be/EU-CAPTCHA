@@ -15,9 +15,9 @@ $(function(){
 	     function getcaptcha(){
              const getCaptchaUrl = $.ajax({
                  type: "GET",
-                 url: 'api/captchaImg?lang=' + localStorage.getItem("language"),
+                 url: 'api/captchaImg',
                  success: function (data) {
-                     EuCaptchaToken = getCaptchaUrl.getResponseHeader("jwtString");
+                     EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                      const jsonData = JSON.parse(data);
                      $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
                      $("#captchaImg").attr("captchaId", jsonData.captchaId);
@@ -32,10 +32,10 @@ $(function(){
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
-                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
+                 xhr.setRequestHeader("x-jwtString", EuCaptchaToken);
              },
              success: function (data) {
-                 EuCaptchaToken = reloadCaptchaUrl.getResponseHeader("jwtString");
+                 EuCaptchaToken = reloadCaptchaUrl.getResponseHeader("x-jwtString");
                  const jsonData = JSON.parse(data);
                  $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
                  $("#captchaImg").attr("captchaId", jsonData.captchaId);
@@ -53,7 +53,7 @@ $(function(){
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
-                 xhr.setRequestHeader("jwtString", EuCaptchaToken);
+                 xhr.setRequestHeader("x-jwtString", EuCaptchaToken);
              },
              data: jQuery.param({
                  captchaAnswer: $("#captchaAnswer").val(),
