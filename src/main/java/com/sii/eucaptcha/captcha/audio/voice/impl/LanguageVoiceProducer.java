@@ -30,7 +30,7 @@ public class LanguageVoiceProducer implements VoiceProducer {
      */
     @Override
     public Sample getVocalization(char num) {
-        String str = String.valueOf(num).toUpperCase();
+       String str = String.valueOf(num);
 
         String filename = voices.get(str);
         return FileUtil.readSample(filename);
