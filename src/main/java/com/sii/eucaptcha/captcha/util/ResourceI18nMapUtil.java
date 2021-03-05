@@ -14,7 +14,6 @@ public class ResourceI18nMapUtil {
             String key = bundleKeys.nextElement();
             String value = labels.getString(key);
             if (key.startsWith("alphabet.") && StringUtils.isNotBlank(value)) {
-                System.out.println("key = " + key + ", " + "value = " + value);
                 voicesMap.put(key.substring(9), value);
             }
         }

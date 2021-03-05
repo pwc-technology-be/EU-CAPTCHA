@@ -37,9 +37,9 @@ public class LanguageTextProducer implements TextProducer {
             'U', 'V', 'Z'};
 
     private final static char[] BULGARE_CHARS = {
-            'А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е', 'Ж', 'ж', 'З', 'з', 'И', 'и',
-            'Й', 'й', 'К', 'к', 'Л', 'л', 'М', 'м', 'Н', 'н', 'О', 'о', 'П', 'п', 'Р', 'р', 'С', 'с',
-            'Т', 'т', 'У', 'у', 'Ф', 'ф', 'Х', 'х', 'Ц', 'ц', 'Ч', 'ч', 'Ш', 'ш', 'Щ', 'щ',
+            'A', 'a', 'Б', 'б', 'B', 'b', 'Г', 'г', 'Д', 'д', 'E', 'e', 'Ж', 'ж', 'З', 'з', 'И', 'и',
+            'Й', 'й', 'K', 'k', 'Л', 'л', 'M', 'm', 'H', 'h', 'O', 'o', 'П', 'п', 'P', 'p', 'C', 'c',
+            'T', 't', 'Y', 'y', 'Ф', 'ф', 'X', 'x', 'Ц', 'ц', 'Ч', 'ч', 'Ш', 'ш', 'Щ', 'щ',
             'Ю', 'ю', 'Я', 'я', '0', '1', '2', '3', '4', '6', '7', '8', '9'};
 
     private final static char[] CROATE_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,

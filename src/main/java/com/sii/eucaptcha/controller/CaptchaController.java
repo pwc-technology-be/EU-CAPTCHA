@@ -20,7 +20,7 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/api")
 @Slf4j
-@CrossOrigin("*")
+@CrossOrigin
 public class CaptchaController {
 
     private final CaptchaService captchaService;
@@ -64,7 +64,7 @@ public class CaptchaController {
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public ResponseEntity<String> reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
                                                      Locale locale,
-                                                     @RequestHeader("jwtString") String jwtString) {
+                                                     @RequestHeader("x-jwtString") String jwtString) {
 
         try {
             // Reload the captcha if the token is valid
@@ -89,7 +89,7 @@ public class CaptchaController {
     public ResponseEntity<String> validateCaptcha(@PathVariable("captchaId") String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
                                                   @RequestParam(value = "useAudio", required = false) boolean useAudio,
-                                                  @RequestHeader("jwtString") String jwtString) {
+                                                  @RequestHeader("x-jwtString") String jwtString) {
 
         //Verify the validity of the captcha answer.
         if (captchaAnswer.trim().length() != captchaAnswerLength ||
@@ -124,10 +124,8 @@ public class CaptchaController {
         response.addProperty("audioCaptcha", captchaData[2]);
         //Adding the token to the Http Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, OPTIONS");
-        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "jwtString, Origin");
         headers.add("Content-Type", "application/json; charset=UTF-8");
-        headers.add("jwtString", jwtToken.generateJwtToken());
+        headers.add("x-jwtString", jwtToken.generateJwtToken());
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
     }
 }
