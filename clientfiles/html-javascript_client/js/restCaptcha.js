@@ -5,17 +5,14 @@ function onPlayAudio(){
     useAudio = true;
 }
 function getLastSelectedValue(){
-    const language = localStorage.getItem("language");
-    if(language)
-    {
-        document.getElementById('dropdown-language').value = language;
-    }
+    const language = sessionStorage.getItem("language");
+    language ? document.getElementById('dropdown-language').value = language :document.getElementById('dropdown-language').value = "en";
 }
 $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: '!! URL TO THE SERVER!!/api/captchaImg',
+            url: 'api/captchaImg',
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);
@@ -28,7 +25,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: '!! URL TO THE SERVER!!/api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
+            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -49,7 +46,7 @@ $(function(){
         const validateCaptcha = $.ajax({
             type: "POST",
             contentType: 'application/json; charset=utf-8',
-            url: "!! URL TO THE SERVER!!/api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
+            url: "api/validateCaptcha/" + $("#captchaImg").attr("captchaId"),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -106,7 +103,7 @@ $(function(){
             const selectedOption = $('#dropdown-language').val();
             $('#dropdown-language').val(selectedOption);
             if (selectedOption !== '') {
-                localStorage.setItem("language", selectedOption);
+                sessionStorage.setItem("language", selectedOption);
                 window.location.replace('?lang=' + selectedOption);
             }
         });

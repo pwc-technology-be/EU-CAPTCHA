@@ -5,11 +5,8 @@ function onPlayAudio(){
          useAudio = true;
 }
 function getLastSelectedValue(){
-    const language = localStorage.getItem("language");
-    if(language)
-    {
-        document.getElementById('dropdown-language').value = language;
-    }
+    const language = sessionStorage.getItem("language");
+    language ? document.getElementById('dropdown-language').value = language :document.getElementById('dropdown-language').value = "en";
 }
 $(function(){
 	     function getcaptcha(){
@@ -106,7 +103,7 @@ $(function(){
                 const selectedOption = $('#dropdown-language').val();
                 $('#dropdown-language').val(selectedOption);
                 if (selectedOption !== '') {
-                    localStorage.setItem("language", selectedOption);
+                    sessionStorage.setItem("language", selectedOption);
                     window.location.replace('?lang=' + selectedOption);
                 }
             });
