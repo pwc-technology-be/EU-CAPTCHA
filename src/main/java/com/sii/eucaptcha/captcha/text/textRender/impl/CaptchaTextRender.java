@@ -58,7 +58,7 @@ public class CaptchaTextRender implements WordRenderer {
         SecureRandom rand = CaptchaRandom.getSecureInstance();
         double lowerX = 0.3;
         double upperX = 0.2;
-        double x = (rand.nextFloat() * (upperX - lowerX)) + lowerX;
+        double x = (rand.nextFloat() * (upperX - lowerX)) + upperX;
 
         double lowerY = 0.45;
         double upperY = 0.6;
