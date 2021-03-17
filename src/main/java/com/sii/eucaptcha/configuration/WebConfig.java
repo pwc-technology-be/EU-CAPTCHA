@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
@@ -118,6 +119,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("OPTIONS", "GET", "POST")
                 .exposedHeaders("x-jwtString", "Content-Type")
-                .allowedHeaders("x-jwtString", "Content-Type", "Origin");
+                .allowedHeaders("x-jwtString", "Content-Type", HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
     }
 }
