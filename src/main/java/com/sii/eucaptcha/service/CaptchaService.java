@@ -1,8 +1,11 @@
 package com.sii.eucaptcha.service;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -28,10 +31,19 @@ import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
 import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
 import com.sii.eucaptcha.captcha.util.ResourceI18nMapUtil;
 import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
+import com.sii.eucaptcha.controller.constants.CaptchaConstants;
+import com.sii.eucaptcha.controller.dto.captcharesult.*;
+import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
+import com.sii.eucaptcha.exceptions.CaptchaQueryIsNull;
+import com.sii.eucaptcha.exceptions.WrongCaptchaRotationDegree;
 import com.sii.eucaptcha.security.CaptchaRandom;
+import com.sii.eucaptcha.service.whatsup.CaptchaWhatsUpImagesService;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpiringMap;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 
@@ -92,6 +104,16 @@ public class CaptchaService {
 	@Autowired
 	SoundConfigProperties props;
 
+	@Autowired
+	ResourceLoader resourceLoader ;
+
+
+	@Autowired
+	CaptchaWhatsUpImagesService captchaWhatsUpImagesService ;
+
+
+
+
 	private final SecureRandom random = CaptchaRandom.getSecureInstance();
 	/**
 	 *
@@ -106,14 +128,15 @@ public class CaptchaService {
 	 * @param locale the chosen locale
 	 * @return String [] which contains the CaptchaID , Captcha Image , and Captcha Audio.
 	 */
-	public String[] generateCaptchaImage(String previousCaptchaId , Locale locale) {
+	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale , Integer captchaLenght) {
 
 		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
+		int captchaTextLenght = (captchaLenght!=null) ? (int) captchaLenght : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH ;
 
 		//Generate the Captcha Text
-		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);
+		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(captchaTextLenght,locale);
 
 		//Generate the Captcha drawing
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
@@ -168,10 +191,16 @@ public class CaptchaService {
 		
 		String captchaId=this.nextCaptchaId();
 		//Adding the Captcha image , the captcha ID , the captcha audio file to the String []
-		String[] imageParams = {captchaPngImage,captchaId,captchaAudioFile };
+
+		TextualCaptchaResultDtoDto captchaDataResult = new TextualCaptchaResultDtoDto();
+		captchaDataResult.setCaptchaId(captchaId);
+		captchaDataResult.setAudioCaptcha(captchaAudioFile);
+		captchaDataResult.setCaptchaImg(captchaPngImage);
+		captchaDataResult.setCaptchaType(CaptchaConstants.STANDARD);
+
 		addCaptcha(captchaId,captcha.getAnswer());
 
-		return imageParams;
+		return captchaDataResult;
 	}
 
 	/**
@@ -180,7 +209,7 @@ public class CaptchaService {
 	 * @param captchaAnswer the users answer on the Captcha
 	 * @return Boolean of the verification
 	 */
-	public boolean validateCaptcha(String captchaId,String captchaAnswer , boolean usingAudio){
+	public boolean validateCaptcha(String captchaId,String captchaAnswer  ,  boolean usingAudio){
 		boolean result=false;
 
 		//case sensitive
@@ -196,6 +225,30 @@ public class CaptchaService {
 		}
 		removeCaptcha(captchaId);
 		return result;
+	}
+
+	public boolean validateWhatsUpCaptcha(String captchaId , String captchaAnswer ){
+		if(!captchaCodeMap.containsKey(captchaId)){
+			 removeCaptcha(captchaId);
+			 return false;
+		}
+		String storedAnswer = captchaCodeMap.get(captchaId);
+		removeCaptcha(captchaId);
+		int sotredAnswerAsInt = Integer.parseInt(storedAnswer);
+		int givenAnswer = Integer.parseInt(captchaAnswer);
+
+		System.out.println("stored answer = " + sotredAnswerAsInt + " givenAnswer = " + givenAnswer);
+
+		return ( ( givenAnswer == (sotredAnswerAsInt*-1)) ||  ( (givenAnswer<=0) ? ( ( givenAnswer*-1 - 360 ) == sotredAnswerAsInt ) : ( (360 - givenAnswer ) == sotredAnswerAsInt))  );
+
+
+	}
+
+	public boolean validateCaptcha(String captchaId,String captchaAnswer , String captchaType ,  boolean usingAudio){
+		    if(captchaType != null && CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaType))
+		    	return validateWhatsUpCaptcha(captchaId , captchaAnswer );
+		    else
+			return validateCaptcha(captchaId , captchaAnswer , usingAudio);
 	}
 
 	/**
@@ -216,5 +269,93 @@ public class CaptchaService {
 	private static void removeCaptcha(String captchaId){
 		captchaCodeMap.remove(captchaId);
 	}
+
+	/**
+	 * Generate Captcha  Image Wrapper
+	 *
+	 * @param captchaQueryDto the captcha Query that carry the query parameters
+	 * @return response as String contains CaptchaID and Captcha Image
+	 */
+
+	public CaptchaResultDto generateCaptchaWrapper(CaptchaQueryDto captchaQueryDto){
+		if(captchaQueryDto == null) throw new CaptchaQueryIsNull();
+
+		String previousCaptchaId = captchaQueryDto.getPreviousCaptchaId();
+ 		if(captchaQueryDto.getCaptchaType() !=null && captchaQueryDto.getCaptchaType().equalsIgnoreCase(CaptchaConstants.WHATS_UP)){
+			return generateWhatsUpCaptchaImage(previousCaptchaId , captchaQueryDto.getDegree());
+		}else{
+			Locale locale = captchaQueryDto.getLocale();
+			Integer captchaLength = captchaQueryDto.getCaptchaLength();
+			return generateCaptchaImage(previousCaptchaId ,locale , captchaLength );
+		}
+
+
+	}
+	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale ){
+		return generateCaptchaImage(previousCaptchaId ,locale , null );
+	}
+
+	public CaptchaResultDto generateWhatsUpCaptchaImage(String previousCaptchaId , Integer degree){
+		if(previousCaptchaId!=null)
+			removeCaptcha(previousCaptchaId);
+		String captchaId=this.nextCaptchaId();
+		//Adding the Captcha image , the captcha ID , the captcha audio file to the String []
+
+		Resource resource = captchaWhatsUpImagesService.loadRandomImage();
+		if(degree == null ) degree = CaptchaConstants.DEFAULT_DEGREE;
+
+		int rotationAngle = degree ;
+		try {
+
+			 rotationAngle = CaptchaRandom.getRandomRotationAngle(degree);
+		} catch (WrongCaptchaRotationDegree wrongCaptchaRotationDegree) {
+			wrongCaptchaRotationDegree.printStackTrace();
+		}
+
+
+		String captchaPngImage ="";
+		WhatsUpCaptchaResultDtoDto captchaDataResult = new WhatsUpCaptchaResultDtoDto();
+		try {
+			File file = resource.getFile();
+			byte[] fileContent = FileUtils.readFileToByteArray(file);
+			BufferedImage buffImg = ImageIO.read(file);
+
+            BufferedImage rotatedImage =   captchaWhatsUpImagesService.rotate(buffImg , rotationAngle);
+
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			try {
+				ImageIO.write(rotatedImage, "png", os);
+				os.flush();
+				byte[] imageBytes = os.toByteArray();
+				os.close();
+				captchaPngImage = new String(Base64.getEncoder().encode(imageBytes), StandardCharsets.UTF_8);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+
+			//	captchaPngImage = encodedString ;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		captchaDataResult.setCaptchaType(CaptchaConstants.WHATS_UP);
+		captchaDataResult.setCaptchaImg(captchaPngImage);
+		captchaDataResult.setCaptchaId(captchaId);
+		captchaDataResult.setDegree(degree);
+
+		System.out.println("add to storage captchaId = " + captchaId + " answer = " + rotationAngle);
+		addCaptcha(captchaId,Integer.toString(rotationAngle));
+
+		return captchaDataResult;
+	}
+
+
+
+
+
+
 
 }

@@ -1,0 +1,46 @@
+package com.sii.eucaptcha.service.whatsup;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+@Service
+public class CaptchaWhatsUpImagesServiceLocalImpl implements CaptchaWhatsUpImagesService{
+
+    @Autowired
+    private ResourceLoader resourceLoader ;
+
+    private final int nameRangeMin = 1;
+    private final int nameRangeMax = 7 ;
+
+
+    @Override
+    public Resource loadRandomImage() {
+            int randomNum = nameRangeMin + (int)(Math.random() * nameRangeMax);
+        	Resource resource = loadImage(Integer.toString(randomNum));
+        	return resource;
+    }
+
+
+
+    @Override
+    public BufferedImage rotate(BufferedImage bimg, double angle) {
+        int w = bimg.getWidth();
+        int h = bimg.getHeight();
+        BufferedImage rotated = new BufferedImage(w, h, bimg.getType());
+        Graphics2D graphic = rotated.createGraphics();
+        graphic.rotate(Math.toRadians(angle), w/2, h/2);
+        graphic.drawImage(bimg, null, 0, 0);
+        graphic.dispose();
+        return rotated;
+    }
+
+    private Resource loadImage(String name) {
+        return resourceLoader.getResource(
+                "classpath:captchaImages/"+name+".png");
+    }
+}
