@@ -1,4 +1,0 @@
-package com.sii.eucaptcha.controller.dto.captchaquery;
-
-public class WhatsUpCaptchaQueryDto {
-}
