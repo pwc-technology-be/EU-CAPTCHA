@@ -20,7 +20,6 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/api")
 @Slf4j
-@CrossOrigin
 public class CaptchaController {
 
     private final CaptchaService captchaService;
@@ -49,6 +48,7 @@ public class CaptchaController {
      * @param locale the chosen locale
      * @return response as String contains CaptchaID and Captcha Image
      */
+    @CrossOrigin
     @GetMapping(value = "/captchaImg")
     public ResponseEntity<String> getCaptchaImage(@ApiParam(hidden = true) Locale locale) {
         return createResponse(captchaService.generateCaptchaImage(null, locale));
@@ -61,6 +61,7 @@ public class CaptchaController {
      * @param locale            the chosen Locale
      * @return response as String contains CaptchaID and Captcha Image
      */
+    @CrossOrigin
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public ResponseEntity<String> reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
                                                      Locale locale,
@@ -85,6 +86,7 @@ public class CaptchaController {
      * @param captchaAnswer the answer of the Captcha -> success or fail
      * @return fail or success as String response
      */
+    @CrossOrigin
     @PostMapping(value = "/validateCaptcha/{captchaId}")
     public ResponseEntity<String> validateCaptcha(@PathVariable("captchaId") String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
@@ -124,7 +126,7 @@ public class CaptchaController {
         response.addProperty("audioCaptcha", captchaData[2]);
         //Adding the token to the Http Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
         headers.add("Content-Type", "application/json; charset=UTF-8");
         headers.add("x-jwtString", jwtToken.generateJwtToken());
         return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);

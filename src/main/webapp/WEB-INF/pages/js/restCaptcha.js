@@ -12,7 +12,7 @@ $(function(){
 	     function getcaptcha(){
              const getCaptchaUrl = $.ajax({
                  type: "GET",
-                 url: 'api/captchaImg',
+                 url: 'api/captchaImg?lang=' + sessionStorage.getItem("language"),
                  success: function (data) {
                      EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                      const jsonData = JSON.parse(data);
@@ -25,7 +25,7 @@ $(function(){
 	 function reloadCaptcha(){
          const reloadCaptchaUrl = $.ajax({
              type: "GET",
-             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId"),
+             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?lang=' + sessionStorage.getItem("language"),
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
