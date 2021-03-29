@@ -15,34 +15,19 @@ public class LanguageTextProducer implements TextProducer {
      * List of characters for the 24 language
      */
 
-    /*
-     *English
-     *
-     */
-    private final static char[] ENGLISH_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z'};
 
     /**
      * List of common characters for LATVIAN , LITHUANIAN , SLOVENIAN , MALTESE , POLISH , CROITE
      */
-    private final static char[] LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    private final static char[] LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE = {
             'a', 'b', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'r', 's', 't', 'u', 'v', 'z',
             'A', 'B', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T',
             'U', 'V', 'Z'};
 
-    private final static char[] BULGARE_CHARS = {
-            'A', 'a', 'Б', 'б', 'B', 'b', 'Г', 'г', 'Д', 'д', 'E', 'e', 'Ж', 'ж', 'З', 'з', 'И', 'и',
-            'Й', 'й', 'K', 'k', 'Л', 'л', 'M', 'm', 'H', 'h', 'O', 'o', 'П', 'п', 'P', 'p', 'C', 'c',
-            'T', 't', 'Y', 'y', 'Ф', 'ф', 'X', 'x', 'Ц', 'ц', 'Ч', 'ч', 'Ш', 'ш', 'Щ', 'щ',
-            'Ю', 'ю', 'Я', 'я', '0', '1', '2', '3', '4', '6', '7', '8', '9'};
-
-    private final static char[] CROATE_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
+    private final static char[] CROATE_CHARS = ArrayUtils.addAll(
+            LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
             'Č', 'Ć', 'Đ', 'Š', 'Ž', 'č', 'ć', 'đ',
             'š', 'ž');
 
@@ -51,28 +36,12 @@ public class LanguageTextProducer implements TextProducer {
             'ň', 'Ó', 'ó', 'Ř', 'ř', 'Š', 'š', 'Ť',
             'ť', 'Ú', 'ú', 'Ý', 'ý', 'Ž', 'ž');
 
-    private final static char[] DANISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Æ', 'æ', 'Ø', 'ø', 'Å', 'å');
-
-    private final static char[] SPANISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Ñ', 'ñ');
-
-    private final static char[] ESTONIAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'š', 'ž', 'õ', 'ä', 'ö', 'ü', 'Š', 'Ž', 'Õ', 'Ä', 'Ö', 'Ü');
-
-    private final static char[] FINNISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Å', 'å', 'Ä', 'ä', 'Ö', 'ö');
-
-    private final static char[] GERMAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Ä', 'Ö', 'Ü', 'ß', 'ä', 'ö', 'ü', 'ß');
-
-    private final static char[] GREEK_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+   private final static char[] GREEK_CHARS = {
             'A', 'α', 'B', 'β', 'Γ', 'γ', 'Δ', 'δ', 'E', 'ε',
             'Z', 'ζ', 'H', 'η', 'Θ', 'θ', 'I', 'ι', 'K', 'κ',
             'Λ', 'λ', 'M', 'μ', 'N', 'ν', 'Ξ', 'ξ', 'O', 'ο',
             'Π', 'π', 'P', 'ρ', 'Σ', 'σ', 'T', 'τ', 'Y', 'υ',
             'Φ', 'φ', 'X', 'χ', 'Ψ', 'ψ', 'Ω', 'ω'};
-
-    private final static char[] HUNGARIAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS,
-            'Á', 'á', 'É', 'é', 'Í', 'í', 'Ó', 'ó', 'Ö', 'ö',
-            'Ő', 'ő', 'Ú', 'ú', 'Ü', 'ü', 'Ű', 'ű');
-
-    private final static char[] IRISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú');
 
     private final static char[] LATVIAN_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
             'Ā', 'Č', 'Ē', 'Ģ', 'Ī', 'Ķ', 'Ļ', 'Ņ', 'Š', 'Ū', 'Ž',
@@ -91,8 +60,6 @@ public class LanguageTextProducer implements TextProducer {
             'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż',
             'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'Y', 'y', 'ź', 'ż');
 
-    private final static char[] ROMANIAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Ă', 'ă', 'Â', 'â', 'Î', 'î', 'Ș', 'ș', 'Ț', 'ț');
-
     private final static char[] SLOVAKIAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS,
             'Ä', 'Č', 'Ď', 'Í', 'Ľ', 'Ô', 'Š', 'Ť', 'Ž',
             'ä', 'č', 'ď', 'í', 'ľ', 'ô', 'š', 'ť', 'ž');
@@ -100,9 +67,7 @@ public class LanguageTextProducer implements TextProducer {
     private final static char[] SLOVENIAN_CHARS = ArrayUtils.addAll(LIST_CHARS_COMMUN_LATVIAN_LITHUANIAN_SLOVINAN_MALTESS_POLISH_CROITE,
             'Č', 'č', 'c', 'C', 'Š', 'š', 'Ž', 'ž');
 
-    private final static char[] SWEDISH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS, 'Å', 'å', 'Ä', 'ä', 'Ö', 'ö');
-
-    private TextProducer txtProd;
+   private TextProducer txtProd;
 
     /**
      *
@@ -112,38 +77,12 @@ public class LanguageTextProducer implements TextProducer {
      */
     public final TextProducer getLanguageTextProducer(int length, Locale locale) {
         switch (locale.getLanguage()) {
-            case "en": case "fr": case "it":case "nl":case "pt": default:
-               txtProd = new DefaultTextProducer(length, ENGLISH_CHARS);
-                break;
-            case "de":
-                txtProd = new DefaultTextProducer(length, GERMAN_CHARS);
-                break;
-            case "bg":
-                txtProd = new DefaultTextProducer(length, BULGARE_CHARS);
-                break;
+
             case "hr":
                 txtProd = new DefaultTextProducer(length, CROATE_CHARS);
                 break;
-            case "da":
-                txtProd = new DefaultTextProducer(length, DANISH_CHARS);
-                break;
-            case "es":
-                txtProd = new DefaultTextProducer(length, SPANISH_CHARS);
-                break;
-            case "et":
-                txtProd = new DefaultTextProducer(length, ESTONIAN_CHARS);
-                break;
-            case "fi":
-                txtProd = new DefaultTextProducer(length, FINNISH_CHARS);
-                break;
             case "el":
                 txtProd = new DefaultTextProducer(length, GREEK_CHARS);
-                break;
-            case "hu":
-                txtProd = new DefaultTextProducer(length, HUNGARIAN_CHARS);
-                break;
-            case "ga":
-                txtProd = new DefaultTextProducer(length, IRISH_CHARS);
                 break;
             case "lv":
                 txtProd = new DefaultTextProducer(length, LATVIAN_CHARS);
@@ -157,17 +96,11 @@ public class LanguageTextProducer implements TextProducer {
             case "pl":
                 txtProd = new DefaultTextProducer(length, POLISH_CHARS);
                 break;
-            case "ro":
-                txtProd = new DefaultTextProducer(length, ROMANIAN_CHARS);
-                break;
             case "sk":
                 txtProd = new DefaultTextProducer(length, SLOVAKIAN_CHARS);
                 break;
             case "sl":
                 txtProd = new DefaultTextProducer(length, SLOVENIAN_CHARS);
-                break;
-            case "sv":
-                txtProd = new DefaultTextProducer(length, SWEDISH_CHARS);
                 break;
             case "cs":
                 txtProd = new DefaultTextProducer(length, CZECH_CHARS);

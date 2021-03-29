@@ -13,8 +13,8 @@ public class ResourceI18nMapUtil {
         while (bundleKeys.hasMoreElements()) {
             String key = bundleKeys.nextElement();
             String value = labels.getString(key);
-            if (key.startsWith("alphabet.") && StringUtils.isNotBlank(value)) {
-                voicesMap.put(key.substring(9), value);
+            if (key.length() == 1 && StringUtils.isNotBlank(value)) {
+                voicesMap.put(key, value);
             }
         }
         return voicesMap;

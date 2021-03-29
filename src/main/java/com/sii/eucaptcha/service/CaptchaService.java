@@ -112,6 +112,8 @@ public class CaptchaService {
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
+		Map<String, String> voicesMap = new ResourceI18nMapUtil().voiceMap(locale);
+
 		//Generate the Captcha Text
 		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);
 
@@ -125,8 +127,6 @@ public class CaptchaService {
 						COLOR_STRAIGHT_LINE_NOISE.get(random.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
 				))
 				.gimp(new EuCaptchaGimpyRenderer()).withBorder().build();
-		//Adding the voice map for the selected language
-		Map<String, String> voicesMap = new ResourceI18nMapUtil().voiceMap(locale);
 
 		VoiceProducer voiceProducer = new LanguageVoiceProducer(voicesMap);
 
