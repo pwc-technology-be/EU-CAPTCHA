@@ -90,7 +90,10 @@ public class CaptchaAudioService {
                 // VoiceProducers
                 VoiceProducer voiceProducer = voiceProducers.get(SECURE_RANDOM.nextInt(voiceProducers.size()));
                 Sample sample = voiceProducer.getVocalization(c);
-                samples.add(sample);
+
+                Sample sampleWithInteruption = new Sample(sample.getAudioInputStream() , true);
+
+                samples.add(sampleWithInteruption);
             }
             // 3. Add noise, if any, and return the result
             if (noiseProducers.size() > 0) {
