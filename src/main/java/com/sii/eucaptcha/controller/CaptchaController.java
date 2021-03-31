@@ -1,12 +1,15 @@
 package com.sii.eucaptcha.controller;
 
 import com.google.gson.JsonObject;
+import com.sii.eucaptcha.controller.constants.CaptchaConstants;
+import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
+import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
+import com.sii.eucaptcha.exceptions.ForbiddenException;
 import com.sii.eucaptcha.security.JwtToken;
 import com.sii.eucaptcha.service.CaptchaService;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +52,21 @@ public class CaptchaController {
      * @param locale the chosen locale
      * @return response as String contains CaptchaID and Captcha Image
      */
+    // TODO add more parameters to specify the typeof Captcha CAP-23
     @GetMapping(value = "/captchaImg")
-    public ResponseEntity<String> getCaptchaImage(@ApiParam(hidden = true) Locale locale) {
-        return createResponse(captchaService.generateCaptchaImage(null, locale));
+    public CaptchaResultDto getCaptchaImage(@ApiParam(hidden = true) Locale locale ,
+                                            @ApiParam(hidden = true)  Integer captchaLength ,
+                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
+                                            @ApiParam() Integer degree) {
+
+
+        CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
+                .captchaLength(captchaLength)
+                .locale(locale)
+                .degree(degree)
+                .build();
+
+        return captchaService.generateCaptchaWrapper(captchaQueryDto);
     }
 
     /**
@@ -62,19 +77,31 @@ public class CaptchaController {
      * @return response as String contains CaptchaID and Captcha Image
      */
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
-    public ResponseEntity<String> reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
-                                                     Locale locale,
-                                                     @RequestHeader("x-jwtString") String jwtString) {
+    public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
+                                               Locale locale,
+                                               @ApiParam(hidden = true)  Integer captchaLength ,
+                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
+                                               @ApiParam() Integer degree,
+                                               @RequestHeader("x-jwtString") String jwtString) {
+
+        CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
+                .captchaLength(captchaLength)
+                .previousCaptchaId(previousCaptchaId)
+                .locale(locale)
+                .degree(degree)
+                .build();
+
 
         try {
             // Reload the captcha if the token is valid
             if (jwtToken.verifyToken(jwtString)) {
-                return createResponse(captchaService.generateCaptchaImage(previousCaptchaId, locale));
+                return captchaService.generateCaptchaWrapper(captchaQueryDto);
+               // return captchaService.generateCaptchaImage(previousCaptchaId, locale);
             } else {
-                return new ResponseEntity<>("You can't get access ", HttpStatus.FORBIDDEN);
+               throw new ForbiddenException();
             }
         } catch (Exception e) {
-            return new ResponseEntity<>("sorry , you can't get access", HttpStatus.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
@@ -89,19 +116,22 @@ public class CaptchaController {
     public ResponseEntity<String> validateCaptcha(@PathVariable("captchaId") String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
                                                   @RequestParam(value = "useAudio", required = false) boolean useAudio,
-                                                  @RequestHeader("x-jwtString") String jwtString) {
+                                                  @RequestParam(value = "captchaType" , required = true , defaultValue = CaptchaConstants.STANDARD ) String captchaType,
+                                                  @RequestHeader("x-jwtString") String jwtString ) {
+
 
         //Verify the validity of the captcha answer.
-        if (captchaAnswer.trim().length() != captchaAnswerLength ||
+        if (/*captchaAnswer.trim().length() != captchaAnswerLength || */
                 captchaId.trim().length() != captchaIdLength
                 || jwtString == null) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
         } else {
             try {
                 if (jwtToken.verifyToken(jwtString)) {
                     boolean responseCaptcha;
                     //the Token is valid , we proceed the validation of the captcha
-                    responseCaptcha = captchaService.validateCaptcha(captchaId, captchaAnswer, useAudio);
+                    responseCaptcha = captchaService.validateCaptcha(captchaId, captchaAnswer , captchaType ,  useAudio );
                     JsonObject response = new JsonObject();
                     //response captcha ( valid -> success || invalid -> fail  )
                     response.addProperty("responseCaptcha", responseCaptcha ? "success" : "fail");
@@ -116,17 +146,4 @@ public class CaptchaController {
         }
     }
 
-    private ResponseEntity<String> createResponse(String[] captchaData) {
-        JsonObject response = new JsonObject();
-        //Adding data to the Jason Object().
-        response.addProperty("captchaId", captchaData[1]);
-        response.addProperty("captchaImg", captchaData[0]);
-        response.addProperty("audioCaptcha", captchaData[2]);
-        //Adding the token to the Http Header
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        headers.add("Content-Type", "application/json; charset=UTF-8");
-        headers.add("x-jwtString", jwtToken.generateJwtToken());
-        return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
-    }
 }

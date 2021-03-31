@@ -1,5 +1,6 @@
 let useAudio = false;
 let EuCaptchaToken;
+let captchaLenght = 10 ;
 
 function onPlayAudio(){
     useAudio = true;
@@ -12,7 +13,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/captchaImg',
+            url: 'api/captchaImg?captchaLength='+captchaLenght,
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);
@@ -108,5 +109,8 @@ $(function(){
             }
         });
     });
+
     getcaptcha();
+
+
 });
