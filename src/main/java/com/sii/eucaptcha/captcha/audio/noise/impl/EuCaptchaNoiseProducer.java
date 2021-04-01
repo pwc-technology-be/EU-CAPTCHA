@@ -4,12 +4,7 @@ import com.sii.eucaptcha.captcha.audio.Mixer;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.NoiseProducer;
 import com.sii.eucaptcha.captcha.util.FileUtil;
-import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
 import com.sii.eucaptcha.security.CaptchaRandom;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
