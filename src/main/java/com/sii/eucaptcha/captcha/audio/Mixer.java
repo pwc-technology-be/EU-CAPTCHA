@@ -30,16 +30,17 @@ public class Mixer {
 
         return buildSample(sampleCount, appended);
     }
+    public static Sample mix(Sample appendedSamplesWithoutNoise, double sampleVolume,
+                             Sample noiseSample, double noiseVolume) {
+        double[] s1_ary = appendedSamplesWithoutNoise.getInterleavedSamples();
+        double[] s2_ary = noiseSample.getInterleavedSamples();
 
-    public static Sample mix(Sample sample1, double volAdj1,
-                             Sample sample2, double volAdj2) {
-        double[] s1_ary = sample1.getInterleavedSamples();
-        double[] s2_ary = sample2.getInterleavedSamples();
+        System.out.println(s1_ary.length);
+        System.out.println(s2_ary.length);
 
-        //
-        double[] mixed = mix(s1_ary, volAdj1, s2_ary, volAdj2);
+        double[] mixed = mix(s1_ary, sampleVolume, s2_ary, noiseVolume);
 
-        return buildSample(sample1.getSampleCount(), mixed);
+        return buildSample(appendedSamplesWithoutNoise.getSampleCount(), mixed);
     }
 
     private static double[] concatAll(double[] first, double[]... rest) {
@@ -55,14 +56,12 @@ public class Mixer {
         }
         return result;
     }
-
     private static double[] mix(double[] sample1, double volAdj1, double[] sample2,
                                 double volAdj2) {
         for (int i = 0; i < sample1.length; i++) {
-            if (i >= sample2.length) {
-                sample1[i] = 0;
-                break;
-            }
+            if(i >= sample2.length)
+                sample1[i] = (sample1[i] * volAdj1) + (sample2[i-sample2.length] * volAdj2);
+            else
             sample1[i] = (sample1[i] * volAdj1) + (sample2[i] * volAdj2);
         }
         return sample1;
