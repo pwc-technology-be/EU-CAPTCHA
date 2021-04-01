@@ -30,10 +30,7 @@ public class Sample {
 
     private SoundConfigProperties props;
 
-
-
     private boolean withSilenceInteruption = true ;
-
 
     public Sample(AudioInputStream audioInputStream , boolean withSilenceInteruption){
          this.withSilenceInteruption = withSilenceInteruption;
