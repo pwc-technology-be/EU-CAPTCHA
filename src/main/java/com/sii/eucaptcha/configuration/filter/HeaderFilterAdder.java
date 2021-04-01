@@ -14,11 +14,9 @@ import java.io.IOException;
 public class HeaderFilterAdder extends OncePerRequestFilter {
     private final JwtToken jwtToken;
 
-
     public HeaderFilterAdder(JwtToken jwtToken) {
         this.jwtToken = jwtToken;
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
