@@ -28,8 +28,7 @@ public class CaptchaRandom {
             System.out.println("min = " + randomRangeMin);
             System.out.println("max = " + randomRangeMax);
             int randomNumber =  (int) ((Math.random() * (randomRangeMax - randomRangeMin)) + randomRangeMin);
-            int randomRotationAngle = randomNumber*degree;
-            return randomRotationAngle;
+            return randomNumber * degree;
         }
     }
 }

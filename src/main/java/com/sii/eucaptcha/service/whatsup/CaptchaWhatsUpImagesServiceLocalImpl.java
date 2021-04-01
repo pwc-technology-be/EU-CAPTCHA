@@ -14,18 +14,13 @@ public class CaptchaWhatsUpImagesServiceLocalImpl implements CaptchaWhatsUpImage
     @Autowired
     private ResourceLoader resourceLoader ;
 
-    private final int nameRangeMin = 1;
-    private final int nameRangeMax = 7 ;
-
-
     @Override
     public Resource loadRandomImage() {
-            int randomNum = nameRangeMin + (int)(Math.random() * nameRangeMax);
-        	Resource resource = loadImage(Integer.toString(randomNum));
-        	return resource;
+        int nameRangeMin = 1;
+        int nameRangeMax = 7;
+        int randomNum = nameRangeMin + (int)(Math.random() * nameRangeMax);
+        return loadImage(Integer.toString(randomNum));
     }
-
-
 
     @Override
     public BufferedImage rotate(BufferedImage bimg, double angle) {

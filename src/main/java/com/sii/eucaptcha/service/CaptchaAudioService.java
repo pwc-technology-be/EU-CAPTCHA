@@ -103,8 +103,7 @@ public class CaptchaAudioService {
                 return new CaptchaAudioService(this);
             }
             challenge = Mixer.append(samples);
-            CaptchaAudioService captchaAudioService = new CaptchaAudioService(this);
-            return captchaAudioService;
+            return new CaptchaAudioService(this);
         }
 
     }
