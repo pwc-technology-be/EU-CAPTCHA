@@ -111,9 +111,6 @@ public class CaptchaService {
 	@Autowired
 	CaptchaWhatsUpImagesService captchaWhatsUpImagesService ;
 
-
-
-
 	private final SecureRandom random = CaptchaRandom.getSecureInstance();
 	/**
 	 *

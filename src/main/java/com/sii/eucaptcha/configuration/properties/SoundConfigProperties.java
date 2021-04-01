@@ -16,7 +16,6 @@ public class SoundConfigProperties {
     private Double sampleVolume;
     @Value("${sound.noises.noisevolume}")
     private Double noiseVolume;
-
     @Value("${sound.noises.silence.audio}")
     private String silenceAudio ;
 

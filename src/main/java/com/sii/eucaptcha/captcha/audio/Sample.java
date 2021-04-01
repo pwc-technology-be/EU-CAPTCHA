@@ -28,7 +28,6 @@ public class Sample {
 
     private  AudioInputStream silenceAudioInputStream;
 
-
     private SoundConfigProperties props;
 
 
