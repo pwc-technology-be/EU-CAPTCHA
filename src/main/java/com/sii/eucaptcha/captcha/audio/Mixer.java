@@ -35,8 +35,6 @@ public class Mixer {
         double[] s1_ary = appendedSamplesWithoutNoise.getInterleavedSamples();
         double[] s2_ary = noiseSample.getInterleavedSamples();
 
-        System.out.println(s1_ary.length);
-        System.out.println(s2_ary.length);
 
         double[] mixed = mix(s1_ary, sampleVolume, s2_ary, noiseVolume);
 
