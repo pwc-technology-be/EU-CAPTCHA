@@ -59,10 +59,7 @@ public class Mixer {
     private static double[] mix(double[] sample1, double volAdj1, double[] sample2,
                                 double volAdj2) {
         for (int i = 0; i < sample1.length; i++) {
-            if(i >= sample2.length)
-                sample1[i] = (sample1[i] * volAdj1) + (sample2[i-sample2.length] * volAdj2);
-            else
-            sample1[i] = (sample1[i] * volAdj1) + (sample2[i] * volAdj2);
+            sample1[i] = (sample1[i] * volAdj1) + (sample2[i%sample2.length] * volAdj2);
         }
         return sample1;
     }
