@@ -11,22 +11,6 @@ import java.util.Locale;
  */
 public class LanguageTextProducer implements TextProducer {
 
-
-    private final static char[] CROATE_CHARS = ArrayUtils.addAll(
-            'a', 'b', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-            'o', 'p', 'r', 's', 't', 'u', 'v', 'z',
-            'A', 'B', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T',
-            'U', 'V', 'Z',
-            'Č', 'Ć', 'Đ', 'Š', 'Ž', 'č', 'ć', 'đ',
-            'š', 'ž');
-
-    private final static char[] CZECH_CHARS = ArrayUtils.addAll(ENGLISH_CHARS,
-            'Á', 'á', 'Č', 'č',
-            'Ď', 'ď', 'É', 'é', 'Í', 'í', 'Ň',
-            'ň', 'Ó', 'ó', 'Ř', 'ř', 'Š', 'š', 'Ť',
-            'ť', 'Ú', 'ú', 'Ý', 'ý', 'Ž', 'ž');
-
     private final static char[] SLOVAKIAN_CHARS = ArrayUtils.addAll(ENGLISH_CHARS,
             'Ä', 'Č', 'Ď', 'Í', 'Ľ', 'Ô', 'Š', 'Ť', 'Ž',
             'ä', 'č', 'ď', 'í', 'ľ', 'ô', 'š', 'ť', 'ž');
@@ -48,18 +32,11 @@ public class LanguageTextProducer implements TextProducer {
      */
     public final TextProducer getLanguageTextProducer(int length, Locale locale) {
         switch (locale.getLanguage()) {
-
-            case "hr":
-                txtProd = new DefaultTextProducer(length, CROATE_CHARS);
-                break;
             case "sk":
                 txtProd = new DefaultTextProducer(length, SLOVAKIAN_CHARS);
                 break;
             case "sl":
                 txtProd = new DefaultTextProducer(length, SLOVENIAN_CHARS);
-                break;
-            case "cs":
-                txtProd = new DefaultTextProducer(length, CZECH_CHARS);
                 break;
         }
         return this.txtProd;

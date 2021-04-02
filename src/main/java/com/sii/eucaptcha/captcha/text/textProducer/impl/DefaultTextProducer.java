@@ -3,9 +3,7 @@ package com.sii.eucaptcha.captcha.text.textProducer.impl;
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
 import com.sii.eucaptcha.security.CaptchaRandom;
 
-import java.security.SecureRandom;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 public class DefaultTextProducer implements TextProducer {
 
