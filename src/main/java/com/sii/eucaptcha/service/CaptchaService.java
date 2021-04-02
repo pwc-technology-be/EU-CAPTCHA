@@ -125,21 +125,29 @@ public class CaptchaService {
 	 * @param locale the chosen locale
 	 * @return String [] which contains the CaptchaID , Captcha Image , and Captcha Audio.
 	 */
-	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale , Integer captchaLenght) {
+	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale , Integer captchaLength) {
+
+		int extraWidth = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
+				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_WIDTH : 0 ;
+
+		int extraHeight = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
+				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_HEIGHT : 0 ;
+
+		System.out.println("extraWidth = " + extraWidth + "extraHeight = " + extraHeight);
 
 		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
-		int captchaTextLenght = (captchaLenght!=null) ? (int) captchaLenght : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH ;
+		int captchaTextLength = (captchaLength!=null) ? (int) captchaLength : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH ;
 
 		//Generate the Captcha Text
-		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(captchaTextLenght,locale);
+		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(captchaTextLength,locale);
 
 		//Generate the Captcha drawing
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
 
 		//Build The Captcha
-		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH, CAPTCHA_HEIGHT).withText(textProducer ,wordRenderer )
+		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH+extraWidth, CAPTCHA_HEIGHT+extraHeight).withText(textProducer ,wordRenderer )
 				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())),
 						BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(random.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
