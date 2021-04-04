@@ -52,12 +52,11 @@ public class CaptchaController {
      * @param locale the chosen locale
      * @return response as String contains CaptchaID and Captcha Image
      */
-    // TODO add more parameters to specify the typeof Captcha CAP-23
     @GetMapping(value = "/captchaImg")
-    public CaptchaResultDto getCaptchaImage(@ApiParam(hidden = true) Locale locale ,
-                                            @ApiParam(hidden = true)  Integer captchaLength ,
-                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
-                                            @ApiParam() Integer degree) {
+    public CaptchaResultDto getCaptchaImage(@ApiParam(required = false) Locale locale ,
+                                            @ApiParam(required = false)  Integer captchaLength ,
+                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD , required = false) String captchaType ,
+                                            @ApiParam(required = false) Integer degree) {
 
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
@@ -78,10 +77,10 @@ public class CaptchaController {
      */
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
-                                               Locale locale,
-                                               @ApiParam(hidden = true)  Integer captchaLength ,
-                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
-                                               @ApiParam() Integer degree,
+                                               @ApiParam(required = false) Locale locale,
+                                               @ApiParam(hidden = true , required = false)  Integer captchaLength ,
+                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD , required = false ) String captchaType ,
+                                               @ApiParam(required = false) Integer degree,
                                                @RequestHeader("x-jwtString") String jwtString) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)

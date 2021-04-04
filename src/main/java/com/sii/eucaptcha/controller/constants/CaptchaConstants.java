@@ -13,4 +13,8 @@ public class CaptchaConstants {
 
     public static final int DEFAULT_CAPTCHA_LENGTH = 8 ;
 
+    public static final int DEFAULT_UNIT_HEIGHT = 10 ;
+
+    public static  final  int DEFAULT_UNIT_WIDTH = 30 ;
+
 }
