@@ -13,7 +13,7 @@ public class ResourceI18nMapUtil {
         while (bundleKeys.hasMoreElements()) {
             String key = bundleKeys.nextElement();
             String value = labels.getString(key);
-            if (key.length() == 1 && StringUtils.isNotBlank(value)) {
+            if (key.length() == 1 && StringUtils.isNotBlank(value) && StringUtils.contains(value, locale.getLanguage())) {
                 voicesMap.put(key, value);
             }
         }

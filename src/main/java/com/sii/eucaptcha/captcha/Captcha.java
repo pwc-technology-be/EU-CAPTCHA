@@ -44,7 +44,7 @@ public class Captcha {
 
     public static class CaptchaBuilder {
 
-        private String answer = "";
+        private String answer;
         private BufferedImage image;
         private BufferedImage background;
         private Date timeStamp;
@@ -74,7 +74,7 @@ public class Captcha {
          * @param wRenderer the chosen WordRenderer
          */
         public CaptchaBuilder withText(TextProducer txtProd, WordRenderer wRenderer) {
-            answer += txtProd.getText();
+            answer = txtProd.getText();
             wRenderer.render(answer, image);
             return this;
         }

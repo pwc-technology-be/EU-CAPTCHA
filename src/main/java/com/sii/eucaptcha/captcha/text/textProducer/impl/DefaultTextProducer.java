@@ -4,32 +4,30 @@ import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
 import com.sii.eucaptcha.security.CaptchaRandom;
 
 import java.util.Random;
+import java.util.Set;
 
 public class DefaultTextProducer implements TextProducer {
 
     private static final Random RANDOM = CaptchaRandom.getSecureInstance();
 
     private final int LENGTH;
-    private final char[] SRC_CHARS;
+    private final Set<String> LOCALIZED_CHARACTERS;
 
-        public DefaultTextProducer(int length, char[] srcChars) {
+        public DefaultTextProducer(int length, Set<String> localizedCharacters) {
         LENGTH = length;
-        SRC_CHARS = copyOf(srcChars, srcChars.length);
+        LOCALIZED_CHARACTERS = localizedCharacters;
     }
 
     @Override
     public String getText() {
         StringBuilder capText = new StringBuilder();
         for (int i = 0; i < LENGTH; i++) {
-            capText.append(SRC_CHARS[RANDOM.nextInt(SRC_CHARS.length)]);
+            capText.append(getRandomSetElement());
         }
         return capText.toString();
     }
 
-    private static char[] copyOf(char[] original, int newLength) {
-        char[] copy = new char[newLength];
-        System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
-        return copy;
+    public String getRandomSetElement() {
+        return LOCALIZED_CHARACTERS.stream().skip(RANDOM.nextInt(LOCALIZED_CHARACTERS.size())).findFirst().orElse(null);
     }
 }

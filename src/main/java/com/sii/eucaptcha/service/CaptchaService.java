@@ -22,7 +22,7 @@ import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
 import com.sii.eucaptcha.captcha.text.image.background.impl.GradiatedBackgroundProducer;
 import com.sii.eucaptcha.captcha.text.image.noise.impl.StraightLineImageNoiseProducer;
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
-import com.sii.eucaptcha.captcha.text.textProducer.impl.LanguageTextProducer;
+import com.sii.eucaptcha.captcha.text.textProducer.impl.DefaultTextProducer;
 import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
 import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
@@ -112,10 +112,10 @@ public class CaptchaService {
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
 
-		Map<String, String> voicesMap = new ResourceI18nMapUtil().voiceMap(locale);
+		Map<String, String> localesMap = new ResourceI18nMapUtil().voiceMap(locale);
 
 		//Generate the Captcha Text
-		TextProducer textProducer = new LanguageTextProducer().getLanguageTextProducer(8,locale);
+		TextProducer textProducer = new DefaultTextProducer(8, localesMap.keySet());
 
 		//Generate the Captcha drawing
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
@@ -128,7 +128,7 @@ public class CaptchaService {
 				))
 				.gimp(new EuCaptchaGimpyRenderer()).withBorder().build();
 
-		VoiceProducer voiceProducer = new LanguageVoiceProducer(voicesMap);
+		VoiceProducer voiceProducer = new LanguageVoiceProducer(localesMap);
 
 		 //Build the captcha audio file.
 		CaptchaAudioService captchaAudioService = CaptchaAudioService.newBuilder()
