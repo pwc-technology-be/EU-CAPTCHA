@@ -1,11 +1,19 @@
 package com.sii.eucaptcha.captcha.audio;
 
+import com.sii.eucaptcha.BeanUtil;
+import com.sii.eucaptcha.captcha.util.FileUtil;
+import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
+import org.springframework.beans.factory.BeanFactoryUtils;
+
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.SequenceInputStream;
+
 
 public class Sample {
 
@@ -18,19 +26,68 @@ public class Sample {
 
     private final AudioInputStream audioInputStream;
 
+    private  AudioInputStream silenceAudioInputStream;
+
+    private SoundConfigProperties props;
+
+    private boolean withSilenceInteruption = true ;
+
+    public Sample(AudioInputStream audioInputStream , boolean withSilenceInteruption){
+         this.withSilenceInteruption = withSilenceInteruption;
+
+         //  get SoundConfigProperties instance
+
+         if(this.props == null) {
+             this.props = BeanUtil.getBean(SoundConfigProperties.class);
+         }
+
+        if(withSilenceInteruption) {
+            InputStream silenceIs = FileUtil.readResource(props.getSilenceAudio());
+            if(silenceIs instanceof  AudioInputStream){
+                silenceAudioInputStream = (AudioInputStream) silenceIs;
+            }else {
+                try {
+                    silenceAudioInputStream = AudioSystem.getAudioInputStream(silenceIs);
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            AudioInputStream appendedFiles =
+                    new AudioInputStream(
+                            new SequenceInputStream(audioInputStream, silenceAudioInputStream),
+                            audioInputStream.getFormat(),
+                            audioInputStream.getFrameLength() + silenceAudioInputStream.getFrameLength());
+            this.audioInputStream = appendedFiles;
+        }else
+            this.audioInputStream = audioInputStream ;
+
+
+
+
+
+
+        checkFormat(audioInputStream.getFormat());
+    }
+
+
     public Sample(InputStream is) {
+
+
+
         if (is instanceof AudioInputStream) {
             audioInputStream = (AudioInputStream) is;
-            return;
-        }
+        }else {
+            try {
+                audioInputStream = AudioSystem.getAudioInputStream(is);
 
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(is);
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            } catch (UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         checkFormat(audioInputStream.getFormat());
@@ -169,5 +226,21 @@ public class Sample {
                             + "\nExpected: " + SC_AUDIO_FORMAT);
 
         }
+    }
+
+    public boolean isWithSilenceInteruption() {
+        return withSilenceInteruption;
+    }
+
+    public void setWithSilenceInteruption(boolean withSilenceInteruption) {
+        this.withSilenceInteruption = withSilenceInteruption;
+    }
+
+    public SoundConfigProperties getProps() {
+        return props;
+    }
+
+    public void setProps(SoundConfigProperties props) {
+        this.props = props;
     }
 }
