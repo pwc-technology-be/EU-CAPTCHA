@@ -26,7 +26,7 @@ $(function(){
 	 function reloadCaptcha(){
          const reloadCaptchaUrl = $.ajax({
              type: "GET",
-             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?lang=' + sessionStorage.getItem("language"),
+             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?lang=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLenght,
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
