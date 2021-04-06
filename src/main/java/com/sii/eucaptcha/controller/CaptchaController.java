@@ -79,7 +79,7 @@ public class CaptchaController {
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
                                                @ApiParam(required = false) Locale locale,
-                                               @ApiParam(hidden = true , required = false)  Integer captchaLength ,
+                                               @ApiParam(required = false)  Integer captchaLength ,
                                                @ApiParam(defaultValue = CaptchaConstants.STANDARD , required = false ) String captchaType ,
                                                @ApiParam(required = false) Integer degree,
                                                @RequestHeader("x-jwtString") String jwtString) {
