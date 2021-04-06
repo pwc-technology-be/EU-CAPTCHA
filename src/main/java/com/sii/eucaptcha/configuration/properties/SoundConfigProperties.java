@@ -16,6 +16,9 @@ public class SoundConfigProperties {
     private Double sampleVolume;
     @Value("${sound.noises.noisevolume}")
     private Double noiseVolume;
+    @Value("${sound.noises.silence.audio}")
+    private String silenceAudio ;
+
 
     public String[] getDefaultNoises() {
         return defaultNoises;
@@ -41,4 +44,11 @@ public class SoundConfigProperties {
     }
 
 
+    public String getSilenceAudio() {
+        return silenceAudio;
+    }
+
+    public void setSilenceAudio(String silenceAudio) {
+        this.silenceAudio = silenceAudio;
+    }
 }

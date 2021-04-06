@@ -1,6 +1,5 @@
 package com.sii.eucaptcha.configuration;
 
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**

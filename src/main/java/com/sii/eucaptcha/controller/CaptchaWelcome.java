@@ -19,8 +19,22 @@ public class CaptchaWelcome {
      * @return JSP FILE FOR THE DEMO
      * (     server:port/euCaptcha    )
      */
+
+    @Value("${controller.captcha.rotationCaptcha}")
+    private String rotationCaptchaPageName;
+    /**
+     *
+     * @return JSP FILE FOR THE DEMO
+     * (     server:port/euCaptcha    )
+     */
+
     @GetMapping("/")
     public String welcomePage(){
         return welcomePageName;
+    }
+
+    @GetMapping("/rotate")
+    public String rotateCaptchaPage(){
+        return rotationCaptchaPageName;
     }
 }
