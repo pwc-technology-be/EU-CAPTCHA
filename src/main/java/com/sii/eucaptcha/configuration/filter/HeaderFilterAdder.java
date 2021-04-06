@@ -1,6 +1,7 @@
 package com.sii.eucaptcha.configuration.filter;
 
 import com.sii.eucaptcha.security.JwtToken;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,9 +22,11 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         if(httpServletRequest.getRequestURI().contains("captchaImg")){
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
             httpServletResponse.setHeader("x-jwtString" , jwtToken.generateJwtToken());
         }
         if(httpServletRequest.getRequestURI().contains("reloadCaptchaImg")){
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
             httpServletResponse.setHeader("x-jwtString" ,httpServletRequest.getHeader("x-jwtString") );
         }
         filterChain.doFilter(httpServletRequest , httpServletResponse);
