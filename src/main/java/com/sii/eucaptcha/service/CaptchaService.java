@@ -72,16 +72,21 @@ public class CaptchaService {
 	/**
 	 * List of fonts and font sizes
 	 */
-	private static final List<Font> FONTS = new ArrayList<>(3);
+	private static final List<Font> FONTS_SANS_SERIF = new ArrayList<>(3);
+	private static final List<Font> FONTS_SERIF = new ArrayList<>(3);
 
 	static {
 		COLORS.add(Color.BLACK);
 		COLORS.add(Color.GRAY);
 		COLORS.add(Color.DARK_GRAY);
 
-		FONTS.add(new Font("Geneva", Font.BOLD, 50));
-		FONTS.add(new Font("Courier", Font.BOLD, 70));
-		FONTS.add(new Font("Arial", Font.BOLD, 60));
+		FONTS_SANS_SERIF.add(new Font("Geneva", Font.BOLD, 50));
+		FONTS_SANS_SERIF.add(new Font("Calibri", Font.BOLD, 70));
+		FONTS_SANS_SERIF.add(new Font("Arial", Font.BOLD, 60));
+
+		FONTS_SERIF.add(new Font("Cambria", Font.BOLD, 50));
+		FONTS_SERIF.add(new Font("Times New Roman", Font.BOLD, 70));
+		FONTS_SERIF.add(new Font("Courier New", Font.BOLD, 60));
 
 		BACKGROUND_COLORS.add(Color.PINK);
 		BACKGROUND_COLORS.add(Color.ORANGE);
@@ -146,7 +151,7 @@ public class CaptchaService {
 		TextProducer textProducer = new DefaultTextProducer(captchaTextLength, localesMap.keySet());
 
 		//Generate the Captcha drawing
-		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS);
+		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS_SANS_SERIF, FONTS_SERIF);
 
 		//Build The Captcha
 		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH+extraWidth, CAPTCHA_HEIGHT+extraHeight).withText(textProducer ,wordRenderer )
