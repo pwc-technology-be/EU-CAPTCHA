@@ -25,14 +25,18 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "x-requested-with");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "x-jwtstring");
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
             httpServletResponse.setHeader("x-jwtString" , jwtToken.generateJwtToken());
         }
         if(httpServletRequest.getRequestURI().contains("reloadCaptchaImg")){
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "x-requested-with");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "x-jwtstring");
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type");
             httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
+            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
             httpServletResponse.setHeader("x-jwtString" ,httpServletRequest.getHeader("x-jwtString") );
         }
         filterChain.doFilter(httpServletRequest , httpServletResponse);

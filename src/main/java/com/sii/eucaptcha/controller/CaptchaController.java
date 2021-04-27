@@ -90,8 +90,6 @@ public class CaptchaController {
                 .locale(locale)
                 .degree(degree)
                 .build();
-
-
         try {
             // Reload the captcha if the token is valid
             if (jwtToken.verifyToken(jwtString)) {
