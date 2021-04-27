@@ -138,7 +138,7 @@ public class CaptchaService {
 		//Case Reload Captcha
 		if(previousCaptchaId!=null)
 			removeCaptcha(previousCaptchaId);
-		int captchaTextLength = (captchaLength!=null) ? (int) captchaLength : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH ;
+		int captchaTextLength = (captchaLength!=null) ? captchaLength : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH ;
 
 		Map<String, String> localesMap = new ResourceI18nMapUtil().voiceMap(locale);
 
@@ -295,9 +295,6 @@ public class CaptchaService {
 		}
 
 
-	}
-	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale ){
-		return generateCaptchaImage(previousCaptchaId ,locale , null );
 	}
 
 	public CaptchaResultDto generateWhatsUpCaptchaImage(String previousCaptchaId , Integer degree){
