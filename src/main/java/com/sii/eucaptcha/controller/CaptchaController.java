@@ -53,10 +53,10 @@ public class CaptchaController {
      */
     @CrossOrigin
     @GetMapping(value = "/captchaImg")
-    public CaptchaResultDto getCaptchaImage(@ApiParam(required = false) Locale locale ,
-                                            @ApiParam(required = false)  Integer captchaLength ,
-                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD , required = false) String captchaType ,
-                                            @ApiParam(required = false) Integer degree) {
+    public CaptchaResultDto getCaptchaImage(@ApiParam() Locale locale ,
+                                            @ApiParam()  Integer captchaLength ,
+                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
+                                            @ApiParam() Integer degree) {
 
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
@@ -78,10 +78,10 @@ public class CaptchaController {
     @CrossOrigin
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
-                                               @ApiParam(required = false) Locale locale,
-                                               @ApiParam(hidden = true , required = false)  Integer captchaLength ,
-                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD , required = false ) String captchaType ,
-                                               @ApiParam(required = false) Integer degree,
+                                               @ApiParam() Locale locale,
+                                               @ApiParam()  Integer captchaLength ,
+                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType ,
+                                               @ApiParam() Integer degree,
                                                @RequestHeader("x-jwtString") String jwtString) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)

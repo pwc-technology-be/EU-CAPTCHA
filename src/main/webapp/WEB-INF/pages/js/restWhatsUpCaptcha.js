@@ -2,6 +2,20 @@ let EuCaptchaToken;
 let degrees = 0 ;
 $(function(){
 
+    function getWhatsUpcaptcha(){
+        const getCaptchaUrl = $.ajax({
+            type: "GET",
+            url: 'api/captchaImg?captchaType=WHATS_UP',
+            success: function (data) {
+                EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
+                const jsonData = JSON.parse(data);
+                $("#captchaImage").attr("src", "data:image/png;base64," + jsonData.captchaImg);
+                $("#captchaImage").attr("captchaId", jsonData.captchaId);
+                degrees = jsonData.degree;
+            }
+        });
+
+    }
 
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
@@ -21,8 +35,6 @@ $(function(){
             }
         });
     }
-
-
 
     function validateCaptcha(){
         const validateCaptcha = $.ajax({
@@ -60,31 +72,10 @@ $(function(){
         });
     }
 
-
-
-   let degree = 0 ;
-
-
-
-
-    function getWhatsUpcaptcha(){
-        const getCaptchaUrl = $.ajax({
-            type: "GET",
-            url: 'api/captchaImg?captchaType=WHATS_UP',
-            success: function (data) {
-                EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
-                const jsonData = JSON.parse(data);
-                $("#captchaImage").attr("src", "data:image/png;base64," + jsonData.captchaImg);
-                $("#captchaImage").attr("captchaId", jsonData.captchaId);
-                degrees = jsonData.degree;
-            }
-        });
-
-    }
+    let degree = 0 ;
 
     function rotate(orientation , rotationAngle){
 
-        console.log(rotationAngle)
         if(rotationAngle !=undefined){
             degree = rotationAngle;
         }else{
@@ -93,10 +84,6 @@ $(function(){
             else
             degree += degrees*orientation;
         }
-
-        console.log(degree)
-
-
 
         $("#captchaAnswer").val(degree)
 
@@ -107,7 +94,6 @@ $(function(){
             '-webkit-transform': 'rotate(' + degree + 'deg)',
             '-o-transform': 'rotate(' + degree + 'deg)'
         });
-
     }
 
     $('#btnToLeft').click(function (e){
@@ -115,14 +101,12 @@ $(function(){
     })
 
     $('#btnToRight').click(function (e){
-
         rotate( 1)
     })
 
      getWhatsUpcaptcha();
 
     $('#validateWhatsUpCaptcha').click( () => validateCaptcha())
-
 
     let slider = document.getElementById("captcha-range");
     let output = document.getElementById("captcha-range-value");
@@ -132,5 +116,4 @@ $(function(){
         rotate(1 , this.value)
         output.innerHTML = this.value;
     }
-
 })

@@ -7,10 +7,15 @@ function onPlayAudio(){
 }
 function getLastSelectedValue(){
     const language = sessionStorage.getItem("language");
-    language ? document.getElementById('dropdown-language').value = language :document.getElementById('dropdown-language').value = "en";
+    if(language) {
+        document.getElementById('dropdown-language').value = language
+    } else {
+        sessionStorage.setItem("language", "en");
+        document.getElementById('dropdown-language').value = "en";
+    }
 }
 $(function(){
-	     function getcaptcha(){
+     function getcaptcha(){
              const getCaptchaUrl = $.ajax({
                  type: "GET",
                  url: 'api/captchaImg?captchaLength='+captchaLenght,

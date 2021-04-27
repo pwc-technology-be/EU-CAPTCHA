@@ -7,7 +7,12 @@ function onPlayAudio(){
 }
 function getLastSelectedValue(){
     const language = sessionStorage.getItem("language");
-    language ? document.getElementById('dropdown-language').value = language :document.getElementById('dropdown-language').value = "en";
+    if(language) {
+        document.getElementById('dropdown-language').value = language
+    } else {
+        sessionStorage.setItem("language", "en");
+        document.getElementById('dropdown-language').value = "en";
+    }
 }
 $(function(){
     function getcaptcha(){
@@ -26,7 +31,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId")+ '/?lang=' + sessionStorage.getItem("language"),
+            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?lang=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLenght,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -111,6 +116,4 @@ $(function(){
     });
 
     getcaptcha();
-
-
 });

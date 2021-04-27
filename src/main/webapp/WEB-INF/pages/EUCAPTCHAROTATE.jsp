@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/jquery-ui.min.css">
-    <link rel="stylesheet" href="css/eu-captcha-style.css"> </link>
+    <link rel="stylesheet" href="css/eu-captcha-style.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -47,7 +47,6 @@
 
              <div class="slidecontainer">
                  <input type="range" min="-360" max="360" value="0" class="slider" step="15" id="captcha-range">
-                 <p>Rotation Angle : <span id="captcha-range-value"></span></p>
              </div>
              <div class="rotation-captcha-btn-container">
                  <button id="validateWhatsUpCaptcha" class="btn btn-success" >Validate</button>
@@ -57,8 +56,5 @@
              <input id="captchaAnswer" type="hidden" value="0">
          </form>
      </div>
-
-
-
 </body>
 </html>
