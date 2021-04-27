@@ -119,6 +119,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("OPTIONS", "GET", "POST")
                 .exposedHeaders("x-jwtString", "Content-Type")
-                .allowedHeaders("x-jwtstring", "x-jwtString", "Content-Type", "x-requested-with", HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
+                .allowedHeaders("*", HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
     }
 }
