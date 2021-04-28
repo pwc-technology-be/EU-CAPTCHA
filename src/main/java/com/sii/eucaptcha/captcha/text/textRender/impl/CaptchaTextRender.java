@@ -1,5 +1,6 @@
 package com.sii.eucaptcha.captcha.text.textRender.impl;
 
+import static java.lang.Character.isUpperCase;
 import com.sii.eucaptcha.captcha.text.textRender.WordRenderer;
 import com.sii.eucaptcha.security.CaptchaRandom;
 
@@ -26,20 +27,22 @@ public class CaptchaTextRender implements WordRenderer {
      */
     private static final Random RANDOM = CaptchaRandom.getSecureInstance();
 
-    private final List<Color> colors = new ArrayList<>();
-    private final List<Font> fonts = new ArrayList<>();
-
+    private final List<Color> COLORS = new ArrayList<>();
+    private final List<Font> FONTS_SANS_SERIF = new ArrayList<>();
+    private final List<Font> FONTS_SERIF = new ArrayList<>();
 
     /**
      * Build a <code>WordRenderer</code> using the given <code>Color</code>s and
      * <code>Font</code>s.
      *
      * @param colors the colors to be used
-     * @param fonts the fonts to be used
+     * @param fontsSansSerif the fonts to be used for small characters
+     * @Param fontsSerif the fonts to be used for Capital characters
      */
-    public CaptchaTextRender(List<Color> colors, List<Font> fonts) {
-        this.colors.addAll(colors);
-        this.fonts.addAll(fonts);
+    public CaptchaTextRender(List<Color> colors, List<Font> fontsSansSerif, List<Font>fontsSerif) {
+        this.COLORS.addAll(colors);
+        this.FONTS_SANS_SERIF.addAll(fontsSansSerif);
+        this.FONTS_SERIF.addAll(fontsSerif);
     }
 
 
@@ -71,11 +74,16 @@ public class CaptchaTextRender implements WordRenderer {
 
         for (char c : word.toCharArray()) {
             chars[0] = c;
-            g.setColor(colors.get(RANDOM.nextInt(colors.size())));
-            int choiceFont = RANDOM.nextInt(fonts.size());
-            Font font = fonts.get(choiceFont);
+            g.setColor(COLORS.get(RANDOM.nextInt(COLORS.size())));
+            Font font;
+            if(isUpperCase(c)) {
+                int choiceFont = RANDOM.nextInt(FONTS_SERIF.size());
+                font = FONTS_SERIF.get(choiceFont);
+            } else {
+                int choiceFont = RANDOM.nextInt(FONTS_SANS_SERIF.size());
+                font = FONTS_SANS_SERIF.get(choiceFont);
+            }
             g.setFont(font);
-
             GlyphVector gv = font.createGlyphVector(frc, chars);
 
             AffineTransform affineTransform = new AffineTransform();

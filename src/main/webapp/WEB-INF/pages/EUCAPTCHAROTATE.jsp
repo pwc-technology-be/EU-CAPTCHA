@@ -47,6 +47,7 @@
 
              <div class="slidecontainer">
                  <input type="range" min="-360" max="360" value="0" class="slider" step="15" id="captcha-range">
+                 <p>Rotation Angle : <span id="captcha-range-value"></span></p>
              </div>
              <div class="rotation-captcha-btn-container">
                  <button id="validateWhatsUpCaptcha" class="btn btn-success" >Validate</button>
