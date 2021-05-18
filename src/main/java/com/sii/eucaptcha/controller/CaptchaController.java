@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.sii.eucaptcha.controller.constants.CaptchaConstants;
 import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
 import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
-import com.sii.eucaptcha.security.JwtToken;
 import com.sii.eucaptcha.service.CaptchaService;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
