@@ -22,19 +22,19 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         if(httpServletRequest.getRequestURI().contains("captchaImg" )){
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,"POST, GET, HEAD, OPTIONS");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,"POST, GET, HEAD, OPTIONS");
             httpServletResponse.addHeader("x-jwtString" , jwtToken.generateJwtToken());
         }
         if(httpServletRequest.getRequestURI().contains("reloadCaptchaImg")){
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
-            httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,"POST, GET, HEAD, OPTIONS");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Type");
+            httpServletResponse.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,"POST, GET, HEAD, OPTIONS");
             httpServletResponse.addHeader("x-jwtString" ,httpServletRequest.getHeader("x-jwtString") );
         }
         filterChain.doFilter(httpServletRequest , httpServletResponse);
