@@ -1,0 +1,31 @@
+
+.captcha-container{
+    padding: 2em;
+    .eu-captcha {
+        margin-top: 2em;
+        text-align: center;
+        img {
+             margin: 1em auto;
+        }
+        .btn {
+           &.reload {
+               margin-left: auto;
+          }
+          margin-top: 1em;
+        }
+        .captcha-input{
+           padding: 1em 14em;
+        }
+   }
+   .hide {
+        opacity: 0 ;
+   }
+
+   .slidecontainer {
+        
+        .slider-range { 
+            margin: auto;
+        }
+   }
+
+}
