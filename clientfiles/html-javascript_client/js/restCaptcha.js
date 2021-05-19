@@ -18,7 +18,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/captchaImg?captchaLength='+captchaLenght,
+            url: 'api/captchaImg?lang=' + sessionStorage.getItem("language")+ '&captchaLength='+captchaLenght,
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);

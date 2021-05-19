@@ -161,11 +161,21 @@ public class CaptchaService {
 
 		VoiceProducer voiceProducer = new LanguageVoiceProducer(localesMap);
 
+		Double sampleVolume;
+		Double noiseVolume;
+		if(locale.getLanguage().equals("bg")) {
+		    sampleVolume = 3 * props.getSampleVolume();
+		    noiseVolume = props.getNoiseVolume() / 2;
+        } else {
+		    sampleVolume = props.getSampleVolume();
+		    noiseVolume = props.getNoiseVolume();
+        }
+
 		 //Build the captcha audio file.
 		CaptchaAudioService captchaAudioService = CaptchaAudioService.newBuilder()
 				.withAnswer(captcha.getAnswer())
 				.withVoice(voiceProducer)
-				.withNoise(new EuCaptchaNoiseProducer(props.getDefaultNoises(), props.getSampleVolume(), props.getNoiseVolume()))
+				.withNoise(new EuCaptchaNoiseProducer(props.getDefaultNoises(), sampleVolume, noiseVolume))
 				.build();
 		BufferedImage buf = captcha.getImage();
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();

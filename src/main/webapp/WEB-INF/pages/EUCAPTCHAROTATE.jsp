@@ -39,18 +39,18 @@
                  </div>
              </div>
 
-             <button id="btnToLeft" class="btn btn-default">to The left</button>
+             <button id="btnToLeft" class="btn btn-default"><fmt:message key="euCaptcha.left" /></button>
              <div class="captchaContainer">
                  <img id="captchaImage" src="" alt="duck" width="200" height="200" captchaId="">
              </div>
-             <button id="btnToRight" class="btn btn-default">to The right</button>
+             <button id="btnToRight" class="btn btn-default"><fmt:message key="euCaptcha.right" /></button>
 
              <div class="slidecontainer">
                  <input type="range" min="-360" max="360" value="0" class="slider" step="15" id="captcha-range">
                  <p>Rotation Angle : <span id="captcha-range-value"></span></p>
              </div>
              <div class="rotation-captcha-btn-container">
-                 <button id="validateWhatsUpCaptcha" class="btn btn-success" >Validate</button>
+                 <button id="validateWhatsUpCaptcha" class="btn btn-success" ><fmt:message key="euCaptcha.validate" /></button>
              </div>
          </div>
          <form>
