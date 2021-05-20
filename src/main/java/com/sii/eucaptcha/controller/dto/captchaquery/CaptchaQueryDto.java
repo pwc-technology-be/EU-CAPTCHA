@@ -120,7 +120,7 @@ public class CaptchaQueryDto {
 
         private Locale createLocale(String locale) {
             String[] localeStrings = locale.split("-");
-            return new Locale(localeStrings[0], localeStrings[1]);
+            return new Locale.Builder().setLanguage(localeStrings[0]).setRegion(localeStrings[1]).build();
         }
     }
 }
