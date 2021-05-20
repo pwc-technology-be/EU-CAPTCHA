@@ -10,8 +10,8 @@ function getLastSelectedValue(){
     if(language) {
         document.getElementById('dropdown-language').value = language
     } else {
-        sessionStorage.setItem("language", "en");
-        document.getElementById('dropdown-language').value = "en";
+        sessionStorage.setItem("language", "en-GB");
+        document.getElementById('dropdown-language').value = "en-GB";
     }
 }
 $(function(){
@@ -20,7 +20,7 @@ $(function(){
         if(language){
             return language;
         } else{
-            return "en";
+            return "en-GB";
         }
     }
     function getcaptcha(){
