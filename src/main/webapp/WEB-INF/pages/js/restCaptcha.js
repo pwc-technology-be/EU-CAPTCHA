@@ -10,15 +10,24 @@ function getLastSelectedValue(){
     if(language) {
         document.getElementById('dropdown-language').value = language
     } else {
-        sessionStorage.setItem("language", "en");
-        document.getElementById('dropdown-language').value = "en";
+        sessionStorage.setItem("language", "en-GB");
+        document.getElementById('dropdown-language').value = "en-GB";
     }
 }
 $(function(){
+     function getLanguage(){
+         let language = sessionStorage.getItem("language")
+         if(language){
+             return language;
+         } else{
+             return "en-GB";
+         }
+     }
      function getcaptcha(){
+         let language
              const getCaptchaUrl = $.ajax({
                  type: "GET",
-                 url: 'api/captchaImg?captchaLength='+captchaLenght,
+                 url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+captchaLenght,
                  success: function (data) {
                      EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                      const jsonData = JSON.parse(data);
@@ -31,7 +40,7 @@ $(function(){
 	 function reloadCaptcha(){
          const reloadCaptchaUrl = $.ajax({
              type: "GET",
-             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?lang=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLenght,
+             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLenght,
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");

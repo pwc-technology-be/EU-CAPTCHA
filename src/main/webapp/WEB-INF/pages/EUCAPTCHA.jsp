@@ -48,29 +48,29 @@
                   <label title="Change the language" for="dropdown-language"><fmt:message key="language.change" /> :  </label>
                   <select id="dropdown-language" class="custom-select  form-control">
                     <option value=" "> ... </option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="bg">български</option>
-                    <option value="hr">Hrvatski</option>
-                    <option value="da">Dansk</option>
-                    <option value="es">Espanol</option>
-                    <option value="et">Eestlane</option>
-                    <option value="fi">Suomalainen</option>
-                    <option value="el">ελληνικά</option>
-                    <option value="hu">Magyar</option>
-                    <option value="it">Italiano</option>
-                    <option value="lv">Latvietis</option>
-                    <option value="lt">Lietuvis</option>
-                    <option value="mt">Maltin</option>
-                    <option value="nl">Nederlands</option>
-                    <option value="pl">Polski</option>
-                    <option value="pt">Português</option>
-                    <option value="ro">Românesc</option>
-                    <option value="sk">Slovenský</option>
-                    <option value="sl">Slovensko</option>
-                    <option value="sv">Svenska</option>
-                    <option value="cs">česky</option>
+                    <option value="en-GB">English</option>
+                    <option value="fr-FR">Français</option>
+                    <option value="de-DE">Deutsch</option>
+                    <option value="bg-BG">български</option>
+                    <option value="hr-HR">Hrvatski</option>
+                    <option value="da-DK">Dansk</option>
+                    <option value="es-ES">Espanol</option>
+                    <option value="et-EE">Eestlane</option>
+                    <option value="fi-FI">Suomalainen</option>
+                    <option value="el-GR">ελληνικά</option>
+                    <option value="hu-HU" >Magyar</option>
+                    <option value="it-IT">Italiano</option>
+                    <option value="lv-LV">Latvietis</option>
+                    <option value="lt-LT">Lietuvis</option>
+                    <option value="mt-MT">Maltin</option>
+                    <option value="nl-NL">Nederlands</option>
+                    <option value="pl-PL">Polski</option>
+                    <option value="pt-PT">Português</option>
+                    <option value="ro-RO">Românesc</option>
+                    <option value="sk-SK">Slovenský</option>
+                    <option value="sl-SI">Slovensko</option>
+                    <option value="sv-SE">Svenska</option>
+                    <option value="cs-CZ">česky</option>
                   </select>
                 </div>
               </div>

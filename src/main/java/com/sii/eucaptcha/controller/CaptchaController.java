@@ -5,14 +5,12 @@ import com.sii.eucaptcha.controller.constants.CaptchaConstants;
 import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
 import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
 import com.sii.eucaptcha.service.CaptchaService;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Locale;
 
 /**
  * @author mousab.aidoud
@@ -49,11 +47,10 @@ public class CaptchaController {
      */
     @CrossOrigin
     @GetMapping(value = "/captchaImg")
-    public CaptchaResultDto getCaptchaImage(@ApiParam() Locale locale,
-                                            @ApiParam() Integer captchaLength,
-                                            @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType,
-                                            @ApiParam() Integer degree) {
-
+    public CaptchaResultDto getCaptchaImage(@RequestParam(required = false) String locale,
+                                            @RequestParam(required = false) Integer captchaLength,
+                                            @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
+                                            @RequestParam(required = false) Integer degree) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
@@ -74,10 +71,10 @@ public class CaptchaController {
     @CrossOrigin
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
-                                               @ApiParam() Locale locale,
-                                               @ApiParam() Integer captchaLength,
-                                               @ApiParam(defaultValue = CaptchaConstants.STANDARD) String captchaType,
-                                               @ApiParam() Integer degree) {
+                                               @RequestParam(required = false) String locale,
+                                               @RequestParam(required = false) Integer captchaLength,
+                                               @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
+                                               @RequestParam(required = false) Integer degree) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
@@ -100,7 +97,7 @@ public class CaptchaController {
     public ResponseEntity<String> validateCaptcha(@PathVariable(value = "captchaId", required = false) String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
                                                   @RequestParam(value = "useAudio", required = false) boolean useAudio,
-                                                  @RequestParam(value = "captchaType", defaultValue = CaptchaConstants.STANDARD) String captchaType) {
+                                                  @RequestParam(value = "captchaType", defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType) {
 
 
         //Verify the validity of the captcha answer.
