@@ -20,7 +20,7 @@ public class CaptchaRandom {
     }
 
     public static int getRandomRotationAngle(int degree) throws WrongCaptchaRotationDegree {
-        if(degree < CaptchaConstants.MIN_DEGREE || degree > CaptchaConstants.MAX_DEGREE || CaptchaConstants.MAX_DEGREE % degree != 0  )
+        if(degree < CaptchaConstants.MIN_DEGREE || degree > CaptchaConstants.MAX_DEGREE)
             throw  new WrongCaptchaRotationDegree();
         else {
             int randomRangeMax = (CaptchaConstants.MAX_DEGREE / degree);
