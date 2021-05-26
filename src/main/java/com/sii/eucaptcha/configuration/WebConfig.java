@@ -1,7 +1,6 @@
 package com.sii.eucaptcha.configuration;
 
 import com.sii.eucaptcha.configuration.properties.ApplicationConfigProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.annotation.Resource;
-import java.util.Locale;
 
 /**
  * @author mousab.aidoud
