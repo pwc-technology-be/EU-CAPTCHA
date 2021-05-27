@@ -10,6 +10,7 @@
   <link rel="shortcut icon" href="#" />
   <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/eu-captcha-style.css">
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -85,8 +86,7 @@
                 <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
               </div>
               <div class="col-md-2">
-                <a href="#"><span class="fa fa-lightbulb" data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip" />"></span></a>
-                <a href="#" data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip.answer"/>"><fmt:message key="euCaptcha.tooltip.title"/></a>
+                <a href="#" class="fa fa-lightbulb-o fa-5x " data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip.answer"/>"></a>
                 <br><br><br>
                 <label title="Reload the Captcha" for="captchaReload"><fmt:message key="euCaptcha.button.reload"/></label>
                 <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <em class="fa fa-refresh"></em> </button>
