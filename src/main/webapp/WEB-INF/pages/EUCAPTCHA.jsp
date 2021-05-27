@@ -85,6 +85,9 @@
                 <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
               </div>
               <div class="col-md-2">
+                <a href="#"><span class="fa fa-lightbulb" data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip" />"></span></a>
+                <a href="#" data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip.answer"/>"><fmt:message key="euCaptcha.tooltip.title"/></a>
+                <i class="fab fa-medapps"></i>
                 <br><br><br>
                 <label title="Change the language" for="captchaReload">Reload the Captcha</label>
                 <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <em class="fa fa-refresh"></em> </button>
