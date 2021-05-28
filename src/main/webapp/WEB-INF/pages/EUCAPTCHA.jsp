@@ -10,6 +10,7 @@
   <link rel="shortcut icon" href="#" />
   <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/eu-captcha-style.css">
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -25,9 +26,9 @@
 <body dir="rtl " onload="getLastSelectedValue()">
   <div class="container ">
    <div class="row text-center">
-      <div class="col-md-3">
+      <div class="col-sm-1">
       </div>
-      <div class="col-md-6">
+      <div class="col-md-9">
       <div class="row text-center">
 
        <div class=" col-md-12 alert alert-success" id="success" role="alert" style="visibility : hidden">
@@ -78,29 +79,29 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-2"></div>
+              <div class="col-md-1"></div>
               <div class="col-md-8">
                 <img alt="Captcha image to solve" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
                 <hr>
                 <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
               </div>
               <div class="col-md-2">
+                <a href="#" class="fa fa-lightbulb-o fa-5x " data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip.answer"/>"></a>
                 <br><br><br>
-                <label title="Change the language" for="captchaReload">Reload the Captcha</label>
+                <label title="Reload the Captcha" for="captchaReload"><fmt:message key="euCaptcha.button.reload"/></label>
                 <button title="Reload the Captcha" class="btn btn-primary btn-lg " id="captchaReload"> <em class="fa fa-refresh"></em> </button>
               </div>
             </div>
             <hr>
             <div class="row">
-              <div class="col-md-2">
-
+              <div class="col-md-1">
               </div>
               <div class="col-md-8">
-                <label title="Captcha input field for solution" for="captchaAnswer">Input field for solution</label>
+                <label title="Captcha input field for solution" for="captchaAnswer"><fmt:message key="euCaptcha.field.submit"/></label>
                 <input title="Captcha input field for solution" type="text" class="form-control" id="captchaAnswer" placeholder="Captcha Text">
               </div>
               <div class="col-md-2">
-                <label title="Submit tha Captcha" for="captchaSubmit">Submit the Captcha</label>
+                <label title="Submit the Captcha" for="captchaSubmit"><fmt:message key="euCaptcha.button.submit"/></label>
                 <button title="Submit the Captcha" class="btn btn-primary btn-lg " id="captchaSubmit"> <em class="fa fa-check" aria-hidden="true"></em> </button>
               </div>
             </div>  

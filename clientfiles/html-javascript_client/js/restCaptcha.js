@@ -1,6 +1,6 @@
 let useAudio = false;
 let EuCaptchaToken;
-let captchaLenght = 10 ;
+let captchaLength = 10 ;
 
 function onPlayAudio(){
     useAudio = true;
@@ -26,7 +26,7 @@ $(function(){
     function getcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/captchaImg?locale=' + getLanguage() + '&captchaLength='+captchaLenght,
+            url: 'api/captchaImg?locale=' + getLanguage() + '&captchaLength='+captchaLength,
             success: function (data) {
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);
@@ -39,7 +39,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLenght,
+            url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLength,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");

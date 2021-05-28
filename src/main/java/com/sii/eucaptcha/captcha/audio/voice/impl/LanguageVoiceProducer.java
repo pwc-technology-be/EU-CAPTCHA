@@ -16,7 +16,7 @@ public class LanguageVoiceProducer implements VoiceProducer {
     private final Map<String, String> voices;
 
     /**
-     * @param voices       the map with the audiofiles for the chosen locale
+     * @param voices the map with the audiofiles for the chosen locale
      */
     public LanguageVoiceProducer(Map<String, String> voices) {
         this.voices = voices;

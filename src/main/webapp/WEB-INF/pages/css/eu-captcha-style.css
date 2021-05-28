@@ -2,6 +2,10 @@
     display: inline-block;
 }
 
+.fa-lightbulb-o {
+    color: orange;
+}
+
 .slidecontainer {
     width: 100%;
 }
