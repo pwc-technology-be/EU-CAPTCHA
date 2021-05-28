@@ -27,7 +27,7 @@ public class CaptchaRandom {
             int randomRangeMin = randomRangeMax*-1;
             System.out.println("min = " + randomRangeMin);
             System.out.println("max = " + randomRangeMax);
-            int randomNumber =  (int) ((Math.random() * (randomRangeMax - randomRangeMin)) + randomRangeMin);
+            int randomNumber = 1 + ((int) ((Math.random() * (randomRangeMax - randomRangeMin)) + randomRangeMin));
             return randomNumber * degree;
         }
     }
