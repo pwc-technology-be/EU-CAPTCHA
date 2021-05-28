@@ -1,12 +1,30 @@
 let EuCaptchaToken;
 let degrees = 0 ;
-$(function(){
 
+function getLastSelectedValue(){
+    const language = sessionStorage.getItem("language");
+    if(language) {
+        document.getElementById('dropdown-language').value = language
+    } else {
+        sessionStorage.setItem("language", "en-GB");
+        document.getElementById('dropdown-language').value = "en-GB";
+    }
+}
+$(function(){
+    function getLanguage(){
+        let language = sessionStorage.getItem("language")
+        if(language){
+            return language;
+        } else{
+            return "en-GB";
+        }
+    }
     function getWhatsUpcaptcha(){
         const getCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/captchaImg?captchaType=WHATS_UP',
+            url: 'api/captchaImg?captchaType=WHATS_UP&locale='+ getLanguage(),
             success: function (data) {
+                console.log(getLanguage())
                 EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                 const jsonData = JSON.parse(data);
                 $("#captchaImage").attr("src", "data:image/png;base64," + jsonData.captchaImg);
@@ -20,7 +38,7 @@ $(function(){
     function reloadCaptcha(){
         const reloadCaptchaUrl = $.ajax({
             type: "GET",
-            url: 'api/reloadCaptchaImg/' + $("#captchaImage").attr("captchaId")+ "?captchaType=WHATS_UP",
+            url: 'api/reloadCaptchaImg/' + $("#captchaImage").attr("captchaId")+ "?captchaType=WHATS_UP&locale="+ getLanguage(),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -72,6 +90,24 @@ $(function(){
         });
     }
 
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        if(e == 'slider')
+            e.style.display = 'none';
+        else
+            e.style.display = 'block';
+    }
+
+    $("#captchaReload").click(function(){
+        $("#fail").css("visibility", "hidden");
+        $("#success").css("visibility", "hidden");
+        reloadCaptcha();
+    });
+
+    $("#captchaSubmit").click(function(){
+        validateCaptcha();
+    });
+
     let degree = 0 ;
 
     function rotate(orientation , rotationAngle){
@@ -103,6 +139,17 @@ $(function(){
     $('#btnToRight').click(function (e){
         rotate( 1)
     })
+
+    $(document).ready(function () {
+        $("#dropdown-language").change(function () {
+            const selectedOption = $('#dropdown-language').val();
+            $('#dropdown-language').val(selectedOption);
+            if (selectedOption !== '') {
+                sessionStorage.setItem("language", selectedOption);
+                window.location.replace('?lang=' + selectedOption);
+            }
+        });
+    });
 
      getWhatsUpcaptcha();
 
