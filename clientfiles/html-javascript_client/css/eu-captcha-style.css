@@ -43,8 +43,12 @@
 .rotation-captcha{
     margin: 5rem 18rem;
 }
-.slidecontainer{
+#slidecontainer{
     margin-top: 1rem;
+}
+
+#btnarrows{
+    margin-right: 20px;
 }
 
 .rotation-captcha-btn-container{

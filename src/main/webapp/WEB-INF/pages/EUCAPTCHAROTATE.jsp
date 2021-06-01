@@ -77,12 +77,18 @@
                          </div>
                          <div class="row">
                              <div class="col-md-1"></div>
+                                <button title="Use a slider" id="btnslider" class="btn btn-light">Slider</button>
+                                <button title="Use arrows" id="btnarrows" class="btn btn-warning">Arrows</button>
+                         </div>
+                         <hr>
+                         <div class="row">
+                             <div class="col-md-1"></div>
                              <div class="col-md-8">
-                                    <button id="btnToLeft" class="btn btn-default"><fmt:message key="euCaptcha.left" /></button>
+                                    <button id="btnToLeft" class="btn btn-primary"><fmt:message key="euCaptcha.left" /></button>
                                     <div class="captchaContainer">
                                         <img id="captchaImage" src="" alt="duck" width="200" height="200" captchaId="">
                                     </div>
-                                    <button id="btnToRight" class="btn btn-default"><fmt:message key="euCaptcha.right" /></button>
+                                    <button id="btnToRight" class="btn btn-primary"><fmt:message key="euCaptcha.right" /></button>
                                 </div>
                              <div class="col-md-2">
                                  <label title="Reload the Captcha" for="captchaReload"><fmt:message key="euCaptcha.button.reload"/></label>
@@ -99,7 +105,7 @@
                                  </div>
                              </div>
                              <div class="col-md-2">
-                                 <button id="validateWhatsUpCaptcha" class="btn btn-success" ><fmt:message key="euCaptcha.validate" /></button>
+                                 <button title="Validate the Captcha" id="validateWhatsUpCaptcha" class="btn btn-success" ><fmt:message key="euCaptcha.validate" /></button>
                              </div>
                          </div>
                          <br>

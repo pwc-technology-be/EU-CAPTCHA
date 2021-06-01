@@ -91,12 +91,32 @@ $(function(){
     }
 
     function toggle_visibility(id) {
-        var e = document.getElementById(id);
-        if(e == 'slider')
-            e.style.display = 'none';
-        else
-            e.style.display = 'block';
+        $("#fail").css("visibility", "hidden");
+        $("#success").css("visibility", "hidden");
+        if(id === 'btnslider') {
+            $("#btnToLeft").css("visibility", "hidden");
+            $("#btnToRight").css("visibility", "hidden");
+            $("#btnslider").css("visibility", "hidden");
+            $("#btnarrows").css("visibility", "visible");
+            $("#slidecontainer").css("visibility", "visible");
+            getWhatsUpcaptcha();
+        } else {
+            $("#slidecontainer").css("visibility", "hidden");
+            $("#btnarrows").css("visibility", "hidden");
+            $("#btnslider").css("visibility", "visible");
+            $("#btnToLeft").css("visibility", "visible");
+            $("#btnToRight").css("visibility", "visible");
+            getWhatsUpcaptcha();
+        }
     }
+
+    $("#btnslider").click(function (){
+        toggle_visibility('btnslider')
+    });
+
+    $("#btnarrows").click(function (){
+        toggle_visibility('btnarrows')
+    });
 
     $("#captchaReload").click(function(){
         $("#fail").css("visibility", "hidden");
@@ -149,6 +169,7 @@ $(function(){
                 window.location.replace('?lang=' + selectedOption);
             }
         });
+        toggle_visibility("btnarrows")
     });
 
     getWhatsUpcaptcha();

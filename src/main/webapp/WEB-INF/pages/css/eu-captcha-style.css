@@ -47,6 +47,10 @@
     margin-top: 1rem;
 }
 
+#btnarrows{
+    margin-right: 20px;
+}
+
 .rotation-captcha-btn-container{
     display: flex;
     justify-content: center;
