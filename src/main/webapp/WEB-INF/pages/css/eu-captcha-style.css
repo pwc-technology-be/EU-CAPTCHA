@@ -21,6 +21,14 @@
     transition: opacity .2s;
 }
 
+#btnToLeft {
+    font-weight: bold;
+}
+
+#btnToRight {
+    font-weight: bold;
+}
+
 .slider:hover {
     opacity: 1;
 }
