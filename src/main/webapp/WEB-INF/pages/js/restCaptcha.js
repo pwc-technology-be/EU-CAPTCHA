@@ -1,6 +1,5 @@
 let useAudio = false;
 let EuCaptchaToken;
-let captchaLength = 10 ;
 
 function onPlayAudio(){
          useAudio = true;
@@ -23,10 +22,20 @@ $(function(){
              return "en-GB";
          }
      }
+     function getCaptchaLength(queryString){
+         const urlParams = new URLSearchParams(queryString);
+         console.log(urlParams);
+         const captchaLength = urlParams.get("captchaLength");
+         if(captchaLength) {
+             return captchaLength;
+         } else {
+             return 10;
+         }
+     }
      function getcaptcha(){
              const getCaptchaUrl = $.ajax({
                  type: "GET",
-                 url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+captchaLength,
+                 url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+ getCaptchaLength(window.location.search),
                  success: function (data) {
                      EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
                      const jsonData = JSON.parse(data);
@@ -39,7 +48,7 @@ $(function(){
 	 function reloadCaptcha(){
          const reloadCaptchaUrl = $.ajax({
              type: "GET",
-             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ captchaLength,
+             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ getCaptchaLength(window.location.search),
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
