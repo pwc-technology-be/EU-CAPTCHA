@@ -36,3 +36,7 @@ The objective of the action is to provide an open source CAPTCHA that is:
 6. accessible by users with disabilities; 
 7. compliant with data protection rules and best practices; 
 8. maintained with continuous support for subsequent versions of the Java Virtual Machine. 
+
+# License
+
+[European Union Public License (EUPL) 1.2](https://github.com/pwc-technology-be/EU-CAPTCHA/blob/master/LICENSE.md)
