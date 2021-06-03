@@ -3,7 +3,7 @@
 EU CAPTCHA embodies the results and work in progress of [ISA² Action 2018.08 EU-Captcha](https://ec.europa.eu/isa2/actions/developing-open-source-captcha_en). 
 A CAPTCHA is a test intended to distinguish human from machine input. The objective of this action is to offer to the Member States an open source CAPTCHA released under the EUPL (European Union Public License) that is maintained, secure, user friendly and multilingual. It will be delivered as a component that can be operated as a service. A CAPTCHA with such characteristics does not exist on the market. The delivered solution will be published on GitHub so that it can be reviewed and maintained by the open source community.
 
-# Installation
+## Installation
 
 EU CAPTCHA can be installed in two ways:
 - by integrating with the managed service (_**currently this is only a testing environment!**_)
@@ -11,7 +11,7 @@ EU CAPTCHA can be installed in two ways:
 
 Manuals and documentation for both installation methods can be found in the respective GitHub folder. 
 
-# Objectives of the Action
+## Objectives of the Action
 A CAPTCHA is a test intended to distinguish human from machine input in order to thwart spam and automatic submission or extraction of data. The user is typically challenged to solve a puzzle that relies on expected capacities of the human brains but whose resolution is complex to automate. 
 Users and, in particular, disabled people are known to dislike CAPTCHAs that are perceived as hindrances. However, no better solution was found so far to protect information systems against malicious automated processes. 
 The characteristics of a good CAPTCHA are: 
@@ -37,6 +37,6 @@ The objective of the action is to provide an open source CAPTCHA that is:
 7. compliant with data protection rules and best practices; 
 8. maintained with continuous support for subsequent versions of the Java Virtual Machine. 
 
-# License
+## License
 
 [European Union Public License (EUPL) 1.2](https://github.com/pwc-technology-be/EU-CAPTCHA/blob/master/LICENSE.md)
