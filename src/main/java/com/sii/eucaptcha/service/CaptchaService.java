@@ -133,7 +133,7 @@ public class CaptchaService {
 		int extraWidth = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
 				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_WIDTH : 0 ;
 
-		int extraHeight = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
+		int extraHeight = (captchaLength !=null && captchaLength >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
 				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_HEIGHT : 0 ;
 
 		System.out.println("extraWidth = " + extraWidth + "extraHeight = " + extraHeight);
@@ -263,7 +263,7 @@ public class CaptchaService {
 	}
 
 	public boolean validateCaptcha(String captchaId,String captchaAnswer , String captchaType ,  boolean usingAudio){
-		    if(captchaType != null && CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaType))
+		    if(CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaType))
 		    	return validateWhatsUpCaptcha(captchaId , captchaAnswer );
 		    else
 			return validateCaptcha(captchaId , captchaAnswer , usingAudio);

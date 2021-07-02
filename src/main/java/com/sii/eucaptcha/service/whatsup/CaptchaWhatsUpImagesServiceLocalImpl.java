@@ -17,7 +17,7 @@ public class CaptchaWhatsUpImagesServiceLocalImpl implements CaptchaWhatsUpImage
     @Override
     public Resource loadRandomImage() {
         int nameRangeMin = 1;
-        int nameRangeMax = 7;
+        int nameRangeMax = 19;
         int randomNum = nameRangeMin + (int)(Math.random() * nameRangeMax);
         return loadImage(Integer.toString(randomNum));
     }

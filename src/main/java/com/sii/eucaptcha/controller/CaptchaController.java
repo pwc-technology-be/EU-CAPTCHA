@@ -57,7 +57,7 @@ public class CaptchaController {
                 .captchaLength(captchaLength)
                 .locale(locale)
                 .degree(degree)
-                .capitalized(Boolean.valueOf(capitalized))
+                .capitalized(capitalized)
                 .build();
 
         return captchaService.generateCaptchaWrapper(captchaQueryDto);
