@@ -73,8 +73,13 @@ public class Captcha {
          * @param txtProd the chosen TextProducer
          * @param wRenderer the chosen WordRenderer
          */
-        public CaptchaBuilder withText(TextProducer txtProd, WordRenderer wRenderer) {
-            answer = txtProd.getText();
+        public CaptchaBuilder withText(TextProducer txtProd, WordRenderer wRenderer, boolean capitalized) {
+
+            if(capitalized) {
+              answer = txtProd.getText();
+            } else {
+                answer = txtProd.getText().toLowerCase();
+            }
             wRenderer.render(answer, image);
             return this;
         }

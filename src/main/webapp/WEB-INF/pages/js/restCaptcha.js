@@ -4,51 +4,61 @@ let EuCaptchaToken;
 function onPlayAudio(){
          useAudio = true;
 }
+function capitalized() {
+    const checkBox = document.getElementById('capitalized');
+    if(checkBox.checked === true) {
+        sessionStorage.setItem("capitalized", "true");
+    } else {
+        sessionStorage.setItem("capitalized", "false");
+    }
+    getcaptcha();
+}
 function getLastSelectedValue(){
     const language = sessionStorage.getItem("language");
     if(language) {
-        document.getElementById('dropdown-language').value = language
+        document.getElementById('dropdown-language').value = language;
     } else {
         sessionStorage.setItem("language", "en-GB");
         document.getElementById('dropdown-language').value = "en-GB";
     }
 }
+function getLanguage(){
+    let language = sessionStorage.getItem("language")
+    if(language){
+        return language;
+    } else{
+        return "en-GB";
+    }
+}
+function getCaptchaLength(queryString){
+    const urlParams = new URLSearchParams(queryString);
+    console.log(urlParams);
+    const captchaLength = urlParams.get("captchaLength");
+    if(captchaLength) {
+        return captchaLength;
+    } else {
+        return 10;
+    }
+}
+function getcaptcha(){
+    const getCaptchaUrl = $.ajax({
+        type: "GET",
+        url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+ getCaptchaLength(window.location.search) + '&capitalized=' + sessionStorage.getItem("capitalized"),
+        success: function (data) {
+            EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
+            const jsonData = JSON.parse(data);
+            $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
+            $("#captchaImg").attr("captchaId", jsonData.captchaId);
+            $("#audioCaptcha").attr("src", "data:audio/wav;base64," + jsonData.audioCaptcha);
+        }
+    });
+}
 $(function(){
-     function getLanguage(){
-         let language = sessionStorage.getItem("language")
-         if(language){
-             return language;
-         } else{
-             return "en-GB";
-         }
-     }
-     function getCaptchaLength(queryString){
-         const urlParams = new URLSearchParams(queryString);
-         console.log(urlParams);
-         const captchaLength = urlParams.get("captchaLength");
-         if(captchaLength) {
-             return captchaLength;
-         } else {
-             return 10;
-         }
-     }
-     function getcaptcha(){
-             const getCaptchaUrl = $.ajax({
-                 type: "GET",
-                 url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+ getCaptchaLength(window.location.search),
-                 success: function (data) {
-                     EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
-                     const jsonData = JSON.parse(data);
-                     $("#captchaImg").attr("src", "data:image/png;base64," + jsonData.captchaImg);
-                     $("#captchaImg").attr("captchaId", jsonData.captchaId);
-                     $("#audioCaptcha").attr("src", "data:audio/wav;base64," + jsonData.audioCaptcha);
-                 }
-             });
-         }
+
 	 function reloadCaptcha(){
          const reloadCaptchaUrl = $.ajax({
              type: "GET",
-             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ getCaptchaLength(window.location.search),
+             url: 'api/reloadCaptchaImg/' + $("#captchaImg").attr("captchaId") + '/?locale=' + sessionStorage.getItem("language") + '&captchaLength='+ getCaptchaLength(window.location.search) + '&capitalized='+ sessionStorage.getItem("capitalized"),
              beforeSend: function (xhr) {
                  xhr.setRequestHeader("Accept", "application/json");
                  xhr.setRequestHeader("Content-Type", "application/json");
@@ -130,6 +140,12 @@ $(function(){
                     window.location.replace('?lang=' + selectedOption);
                 }
             });
+            var checkBox = document.getElementById('capitalized');
+            if(checkBox.checked === true) {
+                sessionStorage.setItem("capitalized", "true");
+            } else {
+                sessionStorage.setItem("capitalized", "false");
+            }
         });
 
      getcaptcha();

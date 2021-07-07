@@ -50,12 +50,14 @@ public class CaptchaController {
     public CaptchaResultDto getCaptchaImage(@RequestParam(required = false) String locale,
                                             @RequestParam(required = false) Integer captchaLength,
                                             @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
+                                            @RequestParam(defaultValue = "true", required = false) boolean capitalized,
                                             @RequestParam(required = false) Integer degree) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
                 .locale(locale)
                 .degree(degree)
+                .capitalized(capitalized)
                 .build();
 
         return captchaService.generateCaptchaWrapper(captchaQueryDto);
@@ -74,6 +76,7 @@ public class CaptchaController {
                                                @RequestParam(required = false) String locale,
                                                @RequestParam(required = false) Integer captchaLength,
                                                @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
+                                               @RequestParam(required = false) boolean capitalized,
                                                @RequestParam(required = false) Integer degree) {
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
@@ -81,6 +84,7 @@ public class CaptchaController {
                 .previousCaptchaId(previousCaptchaId)
                 .locale(locale)
                 .degree(degree)
+                .capitalized(capitalized)
                 .build();
         return captchaService.generateCaptchaWrapper(captchaQueryDto);
     }

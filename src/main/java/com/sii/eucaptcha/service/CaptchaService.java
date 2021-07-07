@@ -128,12 +128,12 @@ public class CaptchaService {
 	 * @param locale the chosen locale
 	 * @return String [] which contains the CaptchaID , Captcha Image , and Captcha Audio.
 	 */
-	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale , Integer captchaLength) {
+	public CaptchaResultDto generateCaptchaImage(String previousCaptchaId , Locale locale , Integer captchaLength, boolean capitalized) {
 
 		int extraWidth = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
 				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_WIDTH : 0 ;
 
-		int extraHeight = (captchaLength !=null && captchaLength.intValue() >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
+		int extraHeight = (captchaLength !=null && captchaLength >CaptchaConstants.DEFAULT_CAPTCHA_LENGTH) ?
 				(captchaLength-CaptchaConstants.DEFAULT_CAPTCHA_LENGTH)*CaptchaConstants.DEFAULT_UNIT_HEIGHT : 0 ;
 
 		System.out.println("extraWidth = " + extraWidth + "extraHeight = " + extraHeight);
@@ -152,7 +152,7 @@ public class CaptchaService {
 		CaptchaTextRender wordRenderer = new CaptchaTextRender(COLORS, FONTS_SANS_SERIF, FONTS_SERIF);
 
 		//Build The Captcha
-		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH+extraWidth, CAPTCHA_HEIGHT+extraHeight).withText(textProducer ,wordRenderer )
+		Captcha captcha = Captcha.newBuilder().withDimensions(CAPTCHA_WIDTH+extraWidth, CAPTCHA_HEIGHT+extraHeight).withText(textProducer ,wordRenderer, capitalized )
 				.withBackground(new GradiatedBackgroundProducer(BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())),
 						BACKGROUND_COLORS.get(random.nextInt(BACKGROUND_COLORS.size())))).withNoise(new StraightLineImageNoiseProducer(
 						COLOR_STRAIGHT_LINE_NOISE.get(random.nextInt(COLOR_STRAIGHT_LINE_NOISE.size())),7
@@ -263,7 +263,7 @@ public class CaptchaService {
 	}
 
 	public boolean validateCaptcha(String captchaId,String captchaAnswer , String captchaType ,  boolean usingAudio){
-		    if(captchaType != null && CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaType))
+		    if(CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaType))
 		    	return validateWhatsUpCaptcha(captchaId , captchaAnswer );
 		    else
 			return validateCaptcha(captchaId , captchaAnswer , usingAudio);
@@ -302,9 +302,7 @@ public class CaptchaService {
  		if(captchaQueryDto.getCaptchaType() !=null && captchaQueryDto.getCaptchaType().equalsIgnoreCase(CaptchaConstants.WHATS_UP)){
 			return generateWhatsUpCaptchaImage(previousCaptchaId , captchaQueryDto.getDegree());
 		}else{
-			Locale locale = captchaQueryDto.getLocale();
-			Integer captchaLength = captchaQueryDto.getCaptchaLength();
-			return generateCaptchaImage(previousCaptchaId ,locale , captchaLength );
+			return generateCaptchaImage(previousCaptchaId ,captchaQueryDto.getLocale() , captchaQueryDto.getCaptchaLength(), captchaQueryDto.isCapitalized() );
 		}
 
 

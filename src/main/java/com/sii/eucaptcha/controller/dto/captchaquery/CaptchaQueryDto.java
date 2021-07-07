@@ -12,6 +12,7 @@ public class CaptchaQueryDto {
     private String previousCaptchaId;
     private String captchaType;
     private Integer degree;
+    private boolean capitalized;
 
 
     public CaptchaQueryDto(CaptchaQueryDtoBuilder captchaQueryDtoBuilder) {
@@ -20,6 +21,7 @@ public class CaptchaQueryDto {
         this.previousCaptchaId = captchaQueryDtoBuilder.previousCaptchaId;
         this.captchaType = captchaQueryDtoBuilder.captchaType;
         this.degree = captchaQueryDtoBuilder.degree;
+        this.capitalized = captchaQueryDtoBuilder.capitalized;
 
     }
 
@@ -47,6 +49,9 @@ public class CaptchaQueryDto {
         return degree;
     }
 
+    public boolean isCapitalized() {
+        return capitalized;
+    }
 
     @Override
     public String toString() {
@@ -64,6 +69,7 @@ public class CaptchaQueryDto {
         private String previousCaptchaId;
         private String captchaType;
         private Integer degree;
+        private boolean capitalized;
 
         public CaptchaQueryDtoBuilder(String captchaType) {
             if (captchaType == null) this.captchaType = CaptchaConstants.STANDARD;
@@ -93,13 +99,17 @@ public class CaptchaQueryDto {
             return this;
         }
 
-
         public CaptchaQueryDtoBuilder degree(Integer degree) {
             if (degree == null)
                 this.degree = CaptchaConstants.DEFAULT_DEGREE;
             else
                 this.degree = degree;
             return this;
+        }
+
+        public CaptchaQueryDtoBuilder capitalized(boolean capitalized) {
+                this.capitalized = capitalized;
+                return this;
         }
 
         public CaptchaQueryDto build() {
