@@ -23,7 +23,7 @@ public class LanguageVoiceProducer implements VoiceProducer {
     }
 
     /**
-     * Listing of the audio files for each characters , and convert the small case to upper case
+     * Listing of the audio files for each characters
      *
      * @param num the char to be converted to text
      * @return audio file for each char
