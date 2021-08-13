@@ -8,10 +8,12 @@ import java.awt.*;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
@@ -83,6 +85,12 @@ public class CaptchaTextRender implements WordRenderer {
                 int choiceFont = RANDOM.nextInt(FONTS_SANS_SERIF.size());
                 font = FONTS_SANS_SERIF.get(choiceFont);
             }
+            Hashtable<TextAttribute, Object> map =
+                    new Hashtable<>();
+
+            /* Kerning makes the text spacing more natural */
+            map.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
+            font = font.deriveFont(map);
             g.setFont(font);
             GlyphVector gv = font.createGlyphVector(frc, chars);
 

@@ -86,14 +86,16 @@ public class CaptchaAudioService {
             // Make a List of Samples for each character
             List<Sample> samples = new ArrayList<>();
             for (char c : answerArray) {
-                // Create Sample for this character from one of the
-                // VoiceProducers
-                VoiceProducer voiceProducer = voiceProducers.get(SECURE_RANDOM.nextInt(voiceProducers.size()));
-                Sample sample = voiceProducer.getVocalization(c);
+                if(!Character.isWhitespace(c)) {
+                    // Create Sample for this character from one of the
+                    // VoiceProducers
+                    VoiceProducer voiceProducer = voiceProducers.get(SECURE_RANDOM.nextInt(voiceProducers.size()));
+                    Sample sample = voiceProducer.getVocalization(c);
 
-                Sample sampleWithInterruption = new Sample(sample.getAudioInputStream() , true);
+                    Sample sampleWithInterruption = new Sample(sample.getAudioInputStream(), true);
 
-                samples.add(sampleWithInterruption);
+                    samples.add(sampleWithInterruption);
+                }
             }
             // 3. Add noise, if any, and return the result
             if (noiseProducers.size() > 0) {

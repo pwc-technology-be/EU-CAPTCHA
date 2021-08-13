@@ -64,19 +64,11 @@ public class Sample {
         }else
             this.audioInputStream = audioInputStream ;
 
-
-
-
-
-
         checkFormat(audioInputStream.getFormat());
     }
 
 
     public Sample(InputStream is) {
-
-
-
         if (is instanceof AudioInputStream) {
             audioInputStream = (AudioInputStream) is;
         }else {
@@ -89,7 +81,6 @@ public class Sample {
                 throw new RuntimeException(e);
             }
         }
-
         checkFormat(audioInputStream.getFormat());
     }
 

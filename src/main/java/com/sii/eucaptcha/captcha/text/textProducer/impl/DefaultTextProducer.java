@@ -23,6 +23,7 @@ public class DefaultTextProducer implements TextProducer {
         StringBuilder capText = new StringBuilder();
         for (int i = 0; i < LENGTH; i++) {
             capText.append(getRandomSetElement());
+            capText.append(" ");
         }
         return capText.toString();
     }
