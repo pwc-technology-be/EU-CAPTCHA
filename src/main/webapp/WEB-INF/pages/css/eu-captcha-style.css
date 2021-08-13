@@ -21,10 +21,6 @@
     transition: opacity .2s;
 }
 
-#audio {
-    width: 600px;
-    height: 70px;
-}
 #btnToLeft {
     font-weight: bold;
 }

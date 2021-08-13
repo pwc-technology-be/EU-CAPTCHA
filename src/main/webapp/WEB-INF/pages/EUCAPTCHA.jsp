@@ -90,7 +90,7 @@
               <div class="col-md-8">
                 <img alt="Captcha image to solve" class="img-fluid img-thumbnail" src="" id="captchaImg" captchaId="">
                 <hr>
-                <audio id="audio" controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
+                <audio controls autostart="1" src="" id="audioCaptcha" onplay="onPlayAudio()"></audio>
               </div>
               <div class="col-md-2">
                 <a href="#" class="fa fa-lightbulb-o fa-5x " data-toggle="tooltip" title="<fmt:message key="euCaptcha.tooltip.answer"/>"></a>
