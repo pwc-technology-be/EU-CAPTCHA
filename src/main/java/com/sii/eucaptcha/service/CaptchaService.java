@@ -70,21 +70,14 @@ public class CaptchaService {
 	/**
 	 * List of fonts and font sizes
 	 */
-	private static final List<Font> FONTS_SANS_SERIF = new ArrayList<>(3);
-	private static final List<Font> FONTS_SERIF = new ArrayList<>(3);
+	private static final Font FONTS_SERIF = new Font("Serif", Font.BOLD, 50);
+	private static final Font FONTS_SANS_SERIF = new Font("SansSerif", Font.BOLD, 50);
+
 
 	static {
 		COLORS.add(Color.BLACK);
 		COLORS.add(Color.GRAY);
 		COLORS.add(Color.DARK_GRAY);
-
-		FONTS_SANS_SERIF.add(new Font("Geneva", Font.BOLD, 50));
-		FONTS_SANS_SERIF.add(new Font("Calibri", Font.BOLD, 70));
-		FONTS_SANS_SERIF.add(new Font("Arial", Font.BOLD, 60));
-
-		FONTS_SERIF.add(new Font("Cambria", Font.BOLD, 50));
-		FONTS_SERIF.add(new Font("Times New Roman", Font.BOLD, 70));
-		FONTS_SERIF.add(new Font("Courier New", Font.BOLD, 60));
 
 		BACKGROUND_COLORS.add(Color.PINK);
 		BACKGROUND_COLORS.add(Color.ORANGE);
@@ -97,6 +90,8 @@ public class CaptchaService {
 		COLOR_STRAIGHT_LINE_NOISE.add(Color.MAGENTA);
 
 	}
+
+	private List<String> fonts = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
 
 	/**
 	 * Building a map with Expiration Time CAPTCHA_EXPIRY_TIME
@@ -115,6 +110,7 @@ public class CaptchaService {
 	CaptchaWhatsUpImagesService captchaWhatsUpImagesService ;
 
 	private final SecureRandom random = CaptchaRandom.getSecureInstance();
+
 	/**
 	 *
 	 * @return Captcha ID
@@ -164,8 +160,8 @@ public class CaptchaService {
 		Double sampleVolume;
 		Double noiseVolume;
 		if(locale.getLanguage().equals("bg")) {
-		    sampleVolume = 3 * props.getSampleVolume();
-		    noiseVolume = props.getNoiseVolume() / 2;
+		    sampleVolume = props.getSampleVolume();
+		    noiseVolume = 0.0D;
         } else {
 		    sampleVolume = props.getSampleVolume();
 		    noiseVolume = props.getNoiseVolume();

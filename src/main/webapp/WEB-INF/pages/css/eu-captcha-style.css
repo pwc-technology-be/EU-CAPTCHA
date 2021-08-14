@@ -10,6 +10,10 @@
     width: 100%;
 }
 
+#audioCaptcha {
+    width: 100%;
+}
+
 .slider {
     -webkit-appearance: none;
     width: 100%;
