@@ -41,10 +41,10 @@ public class CaptchaTextRender implements WordRenderer {
      * @param fontsSansSerif the fonts to be used for small characters
      * @Param fontsSerif the fonts to be used for Capital characters
      */
-    public CaptchaTextRender(List<Color> colors, List<Font> fontsSansSerif, List<Font>fontsSerif) {
+    public CaptchaTextRender(List<Color> colors, Font fontsSansSerif, Font fontsSerif) {
         this.COLORS.addAll(colors);
-        this.FONTS_SANS_SERIF.addAll(fontsSansSerif);
-        this.FONTS_SERIF.addAll(fontsSerif);
+        this.FONTS_SANS_SERIF.add(fontsSansSerif);
+        this.FONTS_SERIF.add(fontsSerif);
     }
 
 
