@@ -3,8 +3,6 @@ package com.sii.eucaptcha.captcha.audio;
 import com.sii.eucaptcha.BeanUtil;
 import com.sii.eucaptcha.captcha.util.FileUtil;
 import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
-import org.springframework.beans.factory.BeanFactoryUtils;
-
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
