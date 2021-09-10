@@ -23,11 +23,14 @@ public class CaptchaRandom {
         if(degree < CaptchaConstants.MIN_DEGREE || degree > CaptchaConstants.MAX_DEGREE)
             throw  new WrongCaptchaRotationDegree();
         else {
-            int randomRangeMax = (CaptchaConstants.MAX_DEGREE / degree);
-            int randomRangeMin = randomRangeMax * -1;
+            int randomRangeMax = 6;
+            int randomRangeMin = 1;
+            int range = randomRangeMax - randomRangeMin + 1;
             System.out.println("min = " + randomRangeMin);
             System.out.println("max = " + randomRangeMax);
-            int randomNumber = ((int) ((Math.random() * (randomRangeMax - randomRangeMin)) + randomRangeMin));
+            int randomNumber = (int) (Math.random() * randomRangeMax) + randomRangeMin;
+            System.out.println(randomNumber);
+            System.out.println(degree);
             return randomNumber * degree;
         }
     }
