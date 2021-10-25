@@ -59,7 +59,7 @@ public class CaptchaService {
      */
     private static final int CAPTCHA_WIDTH = 400;
     private static final int CAPTCHA_HEIGHT = 200;
-    private static final long CAPTCHA_EXPIRY_TIME = 40;
+    private static final long CAPTCHA_EXPIRY_TIME = 120;
 
     /**
      * List of colors and background colors
