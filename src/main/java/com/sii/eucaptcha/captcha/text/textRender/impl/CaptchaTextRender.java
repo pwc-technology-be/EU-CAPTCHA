@@ -12,10 +12,8 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author mousab.aidoud
@@ -78,12 +76,17 @@ public class CaptchaTextRender implements WordRenderer {
             chars[0] = c;
             g.setColor(COLORS.get(RANDOM.nextInt(COLORS.size())));
             Font font;
+            Map<TextAttribute, Object> textAttributes = new HashMap<>();
+            textAttributes.put(TextAttribute.TRACKING, 0.5);
+            textAttributes.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
             if(isUpperCase(c)) {
                 int choiceFont = RANDOM.nextInt(FONTS_SERIF.size());
-                font = FONTS_SERIF.get(choiceFont);
+                Font baseFont = FONTS_SERIF.get(choiceFont);
+                font = baseFont.deriveFont(textAttributes);
             } else {
                 int choiceFont = RANDOM.nextInt(FONTS_SANS_SERIF.size());
-                font = FONTS_SANS_SERIF.get(choiceFont);
+                Font baseFont = FONTS_SERIF.get(choiceFont);
+                font = baseFont.deriveFont(textAttributes);
             }
             Hashtable<TextAttribute, Object> map =
                     new Hashtable<>();
