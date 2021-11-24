@@ -4,7 +4,7 @@ EU CAPTCHA embodies the results and work in progress of [ISA² Action 2018.08 EU
 A CAPTCHA is a test intended to distinguish human from machine input. The objective of this action is to offer to the Member States an open source CAPTCHA released under the EUPL (European Union Public License) that is maintained, secure, user friendly and multilingual. It will be delivered as a component that can be operated as a service. A CAPTCHA with such characteristics does not exist on the market. The delivered solution will be published on GitHub so that it can be reviewed and maintained by the open source community.
 
 EU CAPTCHA supports two types of CAPTCHA:
-- Alphanumeric CAPTCHA
+- Alphanumeric CAPTCHA with audio transcription
 - Image rotation CAPTCHA 
 
 ## Installation
