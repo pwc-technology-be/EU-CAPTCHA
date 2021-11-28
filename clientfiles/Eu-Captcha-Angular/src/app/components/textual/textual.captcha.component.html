@@ -6,24 +6,31 @@
         </div>
       </div>
       <div class="eu-captcha">
-    
+
         <h2>{{title}}</h2>
-    
+
         <div class="row">
             <form [formGroup]="captchaForm" >
- 
-                
-                 
+
+
+
                   <select formControlName="language">
                     <option [ngValue]="null" disabled>Select Country</option>
                     <option *ngFor="let lang of captchaLang" [ngValue]="lang.id">{{lang.name}}</option>
                   </select>
-                 
-        
-                
-                 
+
+
+
+
             </form>
-        </div>   
+        </div>
+        <div class="row ">
+          <div class="col-md-1"></div>
+          <div class=""col-md-8>
+            <label  for="capitalized"> Capitalized</label>
+            <input type="checkbox" id="capitalized" checked onclick="capitalized()">
+          </div>
+        </div>
         <div class="row">
           <img src={{captchaImage}} alt="">
         </div>
@@ -34,15 +41,15 @@
           <div class="row">
             <input type="text" [(ngModel)]="answer" class="form-control">
           </div>
-      
+
           <div class="row">
             <button (click)="onValidate()" class="btn btn-success validate">validate</button>
             <button (click)="onReload()" class="btn btn-success reload"> reload <em class="fa fa-refresh"></em> </button>
           </div>
-          
+
         </div>
-        
+
       </div>
     </div>
-    
+
   </div>
