@@ -12,14 +12,16 @@ export class CaptchaService {
     host:string = environment.host
 
     captchaLength = 8
+    captchaLanguage = 'en-GB'
     captchaLengthParam = `captchaLength=${this.captchaLength}`
+    captchaLanguageParam= `captchaLanguage=${this.captchaLanguage}`
 
-    
-    
-   
+
+
+
 
     euCaptchaToken : string = ""
-    
+
 
     constructor(private http: HttpClient) {
 
@@ -28,10 +30,10 @@ export class CaptchaService {
 
     getCaptcha = (captchaType: string = "STANDARD"): Observable<HttpResponse<any>> => {
         let captchaTypeParam = `captchaType=${captchaType}`
-        return this.http.get<HttpResponse<any>>(`${this.host}/api/captchaImg?${captchaTypeParam}&${this.captchaLengthParam}` , {observe : 'response'}  )
+        return this.http.get<HttpResponse<any>>(`${this.host}/api/captchaImg?${captchaTypeParam}&${this.captchaLanguageParam}&${this.captchaLengthParam}` , {observe : 'response'}  )
         .pipe(tap(res => {
             const euCaptchaToken = res.headers.get("x-jwtString")
-            if(euCaptchaToken) this.setEuCaptchaToken(euCaptchaToken) 
+            if(euCaptchaToken) this.setEuCaptchaToken(euCaptchaToken)
         }))
     }
     validateCaptcha = (captchaId : string, captchaAnswer : string , useAudio : boolean , captchaType : string): Observable<any>  => {
@@ -40,18 +42,19 @@ export class CaptchaService {
             headers: new HttpHeaders({
               'Content-Type':  'application/x-www-form-urlencoded; charset=UTF-8 application/json',
               'Accept' : 'application/json',
-              'x-jwtString': this.euCaptchaToken
+              'x-jwtString': this.euCaptchaToken,
+              'withCredentials' : String(true)
             })
-          }; 
-        
+          };
+
         return this.http.post<any>(`${this.host}/api/validateCaptcha/${captchaId}` , `captchaAnswer=${captchaAnswer}&useAudio=false&captchaType=${captchaType}`, httpOptions)
     }
     setEuCaptchaToken = (euCaptchaToken : string) =>  {
-        
+
         this.euCaptchaToken = euCaptchaToken ;
 
         console.log(` set euCaptchaToken to ${euCaptchaToken} ` )
-        
+
         //setTimeout( () => {this.euCaptchaToken = ""} , 20000)
     }
 
@@ -62,13 +65,14 @@ export class CaptchaService {
             headers: new HttpHeaders({
               'Content-Type':  'application/x-www-form-urlencoded; charset=UTF-8 application/json',
               'Accept' : 'application/json',
-              'x-jwtString': this.euCaptchaToken
+              'x-jwtString': this.euCaptchaToken,
+              'withCredentials' : String(true)
             })
           };
          return this.http.get<HttpResponse<any>>(`${this.host}/api/reloadCaptchaImg/${captchaId}?${captchaTypeParam}&${this.captchaLengthParam}&${localeParam}`  , {headers : httpOptions.headers , observe : 'response'} )
          .pipe(tap(res => {
             const euCaptchaToken = res.headers.get("x-jwtString")
-            if(euCaptchaToken) this.setEuCaptchaToken(euCaptchaToken) 
+            if(euCaptchaToken) this.setEuCaptchaToken(euCaptchaToken)
         }))
     }
 
