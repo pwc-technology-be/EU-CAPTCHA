@@ -44,10 +44,10 @@ function getcaptcha(){
     const getCaptchaUrl = $.ajax({
         type: "GET",
         url: 'api/captchaImg?locale='+ getLanguage() + '&captchaLength='+ getCaptchaLength(window.location.search) + '&capitalized=' + sessionStorage.getItem("capitalized"),
-        xhrFields: {
-            'withCredentials': true
+        beforeSend: function (xhr) {
+            xhr.withCredentials = true;
+            xhr.crossDomain = true;
         },
-        crossDomain: true,
         success: function (data) {
             EuCaptchaToken = getCaptchaUrl.getResponseHeader("x-jwtString");
             const jsonData = JSON.parse(data);
