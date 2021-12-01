@@ -30,6 +30,10 @@ export class CaptchaService {
 
     getCaptcha = (captchaType: string = "STANDARD"): Observable<HttpResponse<any>> => {
         let captchaTypeParam = `captchaType=${captchaType}`
+        headers: new HttpHeaders({
+          'withCredentials' : String(true),
+          'crossDomain' : String(true)
+        })
         return this.http.get<HttpResponse<any>>(`${this.host}/api/captchaImg?${captchaTypeParam}&${this.captchaLanguageParam}&${this.captchaLengthParam}` , {observe : 'response'}  )
         .pipe(tap(res => {
             const euCaptchaToken = res.headers.get("x-jwtString")
