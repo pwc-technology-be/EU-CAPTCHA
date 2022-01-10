@@ -10,7 +10,7 @@ EU CAPTCHA supports two types of CAPTCHA:
 ## Installation
 
 EU CAPTCHA can be installed in two ways:
-- by integrating with the managed service (_**currently this is only a testing environment!**_)
+- by integrating with the managed service
 - by deploying the code (.WAR file) on your server/environment.
 
 Manuals and documentation for both installation methods can be found in the respective GitHub folder. 
