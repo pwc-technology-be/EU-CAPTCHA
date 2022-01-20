@@ -102,7 +102,7 @@ public class CaptchaController {
 
         //check if captchaId is present
         if (StringUtils.isBlank(captchaId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("CaptchaId is missing!", HttpStatus.NOT_ACCEPTABLE);
         } else {
             //Verify the validity of the captcha answer.
             try {
