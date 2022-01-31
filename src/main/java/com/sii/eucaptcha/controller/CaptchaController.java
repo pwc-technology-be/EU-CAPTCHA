@@ -6,6 +6,7 @@ import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
 import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
 import com.sii.eucaptcha.service.CaptchaService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,6 @@ public class CaptchaController {
      */
     @Value("${controller.captcha.answerLength}")
     private int captchaAnswerLength;
-    /**
-     * Captcha ID Length  -> controller.properties
-     */
-    @Value("${controller.captcha.idLength}")
-    private int captchaIdLength;
 
     public CaptchaController(CaptchaService captchaService) {
         this.captchaService = captchaService;
@@ -104,10 +100,11 @@ public class CaptchaController {
                                                   @RequestParam(value = "captchaType", defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType) {
 
 
-        //Verify the validity of the captcha answer.
-        if (captchaId.trim().length() != captchaIdLength) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        //check if captchaId is present
+        if (StringUtils.isBlank(captchaId)) {
+            return new ResponseEntity<>("CaptchaId is missing!", HttpStatus.NOT_ACCEPTABLE);
         } else {
+            //Verify the validity of the captcha answer.
             try {
                 boolean responseCaptcha;
                 responseCaptcha = captchaService.validateCaptcha(captchaId, captchaAnswer, captchaType, useAudio);
