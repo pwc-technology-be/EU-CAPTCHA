@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 
 /**
@@ -50,9 +49,6 @@ public class CaptchaController {
                                             @RequestParam(defaultValue = "true", required = false) boolean capitalized,
                                             @RequestParam(required = false) Integer degree) {
 
-        if (StringUtils.isBlank(locale) || StringUtils.equalsIgnoreCase("Undefined", locale)) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Locale is missing or invalid!");
-        }
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
                 .locale(locale)
@@ -78,14 +74,6 @@ public class CaptchaController {
                                                @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
                                                @RequestParam(required = false) boolean capitalized,
                                                @RequestParam(required = false) Integer degree) {
-
-        if (StringUtils.isBlank(locale) || StringUtils.equalsIgnoreCase("Undefined", locale)) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Locale is missing or invalid!");
-        }
-
-        if (StringUtils.isBlank(previousCaptchaId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CaptchaId is missing!");
-        }
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
