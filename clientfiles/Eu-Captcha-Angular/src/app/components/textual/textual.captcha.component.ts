@@ -19,7 +19,7 @@ import { FormBuilder, FormGroup, Validators , ReactiveFormsModule, FormsModule  
 
 export class Textual implements OnInit , CaptchaActions {
 
-  useAudio : boolean = false 
+  useAudio : boolean = false
 
   title = 'Eu-Captcha'
 
@@ -34,65 +34,65 @@ export class Textual implements OnInit , CaptchaActions {
 
   answer: string = "";
 
-  validationStatus:boolean = false 
+  validationStatus:boolean = false
 
   showAlert : boolean = false ;
   alertMessage:string = "CAPTCHA validation successful."
   alertClass:string = "alert-success"
 
-  captchaForm : FormGroup 
-  constructor(private captchaService: CaptchaService , private _sanitizer: DomSanitizer , public fb: FormBuilder) { 
+  captchaForm : FormGroup
+  constructor(private captchaService: CaptchaService , private _sanitizer: DomSanitizer , public fb: FormBuilder) {
     this.captchaForm = this.fb.group({
         language: ['']
       })
   }
- 
 
 
-  captchaLang = 
+
+  captchaLang =
   [{id : "en" , name : "English"},
                     {id : "fr" , name : "Français"},
                     {id : "de" , name : "Deutsch"},
                     {id : "bg" , name : "български"},
                     {id : "hr" , name : "Hrvatski"},
                     {id : "da" , name : "Dansk"},
-                    {id : "es" , name : "Espanol"},
-                    {id : "et" , name : "Eestlane"},
-                    {id : "fi" , name : "Suomalainen"},
+                    {id : "es" , name : "Español"},
+                    {id : "et" , name : "Eesti keel"},
+                    {id : "fi" , name : "Suomi"},
                     {id : "el" , name : "ελληνικά"},
                     {id : "hu" , name : "Magyar"},
                     {id : "it" , name : "Italiano"},
-                    {id : "lv" , name : "Latvietis"},
-                    {id : "lt" , name : "Lietuvis"},
-                    {id : "mt" , name : "Maltin"},
+                    {id : "lv" , name : "Latviešu valoda"},
+                    {id : "lt" , name : "Lietuvių kalba"},
+                    {id : "mt" , name : "Malti"},
                     {id : "nl" , name : "Nederlands"},
                     {id : "pl" , name : "Polski"},
                     {id : "pt" , name : "Português"},
-                    {id : "ro" , name : "Românesc"},
-                    {id : "sk" , name : "Slovenský"},
-                    {id : "sl" , name : "Slovensko"},
+                    {id : "ro" , name : "Română"},
+                    {id : "sk" , name : "Slovenčina"},
+                    {id : "sl" , name : "Slovenščina"},
                     {id : "sv" , name : "Svenska"},
-                    {id : "cs" , name : "česky"}
+                    {id : "cs" , name : "čeština"}
 ]
 
 
 
-  
+
 
 
   ngOnInit(): void {
-        
+
     this.captchaService.getCaptcha("STANDARD")
       .subscribe(captchaRequest => {
         const captcha:Captcha = captchaRequest.body
 
         this.captchaImage = `data:image/png;base64,${captcha.captchaImg}`
         this.captchaId = captcha.captchaId
-       
+
         this.audioCaptcha = this._sanitizer.bypassSecurityTrustResourceUrl(`data:audio/wav;base64,${captcha.audioCaptcha}`);
-        
+
         console.log( this.audioCaptcha)
-        
+
         this.degree = captcha.degree
       })
   }
@@ -131,7 +131,7 @@ export class Textual implements OnInit , CaptchaActions {
   validationStatusExpiration = () => {
        setTimeout( () => {
           this.showAlert = false
-          console.log(`validation status become  ${this.validationStatus}`) 
+          console.log(`validation status become  ${this.validationStatus}`)
        } , 2000)
   }
 
@@ -140,6 +140,6 @@ export class Textual implements OnInit , CaptchaActions {
     }
 
     submit() {
-         
+
     }
 }
