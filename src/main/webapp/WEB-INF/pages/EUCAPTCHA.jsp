@@ -27,9 +27,7 @@
 <body dir="rtl " onload="getLastSelectedValue()">
   <div class="container ">
    <div class="row text-center">
-      <div class="col-sm-1">
-      </div>
-      <div class="col-md-9">
+      <div class="col-md-12">
       <div class="row text-center">
 
        <div class=" col-md-12 alert alert-success" id="success" role="alert" style="visibility : hidden">
