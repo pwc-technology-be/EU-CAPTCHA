@@ -28,7 +28,7 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
                     .addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
             httpServletResponse
                     .addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-                            "*, Access-Control-Allow-Headers, X-Requested-With, x-jwtString, Content-Type");
+                            "*, Access-Control-Allow-Headers, X-Requested-With, x-jwtString, Content-Type, cache-control");
             httpServletResponse
                     .addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
             httpServletResponse
@@ -45,7 +45,7 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
                     .addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
             httpServletResponse.
                     addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-                            "*, Access-Control-Allow-Headers, X-Requested-With, x-jwtString, Content-Type");
+                            "*, Access-Control-Allow-Headers, X-Requested-With, x-jwtString, Content-Type, cache-control");
             httpServletResponse
                     .addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-jwtString");
             httpServletResponse
