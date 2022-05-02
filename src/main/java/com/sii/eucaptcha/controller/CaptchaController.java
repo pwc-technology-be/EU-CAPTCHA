@@ -5,6 +5,9 @@ import com.sii.eucaptcha.controller.constants.CaptchaConstants;
 import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
 import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
 import com.sii.eucaptcha.service.CaptchaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +28,6 @@ public class CaptchaController {
 
     private final CaptchaService captchaService;
 
-    /**
-     * Captcha answer length -> controller.properties
-     */
-    @Value("${controller.captcha.answerLength}")
-    private int captchaAnswerLength;
-
     public CaptchaController(CaptchaService captchaService) {
         this.captchaService = captchaService;
     }
@@ -43,9 +40,15 @@ public class CaptchaController {
      * @return response as String contains CaptchaID and Captcha Image
      */
     @CrossOrigin
+    @ApiOperation(value = "Get a Captcha image",
+            notes = "Returns a captcha image as per locale, captchaLength, type and capitalization or not")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved captcha image"),
+            @ApiResponse(code = 406, message = "Not Acceptable - Locale is missing or invalid")
+    })
     @GetMapping(value = "/captchaImg")
-    public CaptchaResultDto getCaptchaImage(@RequestParam(required = false) String locale,
-                                            @RequestParam(required = false) Integer captchaLength,
+    public CaptchaResultDto getCaptchaImage(@RequestParam(defaultValue = "en-GB", required = false) String locale,
+                                            @RequestParam(defaultValue = "8", required = false) Integer captchaLength,
                                             @RequestParam(defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType,
                                             @RequestParam(defaultValue = "true", required = false) boolean capitalized,
                                             @RequestParam(required = false) Integer degree) {
@@ -53,6 +56,7 @@ public class CaptchaController {
         if (StringUtils.isBlank(locale) || StringUtils.equalsIgnoreCase("Undefined", locale)) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Locale is missing or invalid!");
         }
+
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
                 .locale(locale)
@@ -71,6 +75,13 @@ public class CaptchaController {
      * @return response as String contains CaptchaID and Captcha Image
      */
     @CrossOrigin
+    @ApiOperation(value = "Refresh a previous Captcha image",
+            notes = "Returns a new captcha image as per locale, captchaLength, type and capitalization or not")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved captcha image"),
+            @ApiResponse(code = 400, message = "CaptchaId is missing"),
+            @ApiResponse(code = 406, message = "Not Acceptable - Locale is missing or invalid")
+    })
     @GetMapping(value = "/reloadCaptchaImg/{previousCaptchaId}")
     public CaptchaResultDto reloadCaptchaImage(@PathVariable("previousCaptchaId") String previousCaptchaId,
                                                @RequestParam(required = false) String locale,
@@ -86,6 +97,7 @@ public class CaptchaController {
         if (StringUtils.isBlank(previousCaptchaId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CaptchaId is missing!");
         }
+
 
         CaptchaQueryDto captchaQueryDto = new CaptchaQueryDto.CaptchaQueryDtoBuilder(captchaType)
                 .captchaLength(captchaLength)
@@ -105,6 +117,12 @@ public class CaptchaController {
      * @return fail or success as String response
      */
     @CrossOrigin
+    @ApiOperation(value = "Validate a Captcha image",
+            notes = "Returns success or failed as an answer")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfull response can be success or fail"),
+            @ApiResponse(code = 400, message = "CaptchaId is missing")
+    })
     @PostMapping(value = "/validateCaptcha/{captchaId}")
     public ResponseEntity<String> validateCaptcha(@PathVariable(value = "captchaId", required = false) String captchaId,
                                                   @RequestParam(value = "captchaAnswer", required = false) String captchaAnswer,
@@ -114,7 +132,7 @@ public class CaptchaController {
 
         //check if captchaId is present
         if (StringUtils.isBlank(captchaId)) {
-            return new ResponseEntity<>("CaptchaId is missing!", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("CaptchaId is missing!", HttpStatus.BAD_REQUEST);
         } else {
             //Verify the validity of the captcha answer.
             try {

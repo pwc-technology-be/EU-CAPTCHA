@@ -27,9 +27,7 @@
 <body dir="rtl " onload="getLastSelectedValue()">
   <div class="container ">
    <div class="row text-center">
-      <div class="col-sm-1">
-      </div>
-      <div class="col-md-9">
+      <div class="col-md-12">
       <div class="row text-center">
 
        <div class=" col-md-12 alert alert-success" id="success" role="alert" style="visibility : hidden">
@@ -56,23 +54,23 @@
                     <option value="bg-BG">български</option>
                     <option value="hr-HR">Hrvatski</option>
                     <option value="da-DK">Dansk</option>
-                    <option value="es-ES">Espanol</option>
-                    <option value="et-EE">Eestlane</option>
-                    <option value="fi-FI">Suomalainen</option>
+                    <option value="es-ES">Español</option>
+                    <option value="et-EE">Eesti keel</option>
+                    <option value="fi-FI">Suomi</option>
                     <option value="el-GR">ελληνικά</option>
                     <option value="hu-HU" >Magyar</option>
                     <option value="it-IT">Italiano</option>
-                    <option value="lv-LV">Latvietis</option>
-                    <option value="lt-LT">Lietuvis</option>
-                    <option value="mt-MT">Maltin</option>
+                    <option value="lv-LV">Latviešu valoda</option>
+                    <option value="lt-LT">Lietuvių kalba</option>
+                    <option value="mt-MT">Malti</option>
                     <option value="nl-NL">Nederlands</option>
                     <option value="pl-PL">Polski</option>
                     <option value="pt-PT">Português</option>
-                    <option value="ro-RO">Românesc</option>
-                    <option value="sk-SK">Slovenský</option>
-                    <option value="sl-SI">Slovensko</option>
+                    <option value="ro-RO">Română</option>
+                    <option value="sk-SK">Slovenčina</option>
+                    <option value="sl-SI">Slovenščina</option>
                     <option value="sv-SE">Svenska</option>
-                    <option value="cs-CZ">česky</option>
+                    <option value="cs-CZ">čeština</option>
                   </select>
                 </div>
               </div>
@@ -82,7 +80,7 @@
             <div class="row ">
               <div class="col-md-1"></div>
               <div class=""col-md-8>
-                <label  for="capitalized"> Capitalized</label>
+                <label  for="capitalized"><fmt:message key="euCaptcha.field.capitalized"/></label>
                 <input type="checkbox" id="capitalized" checked onclick="capitalized()">
               </div>
             </div>
