@@ -3,7 +3,11 @@
 }
 
 .fa-lightbulb-o {
-    color: orange;
+    color: Red;
+}
+
+#navigation {
+    text-align: center;
 }
 
 .slidecontainer {
