@@ -10,11 +10,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.logging.Logger;
 
 
 /**
@@ -53,7 +54,11 @@ public class CaptchaController {
                                             @RequestParam(defaultValue = "true", required = false) boolean capitalized,
                                             @RequestParam(required = false) Integer degree) {
 
+        log.debug("Request with language: {}, length: {}, type: {}, capitalized: {} and degrees: {}",
+                locale, captchaLength, captchaType, capitalized, degree);
+
         if (StringUtils.isBlank(locale) || StringUtils.equalsIgnoreCase("Undefined", locale)) {
+            log.debug("Locale is missing or invalid!");
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Locale is missing or invalid!");
         }
 
@@ -90,11 +95,16 @@ public class CaptchaController {
                                                @RequestParam(required = false) boolean capitalized,
                                                @RequestParam(required = false) Integer degree) {
 
+        log.debug("Reload requested with previousCaptchaId: {}, language: {}, length: {}, type: {}, capitalized: {} and degrees: {}",
+                previousCaptchaId, locale, captchaLength, captchaType, capitalized, degree);
+
         if (StringUtils.isBlank(locale) || StringUtils.equalsIgnoreCase("Undefined", locale)) {
+            log.debug("Locale is missing or invalid!");
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Locale is missing or invalid!");
         }
 
         if (StringUtils.isBlank(previousCaptchaId)) {
+            log.debug("CaptchaId is missing!");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CaptchaId is missing!");
         }
 
@@ -129,9 +139,12 @@ public class CaptchaController {
                                                   @RequestParam(value = "useAudio", required = false) boolean useAudio,
                                                   @RequestParam(value = "captchaType", defaultValue = CaptchaConstants.STANDARD, required = false) String captchaType) {
 
+        log.debug("Validation requested with captchaId: {}, captchaAnswer: {}, useAudio: {}, type: {}",
+                captchaId, captchaAnswer, useAudio, captchaType);
 
         //check if captchaId is present
         if (StringUtils.isBlank(captchaId)) {
+            log.error("CaptchaId is missing!");
             return new ResponseEntity<>("CaptchaId is missing!", HttpStatus.BAD_REQUEST);
         } else {
             //Verify the validity of the captcha answer.

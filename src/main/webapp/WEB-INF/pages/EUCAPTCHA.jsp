@@ -25,8 +25,14 @@
   <title>EU Captcha</title>
 </head>
 <body dir="rtl " onload="getLastSelectedValue()">
+<div>
+  <ul id="navigation" >
+    <button class="btn btn-lg btn-primary" id="textual" onclick="location.href ='/'">Textual Captcha</button>
+    <button class="btn btn-lg btn-primary" id="rotate" onclick="location.href ='/rotate'">Rotational Captcha</button>
+  </ul>
+</div>
   <div class="container ">
-   <div class="row text-center">
+    <div class="row text-center">
       <div class="col-md-12">
       <div class="row text-center">
 
