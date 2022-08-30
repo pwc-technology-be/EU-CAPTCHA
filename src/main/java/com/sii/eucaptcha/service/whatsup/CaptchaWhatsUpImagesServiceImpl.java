@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @Service
-public class CaptchaWhatsUpImagesServiceLocalImpl implements CaptchaWhatsUpImagesService{
+public class CaptchaWhatsUpImagesServiceImpl implements CaptchaWhatsUpImagesService{
 
     @Autowired
     private ResourceLoader resourceLoader ;
