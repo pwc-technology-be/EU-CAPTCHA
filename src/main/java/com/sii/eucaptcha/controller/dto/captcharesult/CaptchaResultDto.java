@@ -26,7 +26,7 @@ public class CaptchaResultDto implements Serializable {
             dataType = "String",
             example = "STANDARD for textual captcha or WHATS_UP for rotated image captcha"
     )
-    private String captchaType = CaptchaConstants.STANDARD;
+    private String captchaType = CaptchaConstants.TEXTUAL;
 
     public CaptchaResultDto() {
         super();
