@@ -55,10 +55,7 @@ public class HeaderFilterAdder extends OncePerRequestFilter {
             httpServletResponse
                     .addHeader("x-jwtString" ,httpServletRequest.getHeader("x-jwtString") );
         }
-        if("OPTIONS".equals(httpServletRequest.equals(httpServletRequest.getMethod()))) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        
     }
 }
