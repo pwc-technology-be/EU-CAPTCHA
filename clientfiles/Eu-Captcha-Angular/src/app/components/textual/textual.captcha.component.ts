@@ -1,145 +1,158 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { CaptchaService } from '../../services/captcha.service';
-import { tap } from "rxjs/operators";
-import { HttpResponse } from '@angular/common/http';
-import { Captcha } from '../../models/captcha.model'
+import { Captcha } from '../../models/captcha.model';
 import { CaptchaActions } from '../interfaces/captcha.actions.interface';
-import { DomSanitizer, SafeResourceUrl, SafeStyle, SafeUrl } from '@angular/platform-browser';
-import { FormBuilder, FormGroup, Validators , ReactiveFormsModule, FormsModule  } from "@angular/forms";
-
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'textual-captcha',
+  selector: 'eucaptcha-textual',
   templateUrl: './textual.captcha.component.html',
-  styleUrls: ['./textual.captcha.component.scss']
+  styleUrls: ['./textual.captcha.component.scss'],
 })
+export class TextualComponent implements OnInit, CaptchaActions {
+  useAudio = false;
 
+  title = 'Eu-Captcha';
 
-export class Textual implements OnInit , CaptchaActions {
-
-  useAudio : boolean = false
-
-  title = 'Eu-Captcha'
-
-  lang = "en"
+  lang = 'en-GB';
 
   /* Captcha Information */
-  captchaImage: string | undefined
-  captchaId: string = ""
-  audioCaptcha:SafeStyle= ""
-  degree: number | undefined
+  captchaImage: string | undefined;
+  captchaId = '';
+  audioCaptcha: SafeStyle = '';
+  degree: number | undefined;
   /* end Captcha Information */
 
-  answer: string = "";
+  answer = '';
 
-  validationStatus:boolean = false
+  validationStatus = false;
 
-  showAlert : boolean = false ;
-  alertMessage:string = "CAPTCHA validation successful."
-  alertClass:string = "alert-success"
+  showAlert = false;
+  alertMessage = 'CAPTCHA validation successful.';
+  alertClass = 'alert-success';
 
-  captchaForm : FormGroup
-  constructor(private captchaService: CaptchaService , private _sanitizer: DomSanitizer , public fb: FormBuilder) {
+  captchaForm: FormGroup;
+  capitalized: FormControl;
+
+  constructor(
+    private captchaService: CaptchaService,
+    private sanitizer: DomSanitizer,
+    public fb: FormBuilder
+  ) {
     this.captchaForm = this.fb.group({
-        language: ['']
-      })
+      language: ['']
+    });
+    this.capitalized = new FormControl(true);
   }
 
-
-
-  captchaLang =
-  [{id : "en" , name : "English"},
-                    {id : "fr" , name : "Français"},
-                    {id : "de" , name : "Deutsch"},
-                    {id : "bg" , name : "български"},
-                    {id : "hr" , name : "Hrvatski"},
-                    {id : "da" , name : "Dansk"},
-                    {id : "es" , name : "Español"},
-                    {id : "et" , name : "Eesti keel"},
-                    {id : "fi" , name : "Suomi"},
-                    {id : "el" , name : "ελληνικά"},
-                    {id : "hu" , name : "Magyar"},
-                    {id : "it" , name : "Italiano"},
-                    {id : "lv" , name : "Latviešu valoda"},
-                    {id : "lt" , name : "Lietuvių kalba"},
-                    {id : "mt" , name : "Malti"},
-                    {id : "nl" , name : "Nederlands"},
-                    {id : "pl" , name : "Polski"},
-                    {id : "pt" , name : "Português"},
-                    {id : "ro" , name : "Română"},
-                    {id : "sk" , name : "Slovenčina"},
-                    {id : "sl" , name : "Slovenščina"},
-                    {id : "sv" , name : "Svenska"},
-                    {id : "cs" , name : "čeština"}
-]
-
-
-
-
-
+  captchaLang = [
+    { id: 'en-GB', name: 'English' },
+    { id: 'fr-FR', name: 'Français' },
+    { id: 'de-DE', name: 'Deutsch' },
+    { id: 'bg-BG', name: 'български' },
+    { id: 'hr-HR', name: 'Hrvatski' },
+    { id: 'da-DA', name: 'Dansk' },
+    { id: 'es-ES', name: 'Español' },
+    { id: 'et-ET', name: 'Eesti keel' },
+    { id: 'fi-FI', name: 'Suomi' },
+    { id: 'el-EL', name: 'ελληνικά' },
+    { id: 'hu-HU', name: 'Magyar' },
+    { id: 'it-IT', name: 'Italiano' },
+    { id: 'lv-LV', name: 'Latviešu valoda' },
+    { id: 'lt-LT', name: 'Lietuvių kalba' },
+    { id: 'mt-MT', name: 'Malti' },
+    { id: 'nl-NL', name: 'Nederlands' },
+    { id: 'pl-PL', name: 'Polski' },
+    { id: 'pt-PT', name: 'Português' },
+    { id: 'ro-RO', name: 'Română' },
+    { id: 'sk-SK', name: 'Slovenčina' },
+    { id: 'sl-SL', name: 'Slovenščina' },
+    { id: 'sv-SV', name: 'Svenska' },
+    { id: 'cs-CS', name: 'čeština' },
+  ];
 
   ngOnInit(): void {
+    this.onInit();
+  }
+  onInit = () => {
+    this.captchaService
+      .getCaptcha('STANDARD', this.lang, 8, this.capitalized.value)
+      .subscribe((captchaRequest) => {
+        const captcha: Captcha = captchaRequest.body;
 
-    this.captchaService.getCaptcha("STANDARD")
-      .subscribe(captchaRequest => {
-        const captcha:Captcha = captchaRequest.body
+        this.captchaImage = `data:image/png;base64,${captcha.captchaImg}`;
+        this.captchaId = captcha.captchaId;
 
-        this.captchaImage = `data:image/png;base64,${captcha.captchaImg}`
-        this.captchaId = captcha.captchaId
+        this.audioCaptcha = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `data:audio/wav;base64,${captcha.audioCaptcha}`
+        );
 
-        this.audioCaptcha = this._sanitizer.bypassSecurityTrustResourceUrl(`data:audio/wav;base64,${captcha.audioCaptcha}`);
+        console.log(this.audioCaptcha);
 
-        console.log( this.audioCaptcha)
-
-        this.degree = captcha.degree
-      })
+        this.degree = captcha.degree;
+      });
   }
 
   onValidate = () => {
-    this.captchaService.validateCaptcha(this.captchaId, this.answer, false , "STANDARD").subscribe(res => {
-       const {responseCaptcha = 'fail'} = {...res}  ;
-       this.validationStatus = (responseCaptcha!='fail')
-       if(this.validationStatus){
-        this.alertMessage = "CAPTCHA validation successful."
-        this.alertClass = "alert-success"
-       }else {
-        this.alertMessage = "The text you have enterd does not match.Please try again."
-        this.alertClass = "alert-danger"
-       }
-       this.onReload()
-       this.showAlert = true ;
-       this.validationStatusExpiration()
-    } , err => {
-         this.onReload()
-    })
+    this.captchaService
+      .validateCaptcha(this.captchaId, this.answer, 'STANDARD')
+      .subscribe(
+        (res) => {
+          const { responseCaptcha = 'fail' } = { ...res };
+          this.validationStatus = responseCaptcha !== 'fail';
+          if (this.validationStatus) {
+            this.alertMessage = 'CAPTCHA validation successful.';
+            this.alertClass = 'alert-success';
+          } else {
+            this.alertMessage =
+              'The text you have entered does not match.Please try again.';
+            this.alertClass = 'alert-danger';
+          }
+          this.onReload();
+          this.showAlert = true;
+          this.validationStatusExpiration();
+        },
+        (err) => {
+          this.onReload();
+        }
+      );
   }
   onReload = () => {
-    console.log(this.captchaForm.value)
-    this.lang = this.captchaForm.value.language ;
-    this.captchaService.reloadCaptcha(this.captchaId, "STANDARD", this.lang)
-      .subscribe(captchaRequest => {
-        const captcha:Captcha = captchaRequest.body
-        this.captchaImage = `data:image/png;base64,${captcha.captchaImg}`
-        this.captchaId = captcha.captchaId
-        this.audioCaptcha = this._sanitizer.bypassSecurityTrustResourceUrl(`data:audio/wav;base64,${captcha.audioCaptcha}`);
-        this.degree = captcha.degree
-      })
+    console.log(this.captchaForm.value);
+    this.lang = this.captchaForm.value.language;
+    this.captchaService
+      .reloadCaptcha(this.captchaId, 'STANDARD', this.lang)
+      .subscribe((captchaRequest) => {
+        const captcha: Captcha = captchaRequest.body;
+        this.captchaImage = `data:image/png;base64,${captcha.captchaImg}`;
+        this.captchaId = captcha.captchaId;
+        this.audioCaptcha = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `data:audio/wav;base64,${captcha.audioCaptcha}`
+        );
+        this.degree = captcha.degree;
+      });
+  }
+
+  onChange(value: string): void {
+    this.captchaForm.value.language = value;
+    this.lang = value;
+    this.onInit();
+  }
+
+  capitalizedChange(value: string): void {
+    this.onInit();
   }
 
   validationStatusExpiration = () => {
-       setTimeout( () => {
-          this.showAlert = false
-          console.log(`validation status become  ${this.validationStatus}`)
-       } , 2000)
+    setTimeout(() => {
+      this.showAlert = false;
+      console.log(`validation status become  ${this.validationStatus}`);
+    }, 2000);
   }
 
-   onPlayAudio(){
+  onPlayAudio(): void {
     this.useAudio = true;
-    }
+  }
 
-    submit() {
-
-    }
 }
