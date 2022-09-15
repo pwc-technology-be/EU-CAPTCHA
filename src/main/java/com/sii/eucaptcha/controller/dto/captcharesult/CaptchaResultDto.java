@@ -28,6 +28,18 @@ public class CaptchaResultDto implements Serializable {
     )
     private String captchaType = CaptchaConstants.TEXTUAL;
 
+    @ApiModelProperty(
+            value = "The Captcha question",
+            name = "captchaQuestion",
+            dataType = "String",
+            example = ""
+    )
+    private String captchaQuestion;
+
+    private int max;
+
+    private int min;
+
     public CaptchaResultDto() {
         super();
     }
@@ -48,7 +60,6 @@ public class CaptchaResultDto implements Serializable {
         this.captchaImg = captchaImg;
     }
 
-
     public String getCaptchaType() {
         return captchaType;
     }
@@ -56,4 +67,29 @@ public class CaptchaResultDto implements Serializable {
     public void setCaptchaType(String captchaType) {
         this.captchaType = captchaType;
     }
+
+    public String getCaptchaQuestion() {
+        return captchaQuestion;
+    }
+
+    public void setCaptchaQuestion(String captchaQuestion) {
+        this.captchaQuestion = captchaQuestion;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
 }
