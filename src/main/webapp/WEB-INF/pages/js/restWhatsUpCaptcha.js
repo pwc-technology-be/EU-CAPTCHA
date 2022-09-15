@@ -32,7 +32,6 @@ $(function(){
                 degrees = jsonData.degree;
             }
         });
-
     }
 
     function reloadCaptcha(){
@@ -181,7 +180,7 @@ $(function(){
     output.innerHTML = slider.value;
 
     slider.oninput = function() {
-        rotate(1 , this.value)
+        rotate(1 , this.value);
         output.innerHTML = this.value;
     }
 })

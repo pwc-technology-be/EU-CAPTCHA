@@ -19,4 +19,18 @@ public class ResourceI18nMapUtil {
         }
         return voicesMap;
     }
+
+    public final Map<String, String> questionMap(Locale locale) {
+        Map<String, String> voicesMap = new HashMap<>();
+        ResourceBundle labels = ResourceBundle.getBundle("messages", locale);
+        Enumeration<String> bundleKeys = labels.getKeys();
+        while (bundleKeys.hasMoreElements()) {
+            String key = bundleKeys.nextElement();
+            String value = labels.getString(key);
+            if (StringUtils.isNotBlank(value) && StringUtils.startsWith(key, "question")) {
+                voicesMap.put(key, value);
+            }
+        }
+        return voicesMap;
+    }
 }
