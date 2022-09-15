@@ -4,8 +4,6 @@
         <meta charset="utf-8">
         <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
         <meta content="#000000" name="theme-color">
-        <link href="/component-library/manifest.json" rel="manifest">
-        <link href="/component-library/favicon.ico" rel="shortcut icon">
         <title>EU CAPTCHA</title>
 
         <script>if ("ReactSnap" !== navigator.userAgent) {
