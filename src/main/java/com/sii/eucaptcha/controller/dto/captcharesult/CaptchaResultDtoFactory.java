@@ -9,7 +9,7 @@ public class CaptchaResultDtoFactory {
     }
 
     public CaptchaResultDto getCaptcha(String captchaType){
-         if(captchaType == null || CaptchaConstants.STANDARD.equalsIgnoreCase(captchaType)){
+         if(captchaType == null || CaptchaConstants.TEXTUAL.equalsIgnoreCase(captchaType)){
               return new TextualCaptchaResultDtoDto();
          }else if(captchaType.equalsIgnoreCase(CaptchaConstants.WHATS_UP)){
              return new WhatsUpCaptchaResultDtoDto();

@@ -1,37 +1,23 @@
 package com.sii.eucaptcha.service;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
-
 import com.sii.eucaptcha.captcha.Captcha;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.impl.EuCaptchaNoiseProducer;
 import com.sii.eucaptcha.captcha.audio.voice.VoiceProducer;
+import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
 import com.sii.eucaptcha.captcha.text.image.background.impl.GradiatedBackgroundProducer;
+import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.image.noise.impl.StraightLineImageNoiseProducer;
 import com.sii.eucaptcha.captcha.text.textProducer.TextProducer;
 import com.sii.eucaptcha.captcha.text.textProducer.impl.DefaultTextProducer;
-import com.sii.eucaptcha.captcha.text.image.gimpy.impl.EuCaptchaGimpyRenderer;
 import com.sii.eucaptcha.captcha.text.textRender.impl.CaptchaTextRender;
-import com.sii.eucaptcha.captcha.audio.voice.impl.LanguageVoiceProducer;
 import com.sii.eucaptcha.captcha.util.ResourceI18nMapUtil;
 import com.sii.eucaptcha.configuration.properties.SoundConfigProperties;
 import com.sii.eucaptcha.controller.constants.CaptchaConstants;
-import com.sii.eucaptcha.controller.dto.captcharesult.*;
 import com.sii.eucaptcha.controller.dto.captchaquery.CaptchaQueryDto;
+import com.sii.eucaptcha.controller.dto.captcharesult.CaptchaResultDto;
+import com.sii.eucaptcha.controller.dto.captcharesult.TextualCaptchaResultDtoDto;
+import com.sii.eucaptcha.controller.dto.captcharesult.WhatsUpCaptchaResultDtoDto;
 import com.sii.eucaptcha.exceptions.CaptchaQueryIsNull;
 import com.sii.eucaptcha.exceptions.WrongCaptchaRotationDegree;
 import com.sii.eucaptcha.security.CaptchaRandom;
@@ -44,6 +30,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -59,7 +61,7 @@ public class CaptchaService {
      */
     private static final int CAPTCHA_WIDTH = 400;
     private static final int CAPTCHA_HEIGHT = 200;
-    private static final long CAPTCHA_EXPIRY_TIME = 120;
+    private static final long CAPTCHA_EXPIRY_TIME = 5;
 
     /**
      * List of colors and background colors
@@ -98,7 +100,7 @@ public class CaptchaService {
      * Building a map with Expiration Time CAPTCHA_EXPIRY_TIME
      */
     private static final Map<String, String> captchaCodeMap =
-            ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.SECONDS).build();
+            ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.MINUTES).build();
 
     @Autowired
     SoundConfigProperties props;
@@ -110,6 +112,8 @@ public class CaptchaService {
     CaptchaWhatsUpImagesService captchaWhatsUpImagesService;
 
     private final SecureRandom random = CaptchaRandom.getSecureInstance();
+
+    private int counter;
 
     /**
      * @return Captcha ID
@@ -136,6 +140,7 @@ public class CaptchaService {
         //Case Reload Captcha
         if (previousCaptchaId != null) {
             removeCaptcha(previousCaptchaId);
+            counter = 0;
         }
         int captchaTextLength = (captchaLength != null) ? captchaLength : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH;
 
@@ -210,7 +215,7 @@ public class CaptchaService {
         captchaDataResult.setCaptchaId(captchaId);
         captchaDataResult.setAudioCaptcha(captchaAudioFile);
         captchaDataResult.setCaptchaImg(captchaPngImage);
-        captchaDataResult.setCaptchaType(CaptchaConstants.STANDARD);
+        captchaDataResult.setCaptchaType(CaptchaConstants.TEXTUAL);
 
         addCaptcha(captchaId, captcha.getAnswer());
         log.debug("Generated Captcha with captchaId: {} and answer: {}", captchaId, captcha.getAnswer());
@@ -240,7 +245,13 @@ public class CaptchaService {
                 result = StringUtils.equalsIgnoreCase(answer, captchaAnswer);
             }
         }
-        removeCaptcha(captchaId);
+
+        if(counter == 1) {
+            removeCaptcha(captchaId);
+            counter = 0;
+        } else {
+            counter++;
+        }
         return result;
     }
 
@@ -250,12 +261,16 @@ public class CaptchaService {
             return false;
         }
         String storedAnswer = captchaCodeMap.get(captchaId);
-        removeCaptcha(captchaId);
+        if(counter == 1) {
+            removeCaptcha(captchaId);
+            counter = 0;
+        } else {
+            counter++;
+        }
         int storedAnswerAsInt = Integer.parseInt(storedAnswer);
         int givenAnswer = Integer.parseInt(captchaAnswer);
 
         log.debug("stored answer = , givenAnswer = " + storedAnswerAsInt, givenAnswer);
-
         return ((givenAnswer == (storedAnswerAsInt * -1)) || ((givenAnswer <= 0) ? ((givenAnswer * -1 - 360) == storedAnswerAsInt) : ((360 - givenAnswer) == storedAnswerAsInt)));
 
 
@@ -314,6 +329,7 @@ public class CaptchaService {
     public CaptchaResultDto generateWhatsUpCaptchaImage(String previousCaptchaId, Integer degree) {
         if (previousCaptchaId != null) {
             removeCaptcha(previousCaptchaId);
+            counter = 0;
         }
         String captchaId = this.nextCaptchaId();
         //Adding the Captcha image , the captcha ID , the captcha audio file to the String []
