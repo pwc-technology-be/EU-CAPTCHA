@@ -62,7 +62,7 @@ public class CaptchaService {
      */
     private static final int CAPTCHA_WIDTH = 400;
     private static final int CAPTCHA_HEIGHT = 200;
-    private static final long CAPTCHA_EXPIRY_TIME = 120;
+    private static final long CAPTCHA_EXPIRY_TIME = 5;
 
     /**
      * List of colors and background colors
@@ -101,7 +101,7 @@ public class CaptchaService {
      * Building a map with Expiration Time CAPTCHA_EXPIRY_TIME
      */
     private static final Map<String, String> captchaCodeMap =
-            ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.SECONDS).build();
+            ExpiringMap.builder().expiration(CAPTCHA_EXPIRY_TIME, TimeUnit.MINUTES).build();
 
     private final SecureRandom random = CaptchaRandom.getSecureInstance();
     private SoundConfigProperties props;
@@ -165,6 +165,11 @@ public class CaptchaService {
 
         System.out.println("extraWidth = " + extraWidth + "extraHeight = " + extraHeight);
 
+        //Case Reload Captcha
+        if (previousCaptchaId != null) {
+            removeCaptcha(previousCaptchaId);
+            counter = 0;
+        }
         int captchaTextLength = (captchaLength != null) ? captchaLength : CaptchaConstants.DEFAULT_CAPTCHA_LENGTH;
 
         Map<String, String> localesMap = new ResourceI18nMapUtil().voiceMap(locale);
@@ -339,7 +344,6 @@ public class CaptchaService {
         boolean result = false;
 
         if (captchaCodeMap.containsKey(captchaId)) {
-            counter++;
             log.debug("Given answer is {}, stored answer is {}", captchaAnswer, captchaCodeMap.get(captchaId));
             //case sensitive
             if (!usingAudio) {
@@ -352,8 +356,11 @@ public class CaptchaService {
                 result = StringUtils.equalsIgnoreCase(answer, captchaAnswer);
             }
         }
-        if(counter == 2) {
+        if(counter == 1) {
             removeCaptcha(captchaId);
+            counter = 0;
+        } else {
+            counter++;
         }
         return result;
     }
@@ -371,14 +378,16 @@ public class CaptchaService {
             return false;
         }
         String storedAnswer = captchaCodeMap.get(captchaId);
-        if(counter == 2) {
+        if(counter == 1) {
             removeCaptcha(captchaId);
+            counter = 0;
+        } else {
+            counter++;
         }
         int storedAnswerAsInt = Integer.parseInt(storedAnswer);
         int givenAnswer = Integer.parseInt(captchaAnswer);
 
         log.debug("stored answer = , givenAnswer = " + storedAnswerAsInt, givenAnswer);
-        counter++;
         return ((givenAnswer == (storedAnswerAsInt * -1)) || ((givenAnswer <= 0) ? ((givenAnswer * -1 - 360) == storedAnswerAsInt) : ((360 - givenAnswer) == storedAnswerAsInt)));
     }
 
@@ -389,10 +398,11 @@ public class CaptchaService {
         }
         int givenAnswer = Integer.parseInt(captchaAnswer);
         int questionNumber = Integer.parseInt(captchaCodeMap.get(captchaId));
-        if(counter == 2) {
+        if(counter == 1) {
             removeCaptcha(captchaId);
+        }else {
+            counter++;
         }
-        counter++;
         if (questionNumber == 0 || questionNumber == 1) {
             return givenAnswer > minimumNumber && givenAnswer < maximumNumber;
         } else if (questionNumber == 2 || questionNumber == 3) {
@@ -435,4 +445,5 @@ public class CaptchaService {
     private static void removeCaptcha(String captchaId) {
         captchaCodeMap.remove(captchaId);
     }
+
 }
