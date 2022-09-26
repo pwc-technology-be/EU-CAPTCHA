@@ -21,15 +21,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/jquery-1.2.min.js"></script>
     <script src="js/slidingCaptcha.js" Prefer></script>
+    <script src="js/bootstrap-slider.min.js"></script>
 
 
-    <title>EU Captcha Rotate</title>
+    <title>EU Captcha Sliding</title>
 </head>
 <body onload="getLastSelectedValue()">
 <div>
     <ul id="navigation">
         <button class="btn btn-lg btn-primary" id="textual" onclick="location.href ='/textual'">Textual Captcha</button>
-        <button class="btn btn-lg btn-primary" id="sliding" onclick="location.href ='/rotate'">Sliding Captcha</button>
+        <button class="btn btn-lg btn-primary" id="sliding" onclick="location.href ='/rotate'">Rotational Captcha</button>
     </ul>
 </div>
 <div class="container">
@@ -117,6 +118,13 @@
                                 <fmt:message key="euCaptcha.validate"/></button>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-8">
+                            <input id="ex14" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' data-slider-ticks-positions="[0, 30, 70, 90, 100]"/>
+                        </div>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -125,6 +133,7 @@
                     <input id="captchaAnswer" type="hidden" value="0">
                 </form>
             </div>
+
         </div>
     </div>
 </div>
