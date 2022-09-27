@@ -1,32 +1,47 @@
 <div class="container">
-    <div class="captcha-container">
-        <div class="captcha-status">
-            <div  [class.hide]="!showAlert" class="alert {{alertClass}}" role="alert" >
-             {{alertMessage}}
-            </div>
-          </div>
-      <div class="eu-captcha">
-    
-        <h2>{{title}}</h2>
-    
-    
-        <div class="row">
-          <img src={{captchaImage}} alt="" width="200" id="captchaImage" [ngStyle]="whatsAppStyle">
-        </div>
-        <div class="row slidecontainer">
-            <input type="range"  (input)="onChange($event)" min="-360" max="360"  class="slider" step="15" class="slider-range">
-
-        </div>
-        <div class="captcha-input">
-      
-          <div class="row">
-            <button (click)="onValidate()" class="btn btn-success validate">validate</button>
-            <button (click)="onReload()" class="btn btn-success reload"> reload <em class="fa fa-refresh"></em> </button>
-          </div>
-          
-        </div>
-        
+  <div class="captcha-container">
+    <div class="captcha-status">
+      <div
+        [class.hide]="!showAlert"
+        class="alert {{ alertClass }}"
+        role="alert"
+      >
+        {{ alertMessage }}
       </div>
     </div>
-    
+    <div class="eu-captcha">
+      <h2>{{ title }}</h2>
+
+      <div class="row">
+        <img
+          src="{{ captchaImage }}"
+          alt=""
+          width="200"
+          id="captchaImage"
+          [ngStyle]="whatsAppStyle"
+        />
+      </div>
+      <div class="row slidecontainer">
+        <input
+          type="range"
+          (input)="onChange($event)"
+          min="-360"
+          max="360"
+          class="slider"
+          step="15"
+          class="slider-range"
+        />
+      </div>
+      <div class="captcha-input">
+        <div class="row">
+          <button (click)="onValidate()" class="btn btn-success validate">
+            validate
+          </button>
+          <button (click)="onReload()" class="btn btn-success reload">
+            reload <em class="fa fa-refresh"></em>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
+</div>

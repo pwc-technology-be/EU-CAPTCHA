@@ -3,7 +3,8 @@ package com.sii.eucaptcha.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
+
+import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -17,12 +18,10 @@ public class SpringFoxConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(false)
-                .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/api/**"))
-                .build();
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .build()
+                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
