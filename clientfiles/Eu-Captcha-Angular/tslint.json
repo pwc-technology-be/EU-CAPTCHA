@@ -139,13 +139,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "eucaptcha",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "eucaptcha",
       "kebab-case"
     ]
   }

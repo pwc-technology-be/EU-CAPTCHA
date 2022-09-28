@@ -3,8 +3,11 @@ package com.sii.eucaptcha.security;
 import com.sii.eucaptcha.controller.constants.CaptchaConstants;
 import com.sii.eucaptcha.exceptions.WrongCaptchaRotationDegree;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.SecureRandom;
 
+@Slf4j
 public class CaptchaRandom {
 
     private static SecureRandom SECURERANDOM;
@@ -25,12 +28,13 @@ public class CaptchaRandom {
         else {
             int randomRangeMax = 6;
             int randomRangeMin = 1;
-            int range = randomRangeMax - randomRangeMin + 1;
-            System.out.println("min = " + randomRangeMin);
-            System.out.println("max = " + randomRangeMax);
+            
+            log.debug("min = {}" , randomRangeMin);
+            log.debug("max = {}" , randomRangeMax);
             int randomNumber = (int) (Math.random() * randomRangeMax) + randomRangeMin;
-            System.out.println(randomNumber);
-            System.out.println(degree);
+            log.debug("randomNumber = {}" , randomNumber);
+            log.debug("degree = {}" , degree);
+
             return randomNumber * degree;
         }
     }
