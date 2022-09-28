@@ -17,6 +17,8 @@ function getLastSelectedValue(){
         document.getElementById('dropdown-language').value = "en-GB";
     }
 }
+function initializeSlider() {}
+
 function getSlidingcaptcha(){
     const getCaptchaUrl = $.ajax({
         type: "GET",
@@ -29,6 +31,8 @@ function getSlidingcaptcha(){
             const question = jsonData.captchaQuestion;
             const div = document.getElementById('captchaQuestion');
             div.innerText = question;
+            sessionStorage.setItem("Max", jsonData.max);
+            sessionStorage.setItem("Min", jsonData.min);
         }
     });
 }
@@ -45,9 +49,11 @@ function reloadSlidingCaptcha(){
             EuCaptchaToken = reloadCaptchaUrl.getResponseHeader("x-jwtString");
             const jsonData = JSON.parse(data);
             sessionStorage.setItem("captchaId", jsonData.captchaId);
-            const captchaQuestion = jsonData.captchaQuestion;
+            const question = jsonData.captchaQuestion;
             const div = document.getElementById('captchaQuestion');
-            div.innerText = captchaQuestion;
+            div.innerText = question;
+            sessionStorage.setItem("Max", jsonData.max);
+            sessionStorage.setItem("Min", jsonData.min);
         }
     });
 }
@@ -109,14 +115,20 @@ $(document).ready(function () {
             window.location.replace('?lang=' + selectedOption);
         }
     });
-    $('#captcha-range').slider({
-        id: 'sastdastSliderContainer',
-        min: 0,
-        max: 4,
-        range: true,
-        focus: true,
-        ticks: [0, 1, 2, 3, 4],
-        ticks_labels: ['Info', 'Low', 'Medium', 'High', 'Critical'],
-        lock_to_ticks: true,
+
+    let slider = document.getElementById("ex14");
+    let output = document.getElementById("captcha-range-value");
+    slider.oninput = function() {
+        $("#captchaAnswer").val(slider.value)
+        output.innerHTML = slider.value;
+    }
+
+    let min = sessionStorage.getItem("Min");
+    let max = sessionStorage.getItem("Max");
+    new Slider("#ex14", {
+        ticks: [min - 15, min, max/2, max, max * 2],
+        ticks_positions: [0, 20, 50, 65, 100],
+        ticks_labels: [min - 15, min, max/2, max, max * 2],
+        ticks_snap_bounds: 30
     });
 });

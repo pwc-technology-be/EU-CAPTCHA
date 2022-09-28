@@ -105,10 +105,7 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-8">
                             <div id="slidecontainer">
-                                <label title="Rotate slider" for="captcha-range"><fmt:message
-                                        key="euCaptcha.button.slider"/></label>
-                                <input type="range" min="-360" max="360" value="0" class="slider" step="15"
-                                       id="captcha-range">
+                                <input id="ex14" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' data-slider-ticks-positions="[0, 30, 70, 90, 100]"/>
                                 <p><fmt:message key="euCaptcha.rotation.angle"/> <span id="captcha-range-value"></span>
                                 </p>
                             </div>
@@ -116,13 +113,6 @@
                         <div class="col-md-2">
                             <button title="Validate the Captcha" id="captchaSubmit" class="btn btn-success">
                                 <fmt:message key="euCaptcha.validate"/></button>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-8">
-                            <input id="ex14" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' data-slider-ticks-positions="[0, 30, 70, 90, 100]"/>
                         </div>
                     </div>
                     <br>

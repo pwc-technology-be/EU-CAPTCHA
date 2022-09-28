@@ -139,13 +139,16 @@ public class CaptchaService {
         String previousCaptchaId = captchaQueryDto.getPreviousCaptchaId();
 
         switch (captchaQueryDto.getCaptchaType().toUpperCase()) {
-            case CaptchaConstants.TEXTUAL ->
+            case CaptchaConstants.TEXTUAL:
                     captchaDataResult = generateTextualCaptchaImage(previousCaptchaId, captchaQueryDto.getLocale(),
                             captchaQueryDto.getCaptchaLength(), captchaQueryDto.isCapitalized());
-            case CaptchaConstants.WHATS_UP ->
+                    break;
+            case CaptchaConstants.WHATS_UP:
                     captchaDataResult = generateWhatsUpCaptchaImage(previousCaptchaId, captchaQueryDto.getDegree());
-            case CaptchaConstants.SLIDING ->
+                    break;
+            case CaptchaConstants.SLIDING:
                     captchaDataResult = generateSlidingCaptchaImage(previousCaptchaId, captchaQueryDto.getLocale());
+                    break;
         }
         return captchaDataResult;
     }
@@ -304,6 +307,7 @@ public class CaptchaService {
     }
 
     public CaptchaResultDto generateSlidingCaptchaImage(String previousCaptchaId, Locale locale) {
+        counter = 0;
         String captchaId = this.handleCaptchaId(previousCaptchaId);
 
         String question = captchaSlidingQuestionService.generateRandomQuestion(locale);
@@ -403,16 +407,14 @@ public class CaptchaService {
         }else {
             counter++;
         }
-        if (questionNumber == 0 || questionNumber == 1) {
+        if (questionNumber == 1 || questionNumber == 3) {
             return givenAnswer > minimumNumber && givenAnswer < maximumNumber;
-        } else if (questionNumber == 2 || questionNumber == 3) {
+        } else if (questionNumber == 2 || questionNumber == 6) {
             return givenAnswer == minimumNumber || givenAnswer == maximumNumber;
-        } else if (questionNumber == 4 || questionNumber == 5) {
-            int answer = minimumNumber * 2;
-            return givenAnswer > answer && givenAnswer < maximumNumber;
+        } else if (questionNumber == 4 || questionNumber == 7) {
+           return  givenAnswer == maximumNumber;
         } else {
-            int answer = maximumNumber / 2;
-            return givenAnswer > minimumNumber && givenAnswer < answer;
+            return givenAnswer == minimumNumber;
         }
     }
 

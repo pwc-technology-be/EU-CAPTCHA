@@ -21,17 +21,17 @@ public class CaptchaSlidingQuestionServiceImpl implements CaptchaSlidingQuestion
 
     @Override
     public int generateMaxNumber() {
-        int upperbound = 1000;
+        int upperbound = 150;
         return RANDOM.nextInt(upperbound);
     }
 
     @Override
-    public int generateMinNumber(int maxnumber) {
-        return RANDOM.nextInt(maxnumber-10);
+    public int generateMinNumber(int maxNumber) {
+        return RANDOM.nextInt(maxNumber-10);
     }
 
     private String selectRandomQuestion(Map<String, String> localizedQuestions) {
-        List<String> valuesList = new ArrayList<String>(localizedQuestions.values());
+        List<String> valuesList = new ArrayList<>(localizedQuestions.values());
         randomIndex = RANDOM.nextInt(valuesList.size());
         return valuesList.get(randomIndex);
     }
