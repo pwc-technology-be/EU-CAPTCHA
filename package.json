@@ -1,0 +1,13 @@
+{
+    "name": "eu-captcha",
+    "version": "0.1.0",
+    "devDependencies": {
+        "@types/node": "^8.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.16.0",
+        "@pulumi/awsx": "^0.40.1",
+        "@pulumi/cloud-aws": "^0.30.1",
+        "@pulumi/pulumi": "^3.40.2"
+    }
+}
