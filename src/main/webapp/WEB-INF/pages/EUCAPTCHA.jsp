@@ -9,17 +9,13 @@
 
   <link rel="shortcut icon" href="#" />
   <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/eu-captcha-style.css">
 
-  <script type="text/javascript" src="https://apmactivegate.tech.ec.europa.eu:443/jstag/managed/39a3e95b-5423-482c-879b-99ef235dffeb/9e3c4a81c651b37_complete.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="js/jquery-1.2.min.js"></script>
   <script src="js/restCaptcha.js"></script>
 
   <title>EU Captcha</title>
