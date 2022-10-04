@@ -97,7 +97,7 @@ public class CaptchaService {
     CaptchaWhatsUpImagesService captchaWhatsUpImagesService;
 
     @Autowired
-    @Qualifier("redisStorage") // use mapStorage if you want to use just one node
+    @Qualifier("mapStorage") // use mapStorage if you want to use just one node
     CaptchaStorage captchaStorage;
 
     private final SecureRandom random = CaptchaRandom.getSecureInstance();

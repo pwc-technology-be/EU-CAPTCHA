@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPooled;
-import redis.clients.jedis.Protocol;
 
 @Service("redisStorage")
 @Slf4j
