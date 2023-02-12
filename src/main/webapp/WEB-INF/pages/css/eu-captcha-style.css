@@ -14,6 +14,25 @@
     width: 100%;
 }
 
+.captcha-slider {
+    align-items: flex-start;
+    display: flex;
+    margin-top: .75rem;
+    margin-bottom: .75rem;
+}
+
+#captchaQuestion {
+    text-align: center;
+}
+
+.captcha-slider-slider {
+    display: inline-block;
+    width: 100%;
+    background-color: transparent;
+    -webkit-appearance: none;
+    margin-top: 10px;
+}
+
 #audioCaptcha {
     width: 100%;
 }

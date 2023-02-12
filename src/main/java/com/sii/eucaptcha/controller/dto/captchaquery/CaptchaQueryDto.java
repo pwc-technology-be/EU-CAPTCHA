@@ -72,7 +72,9 @@ public class CaptchaQueryDto {
         private boolean capitalized;
 
         public CaptchaQueryDtoBuilder(String captchaType) {
-            if (captchaType == null) this.captchaType = CaptchaConstants.STANDARD;
+            if (captchaType == null) {
+                this.captchaType = CaptchaConstants.TEXTUAL;
+            }
             else
                 this.captchaType = captchaType;
         }
@@ -119,7 +121,7 @@ public class CaptchaQueryDto {
         }
 
         protected void validateCaptchaQueryDtoObject(CaptchaQueryDto captchaQueryDto) {
-            if (CaptchaConstants.STANDARD.equalsIgnoreCase(captchaQueryDto.getCaptchaType())) {
+            if (CaptchaConstants.TEXTUAL.equalsIgnoreCase(captchaQueryDto.getCaptchaType())) {
                 if (captchaQueryDto.getLocale() == null || captchaQueryDto.captchaLength == null)
                     throw new CaptchaQueryParamIsMissing(captchaQueryDto.getCaptchaType(), "locale", "captchaLenghth");
             } else if (CaptchaConstants.WHATS_UP.equalsIgnoreCase(captchaQueryDto.getCaptchaType())) {
