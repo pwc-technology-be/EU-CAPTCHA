@@ -21,8 +21,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/jquery-1.2.min.js"></script>
     <script src="js/slidingCaptcha.js" Prefer></script>
-    <script src="js/bootstrap-slider.min.js"></script>
-
 
     <title>EU Captcha Sliding</title>
 </head>
@@ -42,7 +40,7 @@
                 </div>
                 <div class=" col-md-12 alert alert-danger" id="fail" role="alert" style="visibility : hidden">
                     <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> <fmt:message
-                        key="euCaptcha.invalid.whatsup"/>
+                        key="euCaptcha.invalid"/>
                 </div>
                 <div class=" col-md-12 alert alert-danger" id="error" role="alert" style="visibility : hidden">
                     <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> <fmt:message
@@ -81,6 +79,7 @@
                                     <option value="sl-SI">Slovenščina</option>
                                     <option value="sv-SE">Svenska</option>
                                     <option value="cs-CZ">čeština</option>
+                                    <option value="ga-IE">Gaeilge</option>
                                 </select>
                             </div>
                         </div>
@@ -105,8 +104,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-8">
                             <div id="slidecontainer">
-                                <input id="ex14" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' data-slider-ticks-positions="[0, 30, 70, 90, 100]"/>
-                                <p><fmt:message key="euCaptcha.rotation.angle"/> <span id="captcha-range-value"></span>
+                                <input type="range" min="0" max="200" value="0" class="slider" step="1"
+                                       id="captcha-sliding">
+                                <p><fmt:message key="euCaptcha.sliding.answer"/> <span id="captcha-range-value"></span>
                                 </p>
                             </div>
                         </div>

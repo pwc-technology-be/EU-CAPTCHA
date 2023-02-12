@@ -77,6 +77,7 @@
                     <option value="sl-SI">Slovenščina</option>
                     <option value="sv-SE">Svenska</option>
                     <option value="cs-CZ">čeština</option>
+                    <option value="ga-IE">Gaeilge</option>
                   </select>
                 </div>
               </div>
