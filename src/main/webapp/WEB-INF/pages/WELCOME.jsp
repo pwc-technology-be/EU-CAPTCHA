@@ -4,24 +4,24 @@
         <meta charset="utf-8">
         <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
         <meta content="#000000" name="theme-color">
-        <title>EU CAPTCHA</title>
-
-        <script>if ("ReactSnap" !== navigator.userAgent) {
+        <title>EU Captcha</title>
+       <!-- <script>if ("ReactSnap" !== navigator.userAgent) {
         var cl = document.querySelector("html").classList;
         cl.remove("no-js"), cl.add("has-js");
         var head = document.head || document.getElementsByTagName("head")[0], cck = document.createElement("script");
         cck.src = "https://ec.europa.eu/wel/cookie-consent/consent.js", cck.type = "text/javascript", head.appendChild(cck)
-    }</script>
+    }</script> -->
         <script>window.location.hash.match("access_token") && (document.location.pathname += "/admin"), window.location.hash.match("invite_token") && (document.location.pathname += "/admin"), window.location.hash.match("confirmation_token") && (document.location.pathname += "/admin"), window.location.hash.match("email_change_token") && (document.location.pathname += "/admin"), window.location.hash.match("recovery_token") && (document.location.pathname += "/admin")</script>
 
+        <script type="text/javascript" src="https://apmactivegate.tech.ec.europa.eu:443/jstag/managed/39a3e95b-5423-482c-879b-99ef235dffeb/9e3c4a81c651b37_complete.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" media="all" href="css/eu/all.css"/>
         <link rel="stylesheet" media="screen" href="css/eu/screen.css"/>
         <link rel="stylesheet" media="print" href="css/eu/print.css"/>
         <link rel="stylesheet" media="screen" href="css/eu/screen1.css"/>
         <link rel="stylesheet" media="print" href="css/eu/print1.css"/>
 
-        <link href="js/eu/ec.ea4b8b78.chunk.js" rel="prefetch" as="script">
-        <link href="js/eu/eu.1f3ba700.chunk.js" rel="prefetch" as="script">
+        <!--<link href="js/eu/ec.ea4b8b78.chunk.js" rel="prefetch" as="script"> -->
+        <!--<link href="js/eu/eu.1f3ba700.chunk.js" rel="prefetch" as="script"> -->
 
         <meta content="Europa Component Library (ECL) documentation website" name="Description" data-react-helmet="true">
     </head>
@@ -51,11 +51,6 @@
                 <div class="ecl-menu__overlay" data-ecl-menu-overlay></div>
                 <div class="ecl-container ecl-menu__container">
                     <a class="ecl-link ecl-link--standalone ecl-menu__open" href="" data-ecl-menu-open>
-                        <svg class="ecl-icon ecl-icon--s" focusable="false"
-                            aria-hidden="true">
-                            <use xlink:href="/themes/contrib/oe_theme/dist/eu/images/icons/sprites/icons.svg#hamburger">
-                            </use>
-                        </svg>
                         Menu
                     </a>
                     <section class="ecl-menu__inner" data-ecl-menu-inner>
@@ -63,22 +58,17 @@
                             <button class="ecl-menu__close ecl-button ecl-button--text" type="submit"
                                     data-ecl-menu-close>
                                 <span class="ecl-menu__close-container ecl-button__container">
-                                    <svg class="ecl-icon ecl-icon--s ecl-button__icon ecl-button__icon--before"
-                                         focusable="false" aria-hidden="true" data-ecl-icon>
-                                            <use xlink:href="/themes/contrib/oe_theme/dist/eu/images/icons/sprites/icons.svg#close-filled">
-                                            </use>
-                                    </svg>
                                     <span class="ecl-button__label" data-ecl-label="true">Close</span>
                                 </span>
                             </button>
                             <div class="ecl-menu__title">Menu</div>
                             <button data-ecl-menu-back type="submit" class="ecl-menu__back ecl-button ecl-button--text">
                                 <span class="ecl-button__container">
-                                    <svg class="ecl-icon ecl-icon--s ecl-icon--rotate-270 ecl-button__icon ecl-button__icon--before"
+                                    <!-- <svg class="ecl-icon ecl-icon--s ecl-icon--rotate-270 ecl-button__icon ecl-button__icon--before"
                                          focusable="false" aria-hidden="true" data-ecl-icon>
                                         <use xlink:href="/component-library/dist/media/icons.cec58484.svg#corner-arrow">
                                         </use>
-                                    </svg>
+                                    </svg> -->
                                     <span class="ecl-button__label" data-ecl-label>Back</span>
                                 </span>
                             </button>
@@ -102,21 +92,21 @@
                            class="ecl-link ecl-link--standalone ecl-link--no-visited ecl-breadcrumb-standardised__link">
                             European Union
                         </a>
-                        <svg class="ecl-icon ecl-icon--2xs ecl-icon--rotate-90 ecl-breadcrumb-standardised__icon"
+                        <!-- <svg class="ecl-icon ecl-icon--2xs ecl-icon--rotate-90 ecl-breadcrumb-standardised__icon"
                             focusable="false" aria-hidden="true" role="presentation">
                             <use xlink:href="css/images/icons.cec58484.svg#corner-arrow">
                             </use>
-                        </svg>
+                        </svg> -->
                     </li>
                     <li class="ecl-breadcrumb-standardised__segment" data-ecl-breadcrumb-standardised-item="static">
                         <a href="" class="ecl-link ecl-link--standalone ecl-link--no-visited ecl-breadcrumb-standardised__link">
                             EU CAPTCHA
                         </a>
-                        <svg class="ecl-icon ecl-icon--2xs ecl-icon--rotate-90 ecl-breadcrumb-standardised__icon"
+                        <!-- <svg class="ecl-icon ecl-icon--2xs ecl-icon--rotate-90 ecl-breadcrumb-standardised__icon"
                             focusable="false" aria-hidden="true" role="presentation">
                             <use xlink:href="css/images/icons.cec58484.svg#corner-arrow">
                             </use>
-                        </svg>
+                        </svg> -->
                     </li>
                 </ol>
             </nav>
@@ -498,9 +488,9 @@
         </div>
     </footer>
 
-        <script src="/js/eu/runtime~main.5693af20.js"></script>
+       <!-- <script src="/js/eu/runtime~main.5693af20.js"></script>
         <script src="/js/eu/vendors.ef9f5d65.chunk.js"></script>
-        <script src="/js/eu/main.948b526c.chunk.js"></script>
+        <script src="/js/eu/main.948b526c.chunk.js"></script> -->
         <script defer src="https://europa.eu/webtools/load.js?globan=1110" type="text/javascript"></script>
     </body>
 </html>
