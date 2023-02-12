@@ -20,14 +20,26 @@ public class CaptchaSlidingQuestionServiceImpl implements CaptchaSlidingQuestion
     }
 
     @Override
-    public int generateMaxNumber() {
-        int upperbound = 150;
-        return RANDOM.nextInt(upperbound);
+    public int[] generateRandomNumbers() {
+        int[] randomNumbers = new int[2];
+        int maxNumber = generateRandomNumber();
+        int minNumber = generateRandomNumber();
+        if(maxNumber > minNumber) {
+            randomNumbers[0] = minNumber;
+            randomNumbers[1] = maxNumber;
+        } else if (maxNumber < minNumber) {
+            randomNumbers[0] = maxNumber;
+            randomNumbers[1] = minNumber;
+        } else {
+            randomNumbers[0] = minNumber;
+            randomNumbers[1] = maxNumber + 10;
+        }
+        return randomNumbers;
     }
 
-    @Override
-    public int generateMinNumber(int maxNumber) {
-        return RANDOM.nextInt(maxNumber-10);
+    private int generateRandomNumber() {
+        int upperbound = 190;
+        return RANDOM.nextInt(upperbound);
     }
 
     private String selectRandomQuestion(Map<String, String> localizedQuestions) {

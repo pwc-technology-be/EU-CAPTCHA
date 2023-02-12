@@ -1,5 +1,6 @@
 package com.sii.eucaptcha.service;
 
+import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.sii.eucaptcha.captcha.Captcha;
 import com.sii.eucaptcha.captcha.audio.Sample;
 import com.sii.eucaptcha.captcha.audio.noise.impl.EuCaptchaNoiseProducer;
@@ -111,13 +112,11 @@ public class CaptchaService {
 
     private ResourceLoader resourceLoader;
 
-    private int maximumNumber;
-    private int minimumNumber;
-
     private int counter;
 
     public CaptchaService(CaptchaWhatsUpImagesService captchaWhatsUpImagesService,
-                          CaptchaSlidingQuestionService captchaSlidingQuestionService, SoundConfigProperties props, ResourceLoader resourceLoader) {
+                          CaptchaSlidingQuestionService captchaSlidingQuestionService, SoundConfigProperties props,
+                          ResourceLoader resourceLoader) {
         this.captchaWhatsUpImagesService = captchaWhatsUpImagesService;
         this.captchaSlidingQuestionService = captchaSlidingQuestionService;
         this.props = props;
@@ -139,7 +138,7 @@ public class CaptchaService {
         String previousCaptchaId = captchaQueryDto.getPreviousCaptchaId();
 
         switch (captchaQueryDto.getCaptchaType().toUpperCase()) {
-            case CaptchaConstants.TEXTUAL:
+            case CaptchaConstants.STANDARD:
                     captchaDataResult = generateTextualCaptchaImage(previousCaptchaId, captchaQueryDto.getLocale(),
                             captchaQueryDto.getCaptchaLength(), captchaQueryDto.isCapitalized());
                     break;
@@ -246,7 +245,7 @@ public class CaptchaService {
         captchaDataResult.setCaptchaId(captchaId);
         captchaDataResult.setAudioCaptcha(captchaAudioFile);
         captchaDataResult.setCaptchaImg(captchaPngImage);
-        captchaDataResult.setCaptchaType(CaptchaConstants.TEXTUAL);
+        captchaDataResult.setCaptchaType(CaptchaConstants.STANDARD);
 
         addCaptcha(captchaId, captcha.getAnswer());
         log.debug("Generated Captcha with captchaId: {} and answer: {}", captchaId, captcha.getAnswer());
@@ -311,20 +310,16 @@ public class CaptchaService {
         String captchaId = this.handleCaptchaId(previousCaptchaId);
 
         String question = captchaSlidingQuestionService.generateRandomQuestion(locale);
-        maximumNumber = captchaSlidingQuestionService.generateMaxNumber();
-        minimumNumber = captchaSlidingQuestionService.generateMinNumber(maximumNumber);
-
-        String maxQuestion = question.replace("{max}", String.valueOf(maximumNumber));
-        String completeQuestion = maxQuestion.replace("{min}", String.valueOf(minimumNumber));
+        int[] randomNumbers = captchaSlidingQuestionService.generateRandomNumbers();
 
         SlidingCaptchaResultDto captchaDataResult = new SlidingCaptchaResultDto();
         captchaDataResult.setCaptchaId(captchaId);
-        captchaDataResult.setMax(maximumNumber);
-        captchaDataResult.setMin(minimumNumber);
-        captchaDataResult.setCaptchaQuestion(completeQuestion);
+        captchaDataResult.setMax(randomNumbers[1]);
+        captchaDataResult.setMin(randomNumbers[0]);
+        captchaDataResult.setCaptchaQuestion(formatNumbersIntoString(locale, randomNumbers, question));
         captchaDataResult.setCaptchaType(CaptchaConstants.SLIDING);
 
-        addCaptcha(captchaId, Integer.toString(captchaSlidingQuestionService.getRandomIndex()));
+        addCaptcha(captchaId, prepareAnswer(captchaSlidingQuestionService.getRandomIndex(), randomNumbers[0], randomNumbers[1]));
         return captchaDataResult;
     }
 
@@ -401,7 +396,11 @@ public class CaptchaService {
             return false;
         }
         int givenAnswer = Integer.parseInt(captchaAnswer);
-        int questionNumber = Integer.parseInt(captchaCodeMap.get(captchaId));
+        String[] answer = collectAnswer(captchaId);
+        int questionNumber = Integer.parseInt(answer[0]);
+        int minimumNumber = Integer.parseInt(answer[1]);
+        int maximumNumber = Integer.parseInt(answer[2]);
+
         if(counter == 1) {
             removeCaptcha(captchaId);
         }else {
@@ -416,6 +415,21 @@ public class CaptchaService {
         } else {
             return givenAnswer == minimumNumber;
         }
+    }
+
+    private String prepareAnswer (int questionIndex, int minNumber, int maxNumber) {
+        StringBuilder answer = new StringBuilder();
+        return answer.append(questionIndex)
+                .append(",")
+                .append(minNumber)
+                .append(",")
+                .append(maxNumber)
+                .toString();
+    }
+
+    private String[] collectAnswer(String captchaId) {
+        String answer = captchaCodeMap.get(captchaId);
+        return answer.split(",");
     }
 
     /**
@@ -446,6 +460,24 @@ public class CaptchaService {
      */
     private static void removeCaptcha(String captchaId) {
         captchaCodeMap.remove(captchaId);
+    }
+
+    private String formatNumbersIntoString(Locale locale, int[] randomNumbers, String question ) {
+        int int_random = random.nextInt(4);
+        RuleBasedNumberFormat ruleBasedNumberFormat = new RuleBasedNumberFormat(locale, RuleBasedNumberFormat.SPELLOUT);
+        if(int_random == 0) {
+            String minQuestion = question.replace("{min}", Integer.toString(randomNumbers[0]));
+            return minQuestion.replace("{max}", Integer.toString(randomNumbers[1]));
+        } else if (int_random == 1) {
+            String minQuestion = question.replace("{min}", ruleBasedNumberFormat.format(randomNumbers[0]));
+           return  minQuestion.replace("{max}", Integer.toString(randomNumbers[1]));
+        } else if (int_random == 2) {
+            String maxQuestion = question.replace("{max}", ruleBasedNumberFormat.format(randomNumbers[1]));
+            return maxQuestion.replace("{min}", Integer.toString(randomNumbers[0]));
+        } else {
+            String minQuestion = question.replace("{min}", ruleBasedNumberFormat.format(randomNumbers[0]));
+            return minQuestion.replace("{max}", ruleBasedNumberFormat.format(randomNumbers[1]));
+        }
     }
 
 }

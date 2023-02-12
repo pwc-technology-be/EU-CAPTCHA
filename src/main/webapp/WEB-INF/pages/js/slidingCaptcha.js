@@ -8,6 +8,7 @@ function getLanguage(){
         return "en-GB";
     }
 }
+
 function getLastSelectedValue(){
     const language = sessionStorage.getItem("language");
     if(language) {
@@ -17,7 +18,6 @@ function getLastSelectedValue(){
         document.getElementById('dropdown-language').value = "en-GB";
     }
 }
-function initializeSlider() {}
 
 function getSlidingcaptcha(){
     const getCaptchaUrl = $.ajax({
@@ -31,8 +31,6 @@ function getSlidingcaptcha(){
             const question = jsonData.captchaQuestion;
             const div = document.getElementById('captchaQuestion');
             div.innerText = question;
-            sessionStorage.setItem("Max", jsonData.max);
-            sessionStorage.setItem("Min", jsonData.min);
         }
     });
 }
@@ -52,8 +50,6 @@ function reloadSlidingCaptcha(){
             const question = jsonData.captchaQuestion;
             const div = document.getElementById('captchaQuestion');
             div.innerText = question;
-            sessionStorage.setItem("Max", jsonData.max);
-            sessionStorage.setItem("Min", jsonData.min);
         }
     });
 }
@@ -116,19 +112,10 @@ $(document).ready(function () {
         }
     });
 
-    let slider = document.getElementById("ex14");
+    let slider = document.getElementById("captcha-sliding");
     let output = document.getElementById("captcha-range-value");
     slider.oninput = function() {
         $("#captchaAnswer").val(slider.value)
         output.innerHTML = slider.value;
     }
-
-    let min = sessionStorage.getItem("Min");
-    let max = sessionStorage.getItem("Max");
-    new Slider("#ex14", {
-        ticks: [min - 15, min, max/2, max, max * 2],
-        ticks_positions: [0, 20, 50, 65, 100],
-        ticks_labels: [min - 15, min, max/2, max, max * 2],
-        ticks_snap_bounds: 30
-    });
 });
