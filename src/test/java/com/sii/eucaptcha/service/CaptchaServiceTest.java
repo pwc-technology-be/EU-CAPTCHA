@@ -37,7 +37,6 @@ public class CaptchaServiceTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        when(this.serviceMocked.nextCaptchaId()).thenReturn(anyString());
     }
 
     @DisplayName("Test genrating Captcha methode ")
@@ -57,10 +56,10 @@ public class CaptchaServiceTest {
     @DisplayName("Test validate captcha methode")
     @Test
     public void validateCaptcha() {
-        when(this.serviceMocked.validateCaptcha(anyString(), anyString() , anyBoolean())).thenReturn(true);
+        when(this.serviceMocked.validateTextualCaptcha(anyString(), anyString(), anyBoolean())).thenReturn(true);
         String CaptchaID = "jh0b0t6rad62bgu9cerv91cb5g";
         String CaptchaAnswer = "KAB1";
-        assertTrue(serviceMocked.validateCaptcha(CaptchaID, CaptchaAnswer,true));
+        assertTrue(serviceMocked.validateTextualCaptcha(CaptchaID, CaptchaAnswer, true));
 
     }
 

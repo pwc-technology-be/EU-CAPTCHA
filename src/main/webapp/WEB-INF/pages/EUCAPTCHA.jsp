@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,13 +22,13 @@
   <script src="js/jquery-1.2.min.js"></script>
   <script src="js/restCaptcha.js"></script>
 
-  <title>EU Captcha</title>
+  <title>EU Captcha Textual</title>
 </head>
 <body dir="rtl " onload="getLastSelectedValue()">
 <div>
   <ul id="navigation" >
-    <button class="btn btn-lg btn-primary" id="textual" onclick="location.href ='/'">Textual Captcha</button>
     <button class="btn btn-lg btn-primary" id="rotate" onclick="location.href ='/rotate'">Rotational Captcha</button>
+    <button class="btn btn-lg btn-primary" id="sliding" onclick="location.href ='/sliding'">Sliding Captcha</button>
   </ul>
 </div>
   <div class="container ">
@@ -77,6 +77,7 @@
                     <option value="sl-SI">Slovenščina</option>
                     <option value="sv-SE">Svenska</option>
                     <option value="cs-CZ">čeština</option>
+                    <option value="ga-IE">Gaeilge</option>
                   </select>
                 </div>
               </div>

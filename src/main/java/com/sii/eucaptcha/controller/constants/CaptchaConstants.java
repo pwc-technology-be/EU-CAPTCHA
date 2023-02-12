@@ -1,9 +1,11 @@
 package com.sii.eucaptcha.controller.constants;
 
 public class CaptchaConstants {
-    public static final String STANDARD = "STANDARD";
+    public static final String TEXTUAL = "TEXTUAL";
 
     public static final String WHATS_UP = "WHATS_UP";
+
+    public static final String SLIDING = "SLIDING";
 
     public static final Integer DEFAULT_DEGREE = 30 ;
 
